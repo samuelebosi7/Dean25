@@ -1,0 +1,212 @@
+//@import "~compass/css3";
+
+body{
+  background-color:#252a2d;
+  font-family: Roboto Condensed,sans-serif;
+}
+
+input[type="text"]
+{
+    background: transparent;
+    border: none;
+    /*font-family: Roboto Condensed,sans-serif;*/
+}
+
+#transport-bar{
+    position: absolute;
+    border-radius: 7px;
+    margin: auto;
+    width: 98%;
+    height: 40px;
+    text-align: center;
+    background-color: #424242;
+    box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.06),
+    inset 0 4px 0 rgba(255, 255, 255, 0.15);
+    display: inline-block;
+}
+
+.text-songTitle{
+  position: absolute;
+  margin-left:2%;
+  margin-top:10px;
+  text-decoration: underline;
+  text-decoration-color: white;
+  border-color:black;
+  border-radius:3px;
+  height: 25px;
+  width:150px;
+}
+
+#songTitle{
+  color:white;
+  text-align:right;
+}
+
+#rep-menu{
+    position: relative;
+    margin-left:200px;
+    margin-top:13px;
+}
+
+.play-pause {
+  position: absolute;
+  margin-left:2px;
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  width: 0;
+  height: 16px;
+
+  border-color: transparent transparent transparent #dadada;
+  transition: 100ms all ease;
+  cursor: pointer;
+
+  border-style: solid;
+  border-width: 7px 0 7px 16px;
+
+  &.paused {
+    border-style: double;
+    border-width: 0px 0 0px 16px;
+  }
+
+  &:hover {
+    border-color: transparent transparent transparent #f7f7f7;
+  }
+}
+
+.rec{
+  position: absolute;
+  margin-left:28px;
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  width: 0;
+  height: 16px;
+  width: 16px;
+	border-radius: 50%;
+  background-color: #a22525;
+  transition: 100ms all ease;
+  cursor: pointer;
+
+  &.working {
+    background-color: #ff3044;
+  }
+  &:hover {
+    background-color: #ff3044;
+  }
+}
+
+.stop{
+    position: absolute;
+    margin-left:56px;
+    height: 16px;
+    width: 16px;
+    background-color: #dadada;
+    transition: 100ms all ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f7f7f7;
+    }
+}
+
+.crono{
+    height: 100%;
+    width: 100%;
+    text-align:center;
+    margin-top:5px;
+}
+
+#tempoDisplays{
+  position: relative;
+  margin-left:300px;
+  margin-top:13px;
+}
+
+.tempoProp.text-crono{
+  position: absolute;
+  margin-top:-5px;
+  margin-left:0px;
+}
+
+.tempoProp{
+  background-color:gray;
+  border-radius:3px;
+  height: 25px;
+  width: 75px;
+}
+
+.tempoProp.text-bpm{
+  position: absolute;
+  margin-top:-5px;
+  margin-left:100px;
+  text-align:left;
+}
+
+.bpm{
+  height: 25px;
+  width: 35px;
+  text-align:right;
+}
+
+/*$chromeurl: image-url('https://s3.amazonaws.com/codepen/chrome_radial.jpg');
+
+.volume{
+  position: relative;
+  margin-top:-5px;
+  margin-left:500px;display: block;
+  background: #565656;
+  height: 7px;
+  box-shadow: 0 1px 0px rgba(255,255,255,0.25),
+    inset 0 0 4px rgba(0,0,0,0.9);
+  @include border-radius(7px);
+  div.ui-slider-range {
+    display: block;
+    height: 7px;
+    @include border-radius(7px);
+    @include transition-property(background-color);
+    @include transition-duration(100ms);
+  }
+  &.main div.ui-slider-range {
+    background-color: rgb(47, 103, 53);
+    box-shadow: inset 0 0 4px rgba(163, 18, 0, 0.7),
+      inset 0 0 2px rgba(0, 0, 0,0.5);
+    &.hilite, &.dragging {
+      background-color: rgb(255, 160, 155);
+    }
+  }
+   
+  a.ui-slider-handle {
+    position: absolute;
+    top: -5px;
+    margin-left: -9px;
+    z-index: 2;
+    height: 16px;
+    width: 16px;
+    @include border-radius(20px);
+    background-color: #d4d4d4;
+    @include background-image($chromeurl);
+    @include background-size(100% 100%);
+    border: 0px solid rgba(0,0,0,0.1);
+    box-shadow: 0 0px 2px rgba(0,0,0,0.4),
+      inset 0 0px 1px rgba(0,0,0,0.3),
+      0 1px 2px rgba(0,0,0,0.6),
+      0 4px 2px rgba(0,0,0,0.2),
+      0 9px 4px rgba(0,0,0,0.1),
+      inset 0 2px 1px rgba(255,255,255,1.0);
+    outline: none;
+  }
+  
+  a.ui-slider-handle:after {
+   content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    left: -1px;
+    top: -4px;
+    background-color: none;
+    @include border-radius(12px);
+    @include background-image(radial-gradient(rgba(255,255,255,1.0), rgba(255,255,255,0.05) rgba(255,255,255,0.0)));
+  }
+}*/
+

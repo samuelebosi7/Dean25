@@ -1,0 +1,77 @@
+<html>
+    <head>
+        
+        <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+      </head>
+    <body>
+      <div id="app">
+        <!--<div id = "command-line">-->
+          <div id='transport-bar'>
+            <div class='text-songTitle'>
+                <span contenteditable="true" id='songTitle' >New project</span>
+            </div>
+            <div id='rep-menu'>
+                <div class='play-pause'>
+                </div>
+                <div class='rec'>
+                </div>
+                <div class='stop'>
+                </div>
+            </div>
+            
+            <div id='tempoDisplays'>
+                <div class='tempoProp text-crono'>
+                    <span type="text" class='crono'>00:00:00</span>
+                </div>
+                <div class='tempoProp text-bpm'>
+                    <input type="text" class='bpm' min="40" max="240" value='120'>
+                    </input>
+                    bpm
+                </div>
+            </div>
+            <div class="volume main"></div>
+            <!--<div class='volume'>
+                <input id="duration" type="range" min="0" max="100"></input>
+            </div>-->
+          <!--</div>-->
+        </div>
+        <div id = "central-part">
+            <div id = "table-view">
+              <div id= "principal-table">
+                <in-row v-for="instrument in instrumentList" v-bind:key="instrument.id"></in-row>
+              </div>
+            </div>
+            <div id="left-part">
+              <div id= "instrument-menu">
+                  <nav id="instument-down-menu">
+                      <div id="menu">
+                        <div id="menu-add" class="menu-item">
+                          <a> <i class="fas fa-plus-square fa-2x"></i> &nbsp; Add instrument</a>
+                          <div id="submenu">
+                            <div v-on:click="addInstrument($event)" class="instrument-in-menu menu-item"><a>Instrument 1</a></div>
+                            <div v-on:click="addInstrument($event)"class="instrument-in-menu menu-item"><a>Instrument 2</a></div>
+                            <div v-on:click="addInstrument($event)" class="instrument-in-menu menu-item"><a>Instrument 3</a></div>
+                            <div v-on:click="addInstrument($event)" class="instrument-in-menu menu-item"><a>Instrument 4</a></div>
+                          </div>
+                        </div>
+                      </div>
+                  </nav>
+              </div>
+            
+            <div id = "instrument-list">
+                <instrument v-for="instrument in instrumentList" v-bind:key="instrument.id" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+            </div>
+          </div>
+            </div>
+        </div>
+        <div id = "mixer"></div>
+
+      </div>
+      <!--<script src="js/instrument-script.js"></script>-->
+      <script src="bundle.js"></script>
+    </body>
+</html>

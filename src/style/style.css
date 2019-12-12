@@ -1,0 +1,221 @@
+html {
+    height:100%;
+}
+
+body {
+    overflow: hidden; 
+    font-family: 'Roboto', sans-serif;
+}
+
+#command-line {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 60px;
+    background-color: black;
+}
+
+#mixer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 15%;
+    width: 100%;
+    background-color: green;
+}
+
+#central-part {
+    position: absolute;
+    left: 0px;
+    top: 60px;
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+}
+
+#left-part {
+    position: relative;
+    float:left;
+    top: 0px;
+    width: 40%;
+    height: 75%;
+    background-color: rgba(197, 196, 196, 0.5);
+}
+
+#instrument-list {
+  height: 83%;
+  overflow-y: auto;
+}
+
+#instrument-list::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: rgba(197, 196, 196, 0.5);
+}
+
+#instrument-list::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: rgba(197, 196, 196, 0.5);
+}
+
+#instrument-list::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+#table-view {
+    position: relative;
+    float: right;
+    top: 0px;
+    width: 60%;
+    height: 75%;
+    background-color: rgba(197, 196, 196, 0.5);
+}
+
+#instrument-menu {
+  position: relative;
+  height: 10%;
+  border: 2px solid black;
+  margin-bottom: 5px;
+  display: contents;
+}
+
+/* instrument css */
+
+.instrument {
+  border: 2px solid black;
+  margin-top: 4px;
+  margin-left: 4px;
+  background-color: grey;
+}
+
+.instrument:hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid red;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.input-label {
+  position:relative;
+  left:50%;
+  transform: translateX(-60%);
+  display: inline-block;
+}
+
+.instrument-name {
+  position: relative;
+  padding-top:10px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-bottom:5px;
+  font-family: Arial;
+  background-color: rgba(199, 199, 199, 0.5);
+  border: 2px solid black;
+}
+
+.euclidean-input {
+  position:relative;
+  margin-top:25px;
+  margin-left: 4px;
+}
+
+input, textarea {
+  border: 1px solid black;
+  box-sizing: border-box;
+  margin: 0;
+  outline: none;
+  padding: 10px;
+}
+
+input[type="button"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.input-num {
+  clear: both;
+  margin-top:5px;
+  position: relative;
+  display: inline-block;
+}
+
+.input-num input[type='button'] {
+  background-color: #0202025c;
+  min-width: 38px;
+  width: auto;
+  transition: all 300ms ease;
+}
+
+.input-num .button-minus,
+.input-num .button-plus {
+  font-weight: bold;
+  height: 38px;
+  padding: 0;
+  width: 38px;
+  position: relative;
+}
+
+.input-num .num-value {
+  position: relative;
+  height: 38px;
+  left: -5px;
+  text-align: center;
+  width: 42px;
+  display: inline-block;
+  font-size: 13px;
+  margin: 0 0 5px;
+  resize: vertical;
+  background-color: rgba(224, 223, 223, 0.4);
+}
+
+.button-plus {
+  left: -11px;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+}
+
+
+#menu-add > a  {
+  font-size: 15px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+#menu-add > a > i {
+  transform: translateY(20%);
+}
+
+.deleteIns {
+  transform: translateY(25%);
+  margin-left: 5px;
+  color: rgba(0, 0, 0, 0.5);
+  transition: all .2s;
+}
+
+.deleteIns:hover {
+  cursor: pointer;
+  color: rgba(0, 0, 0);
+  -webkit-transform: scale(1.1); 
+      -ms-transform: scale(1.1); 
+          transform: scale(1.1);
+          transform: translateY(15%);
+}
+
+
+
