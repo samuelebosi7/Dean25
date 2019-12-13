@@ -1,9 +1,11 @@
 const webpack = require('webpack');
 const path = require( 'path' );
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
+    devtool: 'source-map',
     entry: './src/index.js',
     output: {
         path: path.resolve( __dirname, 'dist' ),
@@ -41,6 +43,9 @@ module.exports = {
     },
     plugins: [
       // make sure to include the plugin for the magic
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+      }),
       new VueLoaderPlugin(),
       new webpack.ProvidePlugin({
         $: "jquery",

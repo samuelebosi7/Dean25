@@ -1,23 +1,33 @@
 <template>
   <div id="app">
+    <top-bar></top-bar>
+    <div id = "central-part">
+      <div id = "table-view">
+        <div id= "principal-table">
+          <!-- <in-row v-for="instrument in instrumentList" v-bind:key="instrument.id"></in-row> -->
+        </div>
+      </div>
+      
+      <left-part></left-part>
+    </div>
+    <div id = "mixer"></div>
   </div>
 </template>
 
 <script>
-import Instrument from './components/instrument.vue'
+import LeftPart from './components/left-part.vue'
+import TopBar from './components/top-bar.vue'
+
 export default {
-  name: 'app',
-  data: {
-    color:'',
-    instrumentList: [
-    { id: 0, title: 'Instrument 0' , color:'red' },
-    { id: 1, title: 'Instrument 1' , color: 'blue'},
-    { id: 2, title: 'Instrument 2' , color: 'orange'}]
+  data() {
+    return {
+      message: ' World',
+    };
   },
 
-  methods: {
-    addInstrument: function () {
-      this.instrumentList.push({ id: this.instrumentList.length, title: event.currentTarget.children['0'].innerText , color: Math.floor(Math.random()*16777215).toString(16)});
-  }}
+  components: {
+    LeftPart,
+    TopBar
+  }
 }
 </script>

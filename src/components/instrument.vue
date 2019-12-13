@@ -1,24 +1,24 @@
 <template>
     <div class="instrument disable-select">
-        <span class="instrument-name">{{title}}</span>
-        <i v-on:click="deleteInstrument" class="deleteIns fas fa-minus-square fa-2x"></i>
+        <span v-on:click="deleteInstrument" class="instrument-name">{{title}}</span>
+        <i class="deleteIns fas fa-minus-square fa-2x" ></i>
 
         <div class="euclidean-input">
             <div class="input-num">
-                <span class="input-label"> STEPS </span> <!--</br>-->
+                <span class="input-label"> STEPS </span> </br>
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value numerator">
                 <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
             </div>
             
             <div class="input-num">
-                <span class="input-label"> PULSES </span> <!--</br>-->
+                <span class="input-label"> PULSES </span> </br>
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value denominator">
                 <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
             </div>
             
-            <div class="input-num"><span class="input-label"> OFFSET </span> <!--</br>-->
+            <div class="input-num"><span class="input-label"> OFFSET </span> </br>
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value denominator">
                 <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
@@ -26,7 +26,7 @@
         </div>
             
         <div class="instument-tools">
-                <knob></knob>
+        
         </div>
     </div>
 </template>
@@ -39,8 +39,7 @@ export default {
     methods: {
     
     deleteInstrument: function () {
-        var pos = app.instrumentList.map(function(e) { return e.id; }).indexOf(this.id);
-        app.instrumentList.splice(pos, 1);
+        this.$emit('deleteChildInstrument', this.id);
     },
 
     incrementValue: function(e) {
