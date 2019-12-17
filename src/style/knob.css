@@ -1,0 +1,37 @@
+dial {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #323131;
+    margin: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.26);
+    position: relative;
+    border: 3px solid #2D2D2D;
+    transform: rotate(0deg); 
+}
+
+dial:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -2px;
+    width: 4px;
+    height: 15px;
+    border-radius: 0 0 2px 2px;
+    background: #fe5532;
+}
+
+dial:after {
+    content: " ";
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    margin-left: -2px;
+    width: 4px;
+    height: 3px;
+    background: #672C20;
+}

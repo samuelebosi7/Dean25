@@ -23,19 +23,25 @@
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value denominator">
                 <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
             </div>
+            <knob>
+            </knob>
         </div>
             
         <div class="instument-tools">
-        
         </div>
     </div>
 </template>
 
 
 <script>
+import Knob from "./knob.vue";
+
 export default {
     name: 'instrument',
     props: ['title' , 'id'],
+    components: {
+        Knob
+    },
     methods: {
     
     deleteInstrument: function () {

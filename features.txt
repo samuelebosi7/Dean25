@@ -1,0 +1,17 @@
+Instrument:
+- Pulses, steps, offset.
+- Track number
+- Track Name
+- Sample selection menu
+- Step duration selection (groove mechanics examples takes 16th notes as minimum duration)
+- Panpot (knob)
+- Volume (knob)
+Transport bar:
+- Play, stop, cue
+- Bpm
+- Time/Beats counter
+- Master volume
+- Project name
+- Project management menu (save to, (generate midi file), (generate audio file), export, ecc.)
+- (Metronome)
+- (Undo/Redo)
