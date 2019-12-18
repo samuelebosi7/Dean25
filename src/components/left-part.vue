@@ -43,7 +43,7 @@ export default {
   methods: {
 
     addInstrument: function (event) {
-      this.instrumentList.push({ id: this.getMaxId()+1, title: event.currentTarget.children['0'].innerText , color: Math.floor(Math.random()*16777215).toString(16)});
+      this.instrumentList.push({ id: this.getMaxId()+1, title: event.currentTarget.children['0'].innerText , color: Math.floor(Math.random()*16777215).toString(16), steps: 1});
     },
 
     getMaxId: function() {

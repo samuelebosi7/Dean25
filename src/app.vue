@@ -23,12 +23,15 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     instrumentList: [
-      { id: 0, title: 'Instrument 0' , color:'red' },
-      { id: 1, title: 'Instrument 1' , color: 'blue'},
-      { id: 2, title: 'Instrument 2' , color: 'orange'}]
+      { id: 0, title: 'Instrument 0' , color:'red', steps: 1 },
+      { id: 1, title: 'Instrument 1' , color: 'blue', steps: 1},
+      { id: 2, title: 'Instrument 2' , color: 'orange', steps: 1}]
   },
   mutations: {
-    
+      setStep (state , payload) {
+        state.instrumentList.find(x => x.id === payload.id).steps = payload.newStep;
+    }
+
   }
 })
 

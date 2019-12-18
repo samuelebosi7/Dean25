@@ -6,7 +6,7 @@
             <span></span>
         </div>
         <div class="seq-row inline">
-            <span></span>
+            {{numSteps}}
         </div>
     </div>
 </template>
@@ -19,6 +19,7 @@ name: "channel",
       
     }
   },
+  props: ["numSteps"],
   methods: { 
     
   }   
