@@ -50,14 +50,14 @@
  }
  
  #instument-down-menu a {
-    background:rgba(119, 85, 255, 0.95);
-    color:#FFF;
+    background:rgba(53, 53, 53, 0.95);
+    color:#dadada;
     min-width:190px;
     transition: background 0.5s, color 0.5s, transform 0.5s;
-    margin:0px 0px 0px 0px;
-    padding:20px 40px;
+    margin:0px 4px 0px 4px;
+    padding:7px 10px;
     box-sizing:border-box;
-    border-radius:3px;
+    border-radius:7px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
     position:relative;
  }
@@ -71,14 +71,23 @@
     height:100%;
  }
  
- #instument-down-menu > div > div > div > div{
-    transition: transform 0.6s, opacity 0.6s;
-    opacity:0;
+ .circle-plus-symbol{
+    position: relative;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #dadada;
  }
  
- #instument-down-menu > div > menu-item:hover > div > div,
- #instument-down-menu > div > menu-item.hover > div > menu-item{
-    transform:translateY(0%);
-    opacity: 1;
+ .plus-symbol{
+   visibility: visible;
+   display: inline-block;
+   clear: both;
+   color: #343434;
+   font-size: 40px;
+   white-space: nowrap;
+   text-align: center;
+   position: relative;
+   left:0.7px;
+   top:-10px;
  }
- 

@@ -17,6 +17,9 @@
             <div class='tempoProp text-bpm'>
                 <input type="text" class='bpm' min="40" max="240" value='120'>bpm
             </div>
+            <div class='tempoProp text-steps'>
+                <div class='steps'>0</div> steps
+            </div>
         </div>
         <div class='volume'>
             <input id="duration" type="range" min="0" max="100">
@@ -29,40 +32,6 @@
     name: 'top-bar',
     }
     
-    var rec=false;
-    var alr_play=false;
-    var rec_int;
-
-    function refresh(){
-    refresh_rec();
-    }
-
-    function refresh_rec(){
-    if(rec==true && alr_play==false){
-        alr_play=true;
-    rec_int=setInterval(flashingLed, 1000);
-    }
-    else if(rec==false){
-        clearInterval(rec_int); 
-        document.querySelectorAll(".rec").forEach(removeRecording);
-    }
-    }
-
-    function removeRecording(button) {
-        button.classList.remove("working");
-    }
-
-    function flashingLed(){
-        document.querySelectorAll(".rec").forEach(toggleRecording);
-    }
-
-    function toggleRecording(button) {
-        button.classList.toggle("working");
-    }
-
-    refresh();
-    setInterval(refresh, 100);
-
     $(document).ready(function() {
     //Play-Pause-Record script
     $(".play-pause").click(function() {
