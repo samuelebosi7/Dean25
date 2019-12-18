@@ -1,17 +1,17 @@
 <template>
     <div>
-        <button class="control mute active"></button>
+        <!-- <button class="control mute active"></button>
         <button class="control pad"></button>
         <div class="control meter vertical">
             <span></span>
-        </div>
-        <div class="seq-row inline">
-            <span></span>
-        </div>
+        </div> -->
+        <sequencer v-bind:numStep="this.numSteps">    
+        </sequencer>
     </div>
 </template>
 
 <script>
+import Sequencer from './sequencer.vue';
 export default {
 name: "channel",
  data() {
@@ -19,6 +19,10 @@ name: "channel",
       
     }
   },
+  components: {
+    Sequencer,
+},
+  props: ["numSteps"],
   methods: { 
     
   }   

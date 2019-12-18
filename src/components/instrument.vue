@@ -61,9 +61,11 @@ export default {
         var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
     
         if(!isNaN(currentVal) && currentVal <= 15){
-        parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+            parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+            this.$store.commit('setStep' , {newStep: currentVal+1 , id: this.id});
         }else if(isNaN(currentVal)){
-        parent.find('input[name=' + fieldName + ']').val(0);
+            parent.find('input[name=' + fieldName + ']').val(0);
+            this.$store.commit('setStep' ,{newStep: 0 , id: this.id});
         }
     },
 
@@ -74,9 +76,11 @@ export default {
         var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
     
         if (!isNaN(currentVal) && currentVal > 1) {
-        parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
+            parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
+            this.$store.commit('setStep', {newStep: currentVal-1 , id: this.id});
         } else {
-        parent.find('input[name=' + fieldName + ']').val(1);
+            parent.find('input[name=' + fieldName + ']').val(1);
+            this.$store.commit('setStep' ,{newStep: 1 , id: this.id});
         }
     }
   }
