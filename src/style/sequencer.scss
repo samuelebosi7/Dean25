@@ -6,6 +6,22 @@ $c-hilite: #99ccaa;
 $c-hilite-blink: #336655;
 $c-shadow: rgba(0, 0, 0, 0.4);
 
+.channel {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid #111;
+    padding: 5px 10px;
+    background: linear-gradient(#555, $c-shadow);
+}
+
+#principal-table {
+    position: relative;
+    width: 60%;
+}
+
 .seq-ui {
   .seq-row {
     font-size: 0;
@@ -19,8 +35,8 @@ $c-shadow: rgba(0, 0, 0, 0.4);
     span {
       display: inline-block;
       margin: 1px;
-      width: 15px;
-      height: 30px;
+      width: 25px;
+      height: 40px;
       background: #181818 linear-gradient(#282828, transparent);
       border: 2px solid #222;
       border-radius: 5px;

@@ -1,8 +1,8 @@
 <template>
-<div id="wrap" class="seq-ui">
+  <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
         {{numStep}}
-        <span v-for="index in numStep" v-bind:key="index" class="seq-ui"></span>
+        <span v-for="index in numStep" v-bind:key="index" v-on:click="onoff" class="seq-ui"></span>
       </div>
     </div>
 </template>
@@ -15,6 +15,13 @@ name: "sequencer",
       
     }
   },
+
+  methods: { 
+    onoff: function(event) {
+        event.target.classList.toggle("seq-note");
+        }
+    },
+
   props: ["numStep"],  
 }
 </script>
