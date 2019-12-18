@@ -17,7 +17,7 @@
       </div>
             
       <div id = "instrument-list">
-        <instrument v-on:deleteChildInstrument="onChildDelete" v-for="instrument in instrumentList" v-bind:key="instrument.id" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+        <instrument v-for="instrument in instrumentList" v-bind:key="instrument.id" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
       </div>
   </div>
 </template>
@@ -30,24 +30,20 @@ export default {
   data() {
     return {
       color:'',
-      instrumentList: [
-      { id: 0, title: 'Instrument 0' , color:'red' },
-      { id: 1, title: 'Instrument 1' , color: 'blue'},
-      { id: 2, title: 'Instrument 2' , color: 'orange'}]
     }
   },
   components: {
     Instrument
   },
+  computed: {
+    instrumentList () {
+      return this.$store.state.instrumentList;
+    }
+  },
   methods: {
 
     addInstrument: function (event) {
       this.instrumentList.push({ id: this.getMaxId()+1, title: event.currentTarget.children['0'].innerText , color: Math.floor(Math.random()*16777215).toString(16)});
-    },
-
-    onChildDelete: function(value) {
-      var pos = this.instrumentList.map(function(e) { return e.id; }).indexOf(value);
-      this.instrumentList.splice(pos, 1);
     },
 
     getMaxId: function() {

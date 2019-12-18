@@ -42,10 +42,16 @@ export default {
     components: {
         Knob
     },
+    computed: {
+        instrumentList () {
+        return this.$store.state.instrumentList;
+        }
+    },
     methods: {
     
     deleteInstrument: function () {
-        this.$emit('deleteChildInstrument', this.id);
+      var pos = this.instrumentList.map(function(e) { return e.id; }).indexOf(this.id);
+      this.instrumentList.splice(pos, 1);
     },
 
     incrementValue: function(e) {

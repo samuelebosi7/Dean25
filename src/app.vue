@@ -3,11 +3,9 @@
     <top-bar></top-bar>
     <div id = "central-part">
       <div id = "table-view">
-        <div id= "principal-table">
-          <!-- <in-row v-for="instrument in instrumentList" v-bind:key="instrument.id"></in-row> -->
-        </div>
+        <principal-table></principal-table>
       </div>
-      
+
       <left-part></left-part>
     </div>
     <div id = "mixer"></div>
@@ -15,8 +13,24 @@
 </template>
 
 <script>
+import Vuex from 'vuex'
 import LeftPart from './components/left-part.vue'
 import TopBar from './components/top-bar.vue'
+import PrincipalTable from './components/principal-table.vue'
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    instrumentList: [
+      { id: 0, title: 'Instrument 0' , color:'red' },
+      { id: 1, title: 'Instrument 1' , color: 'blue'},
+      { id: 2, title: 'Instrument 2' , color: 'orange'}]
+  },
+  mutations: {
+    
+  }
+})
 
 export default {
   data() {
@@ -24,10 +38,11 @@ export default {
       message: ' World',
     };
   },
-
+  store,
   components: {
     LeftPart,
-    TopBar
+    TopBar,
+    PrincipalTable
   }
 }
 </script>
