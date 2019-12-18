@@ -27,7 +27,7 @@ input[type="text"]
 
 .text-songTitle{
   position: absolute;
-  margin-left:2%;
+  margin-left:70px;
   margin-top:10px;
   text-decoration: underline;
   text-decoration-color: white;
@@ -40,11 +40,12 @@ input[type="text"]
 #songTitle{
   color:white;
   text-align:right;
+  font-size: 19px;
 }
 
 #rep-menu{
     position: relative;
-    margin-left:200px;
+    margin-left:300px;
     margin-top:13px;
 }
 
@@ -55,14 +56,14 @@ input[type="text"]
   background: transparent;
   box-sizing: border-box;
   width: 0;
-  height: 16px;
+  height: 19px;
 
   border-color: transparent transparent transparent #dadada;
   transition: 100ms all ease;
   cursor: pointer;
 
   border-style: solid;
-  border-width: 7px 0 7px 16px;
+  border-width: 9px 0 9px 19px;
 
   &.paused {
     border-style: double;
@@ -74,33 +75,11 @@ input[type="text"]
   }
 }
 
-.rec{
-  position: absolute;
-  margin-left:28px;
-  border: 0;
-  background: transparent;
-  box-sizing: border-box;
-  width: 0;
-  height: 16px;
-  width: 16px;
-	border-radius: 50%;
-  background-color: #a22525;
-  transition: 100ms all ease;
-  cursor: pointer;
-
-  &.working {
-    background-color: #ff3044;
-  }
-  &:hover {
-    background-color: #ff3044;
-  }
-}
-
 .stop{
     position: absolute;
-    margin-left:56px;
-    height: 16px;
-    width: 16px;
+    margin-left:36px;
+    height: 19px;
+    width: 19px;
     background-color: #dadada;
     transition: 100ms all ease;
     cursor: pointer;
@@ -114,12 +93,13 @@ input[type="text"]
     height: 100%;
     width: 100%;
     text-align:center;
-    margin-top:5px;
+    margin-top:2.5px;
+    font-size: 18px;
 }
 
 #tempoDisplays{
   position: relative;
-  margin-left:300px;
+  margin-left:450px;
   margin-top:13px;
 }
 
@@ -131,9 +111,10 @@ input[type="text"]
 
 .tempoProp{
   background-color:gray;
-  border-radius:3px;
+  border-radius: 2.5px;
+  border: 1px solid black;
   height: 25px;
-  width: 75px;
+  width: 85px;
 }
 
 .tempoProp.text-bpm{
@@ -145,10 +126,16 @@ input[type="text"]
 
 .bpm{
   height: 25px;
-  width: 35px;
+  width: 50px;
   text-align:right;
+  font-size: 17px;
 }
 
+.volume{
+  position: absolute;
+  margin-top: -25px;
+  margin-left: 800px;
+}
 /*$chromeurl: image-url('https://s3.amazonaws.com/codepen/chrome_radial.jpg');
 
 .volume{

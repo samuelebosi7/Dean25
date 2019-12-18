@@ -6,23 +6,21 @@
         <div id='rep-menu'>
             <div class='play-pause'>
             </div>
-            <div class='rec'>
-            </div>
             <div class='stop'>
             </div>
         </div>
             
         <div id='tempoDisplays'>
             <div class='tempoProp text-crono'>
-                <span type="text" class='crono'>00:00:00</span>
+                <div type="text" class='crono'>00:00:00</div>
             </div>
             <div class='tempoProp text-bpm'>
                 <input type="text" class='bpm' min="40" max="240" value='120'>bpm
             </div>
         </div>
-            <div class='volume'>
-                <input id="duration" type="range" min="0" max="100">
-            </div>
+        <div class='volume'>
+            <input id="duration" type="range" min="0" max="100">
+        </div>
     </div>
 </template>
 
@@ -30,7 +28,7 @@
     export default {
     name: 'top-bar',
     }
-
+    
     var rec=false;
     var alr_play=false;
     var rec_int;
@@ -71,11 +69,6 @@
         $(".play-pause").toggleClass("paused");
         return false;
     });
-    $(".rec").click(function() {
-        if(rec==false)
-        rec=true;
-        return false;
-    });
     $(".stop").click(function() {
         if(rec==true){
         rec=false;
@@ -83,7 +76,7 @@
         }
         return false;
     });
-
+    
     /*
     //Main volume slider script
     function createHoverState (myobject){
