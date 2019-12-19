@@ -71,23 +71,3 @@
     height:100%;
  }
  
- .circle-plus-symbol{
-    position: relative;
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    background-color: #dadada;
- }
- 
- .plus-symbol{
-   visibility: visible;
-   display: inline-block;
-   clear: both;
-   color: #343434;
-   font-size: 40px;
-   white-space: nowrap;
-   text-align: center;
-   position: relative;
-   left:0.7px;
-   top:-10px;
- }

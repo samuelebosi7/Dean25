@@ -1,7 +1,12 @@
 <template>
     <div id='transport-bar'>
-        <div class='text-songTitle'>
-            <span contenteditable="true" id='songTitle' >New project</span>
+        <div id='inst-mod'>
+            <div class="add-rem-inst add-inst">
+                <div class="plus-symbol">+</div> 
+            </div>
+            <div class="add-rem-inst rem-inst">
+                <div class="minus-symbol">-</div> 
+            </div>
         </div>
         <div id='rep-menu'>
             <div class='play-pause'>
@@ -10,20 +15,24 @@
             </div>
         </div>
             
+        <div class='volume'>
+            <input id="duration" type="range" min="0" max="100">
+        </div>
+
         <div id='tempoDisplays'>
             <div class='tempoProp text-crono'>
                 <div type="text" class='crono'>00:00:00</div>
             </div>
             <div class='tempoProp text-bpm'>
-                <input type="text" class='bpm' min="40" max="240" value='120'>bpm
+                <div contenteditable="true" class='ed-div bpm'>120</div> bpm
             </div>
             <div class='tempoProp text-steps'>
                 <div class='steps'>0</div> steps
             </div>
         </div>
-        <div class='volume'>
-            <input id="duration" type="range" min="0" max="100">
-        </div>
+        <div id='metronomeDisplay'></div>
+        
+        <div contenteditable="true" id='songTitle' class="ed-div">New project</div>
     </div>
 </template>
 
@@ -45,7 +54,14 @@
         }
         return false;
     });
-    
+    $('.ed-div').keydown(function(e) {
+     if(e.which == 13 ) {
+        if($(this).text()!='')
+            $(this).blur().next().focus();
+        return false;
+      }
+    });
+
     /*
     //Main volume slider script
     function createHoverState (myobject){
