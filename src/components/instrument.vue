@@ -3,7 +3,7 @@
         <div v-on:click="deleteInstrument" class="instrument-name">{{title}}</div>
 
         <div class="euclidean-input">
-            <range-selector v-for="selector in selectorArr" v-bind:key="selector.id" v-bind:name="selector.name">  
+            <range-selector v-for="selector in selectorArr" v-bind:key="selector.seqId" v-bind:name="selector.name">  
             </range-selector>
 
             <!-- <div class="input-num">
@@ -56,16 +56,16 @@ import RangeSelector from "./range-selector.vue";
 
 export default {
     name: 'instrument',
+    props: ['title' , 'id'],
     data() {
         return {
             selectorArr: [
-                {id: 0, name: "STEPS", value: 1},
-                {id: 1, name: "PULSES", value: 1},
-                {id: 2, name: "OFFSET", value: 0},
-            ]
+                {seqId: 0, name: "STEPS", value: 1 },
+                {seqId: 1, name: "PULSES", value: 1 },
+                {seqId: 2, name: "OFFSET", value: 0},
+            ],
         }
     },
-    props: ['title' , 'id'],
     components: {
         Knob,
         RangeSelector
