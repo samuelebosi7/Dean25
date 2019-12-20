@@ -30,7 +30,9 @@
                 <div class='steps'>0</div> steps
             </div>
         </div>
-        <div id='metronomeDisplay'></div>
+        <div id='metronomeDisplay'>
+            Metronome:<div id='metronome' class='active' ></div>
+        </div>
         
         <div contenteditable="true" id='songTitle' class="ed-div">New project</div>
     </div>

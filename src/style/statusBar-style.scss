@@ -170,6 +170,7 @@ div:focus {
 
 .tempoProp{
   background-color:gray;
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
   border-radius: 2.5px;
   border: 1px solid black;
   height: 25px;
@@ -228,6 +229,32 @@ div:focus {
   text-align: right;
   font-size: 18px;
   line-height: 25px;
+}
+
+#metronomeDisplay{
+  position: absolute;
+  margin-top: 2px;
+  margin-left: 786px;
+  font-size:13px;
+  color: #dadada;
+}
+
+#metronome{
+  position: relative;
+  margin-left: 77px;
+  margin-top: -15px;
+  width: 15px;
+  height: 15px;
+  background: #111;
+  border-radius: 50%;
+  border: 1px solid #222;
+  box-shadow: inset 0 0 10px #111, 0 0 2px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease;
+}
+
+#metronome.active{
+  background: radial-gradient(red, #ff1b1b57 81%);
+  box-shadow: inset 0 0 10px #111, 0 0 2px #000;
 }
 /*$chromeurl: image-url('https://s3.amazonaws.com/codepen/chrome_radial.jpg');
 

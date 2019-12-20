@@ -92,6 +92,8 @@ body {
   border-radius: 10px;
   margin-top: 4px;
   margin-left: 4px;
+  font-size: 12px;
+  font-weight: 700;
   background-color: grey;
 }
 
@@ -106,7 +108,8 @@ body {
 
 .input-label {
   position:relative;
-  left:50%;
+  left:85%;
+  top:26px;
   transform: translateX(-60%);
   display: inline-block;
 }
@@ -117,16 +120,71 @@ body {
   padding-left:10px;
   padding-right:10px;
   padding-bottom:5px;
-  font-family: Arial;
+  width: max-content;
+  margin-top: 8px;
+  margin-left: 10px;
   background-color: rgba(199, 199, 199, 0.5);
-  border: 2px solid black;
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
 .euclidean-input {
   position:relative;
-  margin-top:25px;
+  margin-top:0px;
   margin-left: 4px;
 }
+
+/* inizio prova */
+
+.range-selector{
+  position: absolute;
+  margin-top: 14px;
+  display: inline-block;
+  font-size: 15px;
+  text-align: center;
+}
+
+.range-selector.step{
+  margin-left: 10px;
+}
+
+.change-value.decrement-value,
+.change-value.increment-value
+{
+  position: absolute;
+  background-color: aliceblue;
+  width: 25px;
+  height:25px;
+  border: 1px solid black;
+  color:black;
+  font-size: 22px;
+}
+
+.decrement-value{
+  border-radius:5px 0px 0px 5px;
+  line-height: 21px;
+}
+
+.increment-value{
+  margin-left:50px;
+  border-radius:0px 5px 5px 0px;
+  line-height: 25px;
+}
+
+.actual-value{
+  position: absolute;
+  margin-left:25px;
+  background-color: yellow;
+  width:25px;
+  height:25px;
+  border: 1px solid black;
+  color:black;
+  text-align: center;
+  line-height: 24.7px;
+}
+
+
+/* fine prova */
 
 input, textarea {
   border: 1px solid black;
@@ -163,11 +221,19 @@ input::-webkit-inner-spin-button {
 .input-num .button-minus,
 .input-num .button-plus {
   font-weight: bold;
-  border-radius: 7px;
+  /* border-radius: 7px; */
   height: 25px;
   padding: 0;
   width: 25px;
   position: relative;
+}
+
+.button-minus{
+  border-radius: 7px 0px 0px 7px ;
+}
+
+.button-plus{
+  border-radius: 0px 7px 7px 0px;
 }
 
 .input-num .num-value {
@@ -183,8 +249,26 @@ input::-webkit-inner-spin-button {
   background-color: rgba(224, 223, 223, 0.4);
 }
 
+.input-num.steps{
+  position: relative;
+  margin-left: 2px;
+}
+
 .button-plus {
   left: -11px;
+}
+
+.instr-knobs{
+  margin-left: 200px;
+}
+
+.input-knob{
+  position: relative;
+  clear: both;
+  margin-top: 5px;
+  margin-left: 12px;
+  display: inline-block;
+  text-align: center;
 }
 
 input[type="number"] {

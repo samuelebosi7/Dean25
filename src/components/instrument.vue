@@ -1,30 +1,50 @@
 <template>
     <div class="instrument disable-select">
-        <span v-on:click="deleteInstrument" class="instrument-name">{{title}}</span>
-        <i class="deleteIns fas fa-minus-square fa-2x" ></i>
+        <div v-on:click="deleteInstrument" class="instrument-name">{{title}}</div>
 
         <div class="euclidean-input">
-            <div class="input-num">
-                <span class="input-label"> STEPS </span> </br>
+            <div class='range-selector step'>
+                <div class="change-value decrement-value">-</div>
+                <div class="actual-value">1</div>
+                <div class="change-value increment-value">+</div>
+                <div class="input-label"> STEPS </div> 
+            </div>
+            <!-- <div class="input-num">
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value numerator">
                 <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
+                </br><div class="input-label"> STEPS </div> 
+                
             </div>
             
             <div class="input-num">
-                <span class="input-label"> PULSES </span> </br>
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value denominator">
                 <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
+                </br><div class="input-label"> PULSES </div>
             </div>
             
-            <div class="input-num"><span class="input-label"> OFFSET </span> </br>
+            <div class="input-num">
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value denominator">
                 <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
+                </br>
+                <div class="input-label"> OFFSET </div>
+            </div> -->
+            <div class="instr-knobs">
+                <div class='input-knob'>
+                    <knob>
+                    </knob>
+                    </br>
+                    VOL
+                </div>
+                <div class='input-knob'>
+                    <knob>
+                    </knob>
+                    </br>
+                    PAN
+                </div>
             </div>
-            <knob>
-            </knob>
         </div>
             
         <div class="instument-tools">

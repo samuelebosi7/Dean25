@@ -4,13 +4,6 @@
         <nav id="instument-down-menu">
           <div id="menu">
             <div id="menu-add" v-on:click="addInstrument" class="menu-item">
-              <a> 
-                <!--<i class="fas fa-plus-square fa-2x"></i>-->
-                <div class="circle-plus-symbol">
-                  <div class="plus-symbol">+</div> 
-                </div> 
-                &nbsp; Add instrument
-              </a>
             </div>
           </div>
         </nav>
