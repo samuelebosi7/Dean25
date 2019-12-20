@@ -166,10 +166,10 @@ body {
   margin-left: 0px;
 }
 .range-selector.PULSES{
-  margin-left: 85px;
+  margin-left: 94px;
 }
 .range-selector.OFFSET{
-  margin-left: 170px;
+  margin-left: 188px;
 }
 
 .change-value.decrement-value,
@@ -190,7 +190,7 @@ body {
 }
 
 .increment-value{
-  margin-left:50px;
+  margin-left:61px;
   border-radius:0px 5px 5px 0px;
   line-height: 25px;
 }
@@ -199,8 +199,8 @@ body {
   position: absolute;
   margin-left:25px;
   background-color: yellow;
-  width:25px;
-  height:25px;
+  width:37px;
+  height:27px;
   border: 1px solid black;
   color:black;
   text-align: center;
@@ -283,7 +283,7 @@ input::-webkit-inner-spin-button {
 }
 
 .instr-knobs{
-  margin-left: 200px;
+  margin-left: 280px;
 }
 
 .input-knob{
