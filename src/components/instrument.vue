@@ -3,12 +3,8 @@
         <div v-on:click="deleteInstrument" class="instrument-name">{{title}}</div>
 
         <div class="euclidean-input">
-            <div class='range-selector step'>
-                <div class="change-value decrement-value">-</div>
-                <div class="actual-value">1</div>
-                <div class="change-value increment-value">+</div>
-                <div class="input-label"> STEPS </div> 
-            </div>
+            <range-selector v-for="selector in selectorArr" v-bind:key="selector.id" v-bind:name="selector.name">  
+            </range-selector>
             <!-- <div class="input-num">
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value numerator">
@@ -55,18 +51,23 @@
 
 <script>
 import Knob from "./knob.vue";
+import RangeSelector from "./range-selector.vue";
 
 export default {
     name: 'instrument',
     data() {
         return {
-            step: 1,
-            pulses: 1,
+            selectorArr: [
+                {id: 0, name: "STEP", value: 1},
+                {id: 1, name: "PULSES", value: 1},
+                {id: 2, name: "OFFSET", value: 0},
+            ]
         }
     },
     props: ['title' , 'id'],
     components: {
-        Knob
+        Knob,
+        RangeSelector
     },
     computed: {
         instrumentList () {
@@ -79,52 +80,6 @@ export default {
       var pos = this.instrumentList.map(function(e) { return e.id; }).indexOf(this.id);
       this.instrumentList.splice(pos, 1);
       this.$emit('deleteChannel', this.id);
-    },
-
-    incrementValue: function(flag , e) {  //flag = 1 ----> step  | flag = 0 ----> pulses
-        e.preventDefault();
-        var fieldName = $(event.target).data('field');
-        var parent = $(e.target).closest('div');
-        var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
-        var val = currentVal;
-    
-        if(!isNaN(currentVal) && currentVal <= 15){
-            parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
-            val = currentVal+1;
-            //this.$refs.input.dispatchEvent(new Event("change"));
-            //this.$emit('setStep', {step: currentVal + 1 , id: this.id});
-        }else if(isNaN(currentVal)){
-            parent.find('input[name=' + fieldName + ']').val(0);
-           // this.$refs.input.dispatchEvent(new Event("change"));
-           //this.$emit('setStep', {step: 0 , id: this.id});
-        }
-
-        if(flag == 1)
-            this.step = val;
-        else this.pulses = val;
-    },
-
-    decrementValue: function( flag , e) {
-        e.preventDefault();
-        var fieldName = $(e.target).data('field');
-        var parent = $(e.target).closest('div');
-        var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
-        var val = 1;
-    
-        if (!isNaN(currentVal) && currentVal > 1) {
-            parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
-            val = currentVal-1;
-           // this.$refs.input.dispatchEvent(new Event("change"));
-           //this.$emit('setStep', {step: currentVal - 1 , id: this.id});
-        } else {
-            parent.find('input[name=' + fieldName + ']').val(1);
-           // this.$refs.input.dispatchEvent(new Event("change"));
-           //this.$emit('setStep', {step: 1 , id: this.id});
-        }
-
-        if(flag == 1)
-            this.step = val;
-        else this.pulses = val;
     },
 
     /* updateStep: function(e) {
