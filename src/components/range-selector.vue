@@ -10,7 +10,7 @@
 <script>
 export default {
     name: 'range-selector',
-    props: ['name'],
+    props: ['name, id'],
     data() {
         return {
         }
@@ -21,12 +21,16 @@ export default {
             var fieldName = $(e.target).data('field');
             var parent = $(e.target).parent('div');
             var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+            var cval = 0;
         
             if (!isNaN(currentVal) && currentVal <= 31) {
                 parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+                cval = currentVal;
             } else if(isNaN(currentVal)) {
                 parent.find('input[name=' + fieldName + ']').val(0);
+                cval = currentVal;
             }
+        this.$emit('upValue', {select_id: this.id, inputVal: cval});
         },
 
         decrementValue: function(e) {

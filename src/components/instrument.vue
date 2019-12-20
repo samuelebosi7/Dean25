@@ -3,7 +3,7 @@
         <div v-on:click="deleteInstrument" class="instrument-name">{{title}}</div>
 
         <div class="euclidean-input">
-            <range-selector v-for="selector in selectorArr" v-bind:key="selector.seqId" v-bind:name="selector.name">  
+            <range-selector v-on:upValue="update" v-for="selector in selectorArr" v-bind:key="selector.seqId" v-bind:name="selector.name" v-bind:id="selector.seqId">  
             </range-selector>
 
             <!-- <div class="input-num">
@@ -88,8 +88,13 @@ export default {
       this.$emit('setStep', {step: e.target.value , id: this.id});
     }, */
 
+    update: function (value) {
+        this.selectorArr.find(x => x.id === value.select_id).value = value.inputVal;
+        this.updateValue();
+    },
+    
     updateValue: function() {
-        this.$emit('setStep', {id: this.id, step: this.step , pulses: this.pulses});
+        this.$emit('setStep', {id: this.id, step: this.selectorArr[0].value, pulses: this.sectorArr[1].value});
     }
   }
 }
