@@ -26,8 +26,8 @@
             <div class='tempoProp text-bpm'>
                 <div contenteditable="true" class='ed-div bpm'>120</div> bpm
             </div>
-            <div class='tempoProp text-steps'>
-                <div class='steps'>0</div> steps
+            <div class='tempoProp text-tot-steps'>
+                <div class='tot-steps'>0</div> steps
             </div>
         </div>
         <div id='metronomeDisplay'>

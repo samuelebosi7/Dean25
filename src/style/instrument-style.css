@@ -162,9 +162,14 @@ body {
   text-align: center;
 }
 
-.range-selector.step{
-  position: relative;
-  margin-left: 100px;
+.range-selector.STEPS{
+  margin-left: 0px;
+}
+.range-selector.PULSES{
+  margin-left: 85px;
+}
+.range-selector.OFFSET{
+  margin-left: 170px;
 }
 
 .change-value.decrement-value,
