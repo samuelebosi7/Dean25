@@ -1,7 +1,7 @@
 <template>
   <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
-        <span v-for="index in stepNum" v-bind:key="index" class="seq-ui"></span>
+        <span v-for="index in stepNum" v-bind:key="index" v-on:click="onoff" class="seq-ui"></span>
       </div>
     </div>
 </template>
