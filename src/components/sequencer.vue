@@ -1,7 +1,6 @@
 <template>
   <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
-        {{numStep}}
         <span v-for="index in stepNum" v-bind:key="index" class="seq-ui"></span>
       </div>
     </div>
@@ -29,7 +28,5 @@ name: "sequencer",
         event.target.classList.toggle("seq-note");
         }
     },
-
-  props: ["numStep"],  
 }
 </script>
