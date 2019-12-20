@@ -1,7 +1,7 @@
 <template>
     <div class='range-selector' :class="name">
         <div v-on:click="decrementValue" class="change-value decrement-value" data-field="quantity">-</div>
-        <input class="actual-value" name="quantity" value="1">
+        <input min='0' max='16' class="actual-value" name="quantity" value="1">
         <div v-on:click="incrementValue" class="change-value increment-value" data-field="quantity">+</div>
         <div class="input-label"> {{name}} </div> 
     </div>
@@ -22,9 +22,9 @@ export default {
             var parent = $(e.target).parent('div');
             var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
         
-            if (!isNaN(currentVal) && currentVal <= 15) {
+            if (!isNaN(currentVal) && currentVal <= 31) {
                 parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
-            } else {
+            } else if(isNaN(currentVal)) {
                 parent.find('input[name=' + fieldName + ']').val(0);
             }
         },
