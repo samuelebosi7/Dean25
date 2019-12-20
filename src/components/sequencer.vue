@@ -23,5 +23,13 @@ name: "sequencer",
       this.oneNum = this.binSeq.filter(x => x==1).length
     }
   },
+
+  methods: { 
+    onoff: function(event) {
+        event.target.classList.toggle("seq-note");
+        }
+    },
+
+  props: ["numStep"],  
 }
 </script>
