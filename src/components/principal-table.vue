@@ -1,6 +1,6 @@
 <template>
    <div id= "principal-table">
-        <channel v-for="channel in channelList" v-bind:key="channel.id" v-bind:numSteps = "channel.numSteps"></channel>
+        <!-- <channel v-for="channel in channelList" v-bind:key="channel.id" v-bind:numSteps = "channel.numSteps"></channel> -->
     </div>
 </template>
 

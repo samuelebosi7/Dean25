@@ -1,8 +1,8 @@
 <template>
-<div id="wrap" class="seq-ui">
+  <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
         {{numStep}}
-        <span v-for="index in numStep" v-bind:key="index" class="seq-ui"></span>
+        <span v-for="index in stepNum" v-bind:key="index" class="seq-ui"></span>
       </div>
     </div>
 </template>
@@ -12,9 +12,16 @@ export default {
 name: "sequencer",
  data() {
     return {
-      
+      stepNum: this.binSeq.length,
+      oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["numStep"],  
+  props: ["binSeq"],
+  watch: { 
+    binSeq: function() {
+      this.stepNum = this.binSeq.length;
+      this.oneNum = this.binSeq.filter(x => x==1).length
+    }
+  },
 }
 </script>

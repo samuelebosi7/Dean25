@@ -5,7 +5,7 @@
         <div class="control meter vertical">
             <span></span>
         </div> -->
-        <sequencer v-bind:numStep="this.numSteps">    
+        <sequencer v-bind:binSeq="this.singleChannel.seq">  
         </sequencer>
     </div>
 </template>
@@ -16,13 +16,12 @@ export default {
 name: "channel",
  data() {
     return {
-      
     }
   },
   components: {
     Sequencer,
-},
-  props: ["numSteps"],
+  },
+  props: ["singleChannel"],
   methods: { 
     
   }   
