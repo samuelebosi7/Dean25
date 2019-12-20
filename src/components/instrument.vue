@@ -5,6 +5,7 @@
         <div class="euclidean-input">
             <range-selector v-for="selector in selectorArr" v-bind:key="selector.id" v-bind:name="selector.name">  
             </range-selector>
+
             <!-- <div class="input-num">
                 <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
                 <input type="number" step="1" max="" value="1" name="quantity" class="num-value numerator">
@@ -58,7 +59,7 @@ export default {
     data() {
         return {
             selectorArr: [
-                {id: 0, name: "STEP", value: 1},
+                {id: 0, name: "STEPS", value: 1},
                 {id: 1, name: "PULSES", value: 1},
                 {id: 2, name: "OFFSET", value: 0},
             ]

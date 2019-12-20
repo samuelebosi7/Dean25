@@ -163,7 +163,8 @@ body {
 }
 
 .range-selector.step{
-  margin-left: 10px;
+  position: relative;
+  margin-left: 100px;
 }
 
 .change-value.decrement-value,
