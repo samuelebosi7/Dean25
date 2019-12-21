@@ -1,6 +1,59 @@
 <template>
     <div class="instrument disable-select">
-        <div v-on:click="deleteInstrument" class="instrument-name">{{title}}</div>
+        <div  v-on:click="deleteInstrument" class="add-rem-inst rem-inst on-inst">
+            <div class="minus-symbol">-</div> 
+        </div>
+        <div class="instrument-name">
+            {{title}}
+            <!-- <span class='arrow'>&#9660;</span> -->
+            <ul class="sub-menu genre">
+                <li class="genre1">
+                    Rock
+                    <span>&blacktriangleright;</span>
+                    <ul class="sub-menu item genre1">
+                        <li>
+                            Hi-Hat
+                        </li>
+                        <li>
+                            Kick
+                        </li>
+                        <li>
+                            Snare
+                        </li>
+                        <li>
+                            Cymbal
+                        </li>
+                    </ul>
+                </li>
+                <li class="genre2">
+                    African
+                    <span>&blacktriangleright;</span>
+                    <ul class="sub-menu item genre2">
+                        <li>
+                            Xilofone
+                        </li>
+                        <li>
+                            Djembe
+                        </li>
+                    </ul>
+                </li>
+                <li class="genre3">
+                    Latino
+                    <span>&blacktriangleright;</span>
+                    <ul class="sub-menu item genre3">
+                        <li>
+                            Maracas
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+                <!-- <div class="submenu">
+                    <div class="element-in-menu menu-item"><a>Rock</a></div>
+                    <div class="element-in-menu menu-item"><a>African</a></div>
+                    <div class="element-in-menu menu-item"><a>Oriental</a></div>
+                    <div class="element-in-menu menu-item"><a>Latino</a></div>
+                </div> -->
+        </div>
 
         <div class='meter'>
             <span class="anim"></span>
