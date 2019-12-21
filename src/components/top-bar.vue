@@ -33,12 +33,15 @@
         <div id='metronomeDisplay'>
             Metronome:<div id='metronome' class='active' ></div>
         </div>
+        <!-- <img src="./src/svg/metronome.svg" class='metronome-svg'> -->
         
         <div contenteditable="true" id='songTitle' class="ed-div">New project</div>
     </div>
 </template>
 
 <script>
+    import Instrument from "./instrument.vue";
+
     export default {
     name: 'top-bar',
     }

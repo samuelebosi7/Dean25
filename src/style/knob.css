@@ -11,6 +11,7 @@ dial {
     position: relative;
     border: 3px solid #2D2D2D;
     transform: rotate(0deg); 
+    cursor: grab;
 }
 
 dial:before {
@@ -33,5 +34,10 @@ dial:after {
     margin-left: -2px;
     width: 4px;
     height: 3px;
-    background: #672C20;
+    background: rgb(56, 53, 52);
+}
+
+
+dial:active{
+    cursor: grabbing;
 }

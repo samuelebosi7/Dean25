@@ -2,40 +2,21 @@
     <div class="instrument disable-select">
         <div v-on:click="deleteInstrument" class="instrument-name">{{title}}</div>
 
+        <div class='meter'>
+            <span class="anim"></span>
+        </div>
         <div class="euclidean-input">
             <range-selector v-for="selector in selectorArr" v-bind:key="selector.seqId" v-bind:name="selector.name">  
             </range-selector>
 
-            <!-- <div class="input-num">
-                <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
-                <input type="number" step="1" max="" value="1" name="quantity" class="num-value numerator">
-                <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
-                </br><div class="input-label"> STEPS </div> 
-                
-            </div>
-            
-            <div class="input-num">
-                <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
-                <input type="number" step="1" max="" value="1" name="quantity" class="num-value denominator">
-                <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
-                </br><div class="input-label"> PULSES </div>
-            </div>
-            
-            <div class="input-num">
-                <input v-on:click="decrementValue" type="button" value="-" class="button-minus" data-field="quantity">
-                <input type="number" step="1" max="" value="1" name="quantity" class="num-value denominator">
-                <input v-on:click="incrementValue" type="button" value="+" class="button-plus" data-field="quantity">
-                </br>
-                <div class="input-label"> OFFSET </div>
-            </div> -->
             <div class="instr-knobs">
-                <div class='input-knob'>
+                <div class='input-knob vol'>
                     <knob>
                     </knob>
                     </br>
                     VOL
                 </div>
-                <div class='input-knob'>
+                <div class='input-knob pan'>
                     <knob>
                     </knob>
                     </br>
