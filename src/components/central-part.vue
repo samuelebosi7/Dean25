@@ -37,6 +37,11 @@ export default {
       return this.$store.state.instrumentList;
     }
   },
+  watch: {
+    instrumentList: function () {
+      this.updateChannel();
+    },
+  },
   created() {
       this.createChannel();
   },
@@ -46,10 +51,10 @@ export default {
         this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1]}));
     },
 
-    /* updateChannel: function() {
-      
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , numSteps: element.steps , seq: [0 , 0 , 0 , 1 , 1]}));
-    }, */
+    updateChannel: function() {
+        var idArr = this.channelList.map(el => el.id);
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1]}) : {});
+    }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
         var ary = this.euclidean(value.step, value.pulses);  // qui verrà usato l'agoritmo euclideo

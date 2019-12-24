@@ -30,7 +30,7 @@ export default {
             }
             
             parent.find('input[name=' + fieldName + ']').val(cval);
-            this.$emit('upValue', {select_id: this.selId, inputVal: cval});
+            this.updateInstrument(cval);
         },
 
         decrementValue: function(e) {
@@ -48,11 +48,15 @@ export default {
             
 
             parent.find('input[name=' + fieldName + ']').val(cval);
-            this.$emit('upValue', {select_id: this.selId, inputVal: cval});
+            this.updateInstrument(cval);
         },
 
         inputChange: function(e) {
-            
+            this.updateInstrument(e.target.value);
+        },
+
+        updateInstrument: function(val) {
+            this.$emit('upValue', {select_id: this.selId, inputVal: val});
         }
     }
 }
