@@ -1,9 +1,9 @@
 <template>
-    <div class="instrument disable-select">
-        <div  v-on:click="deleteInstrument" class="add-rem-inst rem-inst on-inst">
+    <div :id="'inst'+id" class="instrument disable-select">
+        <div v-on:click="deleteInstrument" class="add-rem-inst rem-inst on-inst">
             <div class="minus-symbol">-</div> 
         </div>
-        <div class="instrument-name">
+        <div v-on:click="selectInstrument" class="instrument-name">
             {{title}}
             <!-- <span class='arrow'>&#9660;</span> -->
             <ul class="sub-menu genre">
@@ -123,7 +123,17 @@ export default {
     
     updateValue: function() {
         this.$emit('setStep', {id: this.id, step: this.selectorArr[0].val, pulses: this.selectorArr[1].val , offset: this.selectorArr[2].val });
+    },
+
+    selectInstrument: function(e) {
+        $(e.target).children("ul").toggleClass("active");
     }
   }
 }
+// $(document).ready(function() {
+//     $(".instrument-name").click(function() {
+//         $(".genre").toggleClass("active-inst");
+//         return false;
+//     });
+// });
 </script>

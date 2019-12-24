@@ -3,8 +3,6 @@
       <div id= "instrument-menu">
         <nav id="instument-down-menu">
           <div id="menu">
-            <div id="menu-add" v-on:click="addInstrument" class="menu-item">
-            </div>
           </div>
         </nav>
       </div>
@@ -43,20 +41,6 @@ export default {
       this.createChannel();
   },
   methods: {
-
-    addInstrument: function (event) {
-      var newId = this.getMaxId()+1;
-      this.instrumentList.push({ id: newId, title: event.currentTarget.children['0'].innerText , color: Math.floor(Math.random()*16777215).toString(16)});
-      this.channelList.push({id: newId , seq: [0]})
-    },
-
-    getMaxId: function() {
-      console.log(this.instrumentList)
-      console.log(this.channelList)
-      if(this.instrumentList.length >0)
-        return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
-      else return -1;
-    },
 
     createChannel: function(){
         this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1]}));

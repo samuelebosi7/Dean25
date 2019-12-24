@@ -135,8 +135,8 @@ body {
   animation: rotate 0.3s infinite;
   transform: rotate(-10deg);
   animation-direction: alternate;
-  /* pointer-events: none;  //for when we are in non-editable mode
-  opacity: 0; */
+  pointer-events: none;
+  opacity: 0; 
 }
 
 @keyframes rotate {
@@ -175,6 +175,7 @@ body {
   background-color: rgba(199, 199, 199, 0.5);
   border: 1px solid black;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .arrow{
@@ -196,6 +197,8 @@ ul.sub-menu.genre{
   padding-left:0px;
   border-radius: 2px;
   opacity:0;
+  cursor: pointer;
+  pointer-events: none;
 }
 
 ul.sub-menu.item{
@@ -224,9 +227,10 @@ ul.sub-menu li:hover{
 .instrument-name:hover{
   background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.2));
 }
-.instrument-name:hover .sub-menu.genre {
+.active {
   z-index:1;
-  opacity:1;
+  opacity:1 !important;
+  pointer-events: all !important;
 }
 
 li.genre1:hover .sub-menu.item.genre1{
