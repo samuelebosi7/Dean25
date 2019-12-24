@@ -110,6 +110,17 @@ body {
   height: 75px;
 }
 
+.onDelete-instrument-line{
+  left: 15px;
+  /* transition: left 2s; */
+  transition: linear 2s;
+  pointer-events: none;
+}
+
+.onDelete-channel{
+  opacity: 0.5;
+}
+
 .instrument-channel {
   position: absolute;
   width: 58%;
@@ -130,23 +141,23 @@ body {
 
 .add-rem-inst.rem-inst.on-inst{
   position: absolute;
-  margin-left: -14px;
-  margin-top: -12px;
-  animation: rotate 0.3s infinite;
+  margin-left: -27px;
+  margin-top: 17px;
+  /* animation: rotate 0.3s infinite;
   transform: rotate(-10deg);
-  animation-direction: alternate;
+  animation-direction: alternate; */
   pointer-events: none;
   opacity: 0; 
 }
 
-@keyframes rotate {
+/* @keyframes rotate {
   0% {
     transform: rotate(10deg);
   }
   100% {
     transform: rotate(-10deg);
   }
-}
+} */
 
 .add-rem-inst.rem-inst.on-inst:hover{
   /* transform: translateY(-5px); */
@@ -464,7 +475,7 @@ input[type="number"] {
   color: #00000000;
   -webkit-transform: scale(1.1); 
       -ms-transform: scale(1.1); 
-          transform: scale(1.1);
+          transform: scale(1.05);
           transform: translateY(15%);
 }
 
