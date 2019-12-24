@@ -59,7 +59,7 @@
             <span class="anim"></span>
         </div>
         <div class="euclidean-input">
-            <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id"></range-selector>
+            <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
 
             <div class="instr-knobs">
                 <div class='input-knob vol'>
@@ -93,9 +93,9 @@ export default {
     data() {
         return {
             selectorArr: [
-                {id: 0, name: "STEPS", val: 1 },
-                {id: 1, name: "PULSES", val: 1 },
-                {id: 2, name: "OFFSET", val: 0},
+                {id: 0, name: "STEPS", val: 1 , initialValue: 1},
+                {id: 1, name: "PULSES", val: 1 , initialValue: 1 },
+                {id: 2, name: "OFFSET", val: 0 , initialValue: 0},
             ],
         }
     },
