@@ -91,7 +91,7 @@ body {
 .instrument {
   padding: 5px;
   border: 1px solid #00000061;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 4px;
   margin-left: 4px;
   font-size: 12px;
@@ -128,6 +128,31 @@ body {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
+.add-rem-inst.rem-inst.on-inst{
+  position: absolute;
+  margin-left: -14px;
+  margin-top: -12px;
+  animation: rotate 0.3s infinite;
+  transform: rotate(-10deg);
+  animation-direction: alternate;
+  /* pointer-events: none;  //for when we are in non-editable mode
+  opacity: 0; */
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+.add-rem-inst.rem-inst.on-inst:hover{
+  /* transform: translateY(-5px); */
+  transform: scale(1.2);
+  transition: all .7s;
+}
 .input-label {
   position:relative;
   left:85%;
@@ -150,6 +175,77 @@ body {
   background-color: rgba(199, 199, 199, 0.5);
   border: 1px solid black;
   border-radius: 4px;
+}
+
+.arrow{
+  width: 20px;
+}
+
+ul{
+  border:1px solid black;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+ul.sub-menu.genre{
+  position:absolute;
+  background-color: rgb(44, 44, 44);
+  list-style-type:none;
+  margin-top:7px;
+  margin-left:-22px;
+  width:125px;
+  padding-left:0px;
+  border-radius: 2px;
+  opacity:0;
+}
+
+ul.sub-menu.item{
+  position:absolute;
+  background-color: rgb(44, 44, 44);
+  list-style-type:none;
+  margin-top:-11px;
+  margin-left:97px;
+  width:125px;
+  padding-left:0px;
+  border-radius: 2px;
+  opacity:0;
+}
+
+ul.sub-menu li{
+  padding-left:25px;
+  padding-top:5px;
+  padding-bottom:5px;
+  border-radius: 2px;
+  color: #bebebe;
+}
+ul.sub-menu li:hover{
+  color: #dadada;
+  background-color: #6d6d6d;
+}
+.instrument-name:hover{
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.2));
+}
+.instrument-name:hover .sub-menu.genre {
+  z-index:1;
+  opacity:1;
+}
+
+li.genre1:hover .sub-menu.item.genre1{
+  z-index:1;
+  opacity:1;
+}
+
+li.genre2:hover .sub-menu.item.genre2{
+  z-index:1;
+  opacity:1;
+}
+
+li.genre3:hover .sub-menu.item.genre3{
+  z-index:1;
+  opacity:1;
+}
+
+.sub-menu.item{
+  margin-left: 20px;
 }
 
 .meter{

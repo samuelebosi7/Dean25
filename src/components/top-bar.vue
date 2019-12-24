@@ -2,7 +2,7 @@
     <div id='transport-bar'>
         <div id='inst-mod'>
             <div class="add-rem-inst add-inst">
-                <div class="plus-symbol">+</div> 
+                <div class="plus-symbol">+</div>
             </div>
             <div class="add-rem-inst rem-inst">
                 <div class="minus-symbol">-</div> 
