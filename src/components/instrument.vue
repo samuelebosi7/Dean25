@@ -69,7 +69,7 @@ export default {
     },
     
     updateValue: function() {
-        this.$emit('setStep', {id: this.id, step: this.selectorArr[0].val, pulses: this.selectorArr[1].val});
+        this.$emit('setStep', {id: this.id, step: this.selectorArr[0].val, pulses: this.selectorArr[1].val , offset: this.selectorArr[2].val });
     }
   }
 }

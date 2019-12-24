@@ -67,8 +67,9 @@ export default {
         this.instrumentList.forEach(element => this.channelList.push({id: element.id , numSteps: element.steps , seq: [0 , 0 , 0 , 1 , 1]}));
     }, */
 
-    updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses
+    updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
         var ary = this.euclidean(value.step, value.pulses);  // qui verrà usato l'agoritmo euclideo
+        ary = this.arrayRotate(ary , -value.offset)
         this.channelList.find(x => x.id === value.id).seq = ary;
         console.log(this.channelList)
     },
@@ -83,6 +84,12 @@ export default {
         }
 
         return rhythm;
+    },
+
+    arrayRotate: function(arr, count) {
+      count -= arr.length * Math.floor(count / arr.length);
+      arr.push.apply(arr, arr.splice(0, count));
+      return arr;
     },
 
     deleteChannel: function(value) {  //value.id --> id 
