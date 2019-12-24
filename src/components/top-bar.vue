@@ -1,10 +1,10 @@
 <template>
     <div id='transport-bar'>
         <div id='inst-mod'>
-            <div class="add-rem-inst add-inst">
+            <div v-on:click="addInstrument"  class="add-rem-inst add-inst">
                 <div class="plus-symbol">+</div>
             </div>
-            <div class="add-rem-inst rem-inst">
+            <div v-on:click="showButtonsDelete" class="add-rem-inst rem-inst">
                 <div class="minus-symbol">-</div> 
             </div>
         </div>
@@ -44,6 +44,34 @@
 
     export default {
     name: 'top-bar',
+    computed: {
+        instrumentList () {
+        return this.$store.state.instrumentList;
+        }
+    },
+    methods: {
+        showButtonsDelete: function() {
+            document.querySelectorAll(".on-inst").forEach(function(el){
+                el.classList.toggle("active");
+            });
+        },
+        
+
+    addInstrument: function (event) {
+      var newId = this.getMaxId()+1;
+      this.instrumentList.push({ id: newId, title: "Instrument " + newId , color: Math.floor(Math.random()*16777215).toString(16)});
+    //   this.channelList.push({id: newId , seq: [0]})
+    },
+
+    getMaxId: function() {
+    //   console.log(this.instrumentList)
+    //   console.log(this.channelList)
+      if(this.instrumentList.length >0)
+        return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
+      else return -1;
+    },
+
+    }
     }
     
     $(document).ready(function() {
