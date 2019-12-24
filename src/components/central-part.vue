@@ -59,7 +59,7 @@ export default {
     },
 
     createChannel: function(){
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [0]}));
+        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1]}));
     },
 
     /* updateChannel: function() {
@@ -71,7 +71,6 @@ export default {
         var ary = this.euclidean(value.step, value.pulses);  // qui verrà usato l'agoritmo euclideo
         ary = this.arrayRotate(ary , -value.offset)
         this.channelList.find(x => x.id === value.id).seq = ary;
-        console.log(this.channelList)
     },
 
     euclidean: function(tatum, tactus){
