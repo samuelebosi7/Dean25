@@ -1,7 +1,7 @@
 <template>
     <div class='range-selector' :class="selName">
         <div v-on:click="decrementValue" class="change-value decrement-value" data-field="quantity">-</div>
-        <input min='0' max='16' class="actual-value" name="quantity" value="1">
+        <input min='0' max='16' class="actual-value" name="quantity" :value="this.inVal">
         <div v-on:click="incrementValue" class="change-value increment-value" data-field="quantity">+</div>
         <div class="input-label"> {{selName}}</div> 
     </div>
@@ -14,7 +14,7 @@ export default {
         return {
         }
     },
-    props: ['selName' , 'selId'],
+    props: ['selName' , 'selId' , 'inVal'],
     methods:{    
         incrementValue: function(e) { 
             e.preventDefault();
