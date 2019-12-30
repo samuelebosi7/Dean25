@@ -51,8 +51,17 @@
     },
     methods: {
         showButtonsDelete: function() {
+            // document.querySelectorAll(".on-inst").forEach(function(el){
+            //     el.classList.toggle("active");
+            // });
             document.querySelectorAll(".on-inst").forEach(function(el){
                 el.classList.toggle("active");
+            });
+            document.querySelectorAll(".instrument-line").forEach(function(el){
+                el.classList.toggle("onDelete-instrument-line");
+            });
+            document.querySelectorAll(".channel").forEach(function(el){
+                el.classList.toggle("onDelete-channel");
             });
         },
         
