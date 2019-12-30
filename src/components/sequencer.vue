@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { EventBus } from '/Users/marcodonzelli/Desktop/ACTaM_clone/ACTaM-project/src/app.vue';
+//import { EventBus } from '/Users/marcodonzelli/Desktop/ACTaM_clone/ACTaM-project/src/app.vue';
 export default {
 name: "sequencer",
  data() {
@@ -26,13 +26,13 @@ name: "sequencer",
     } */
   },
 
-  created() {
+  /*created() {
     EventBus.$on('suxstep', (data) => {
       this.currentStep++; 
       //console.log(this.currentStep);
       }
       );
-  },
+  },*/
 
   methods: { 
     onoff: function(event) {
