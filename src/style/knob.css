@@ -1,7 +1,7 @@
 dial {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     background: #323131;
     margin: auto;
     margin-left: 0px;
@@ -20,8 +20,8 @@ dial:before {
     top: 0;
     left: 50%;
     margin-left: -2px;
-    width: 4px;
-    height: 15px;
+    width: 3px;
+    height: 13px;
     border-radius: 0 0 2px 2px;
     background: #fe5532;
 }

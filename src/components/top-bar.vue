@@ -68,7 +68,7 @@
 
     addInstrument: function (event) {
       var newId = this.getMaxId()+1;
-      this.instrumentList.push({ id: newId, title: "Instrument " + newId , color: Math.floor(Math.random()*16777215).toString(16)});
+      this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-", color: Math.floor(Math.random()*16777215).toString(16)});
     //   this.channelList.push({id: newId , seq: [0]})
     },
 

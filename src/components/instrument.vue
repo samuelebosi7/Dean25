@@ -3,15 +3,16 @@
         <div v-on:click="deleteInstrument" class="add-rem-inst rem-inst on-inst">
             <div class="minus-symbol">-</div> 
         </div>
-        <div v-on:click="selectInstrument" class="instrument-name">
-            {{title}}
+        <div v-on:click="selectInstrument" v-bind:title='title' class="instrument-name">
+            Cy<!-- {{shortTitle}} -->
             <!-- <span class='arrow'>&#9660;</span> -->
+            
             <ul class="sub-menu genre">
                 <li class="genre1">
                     Rock
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre1">
-                        <li>
+                        <li v-on:click="changeSample">
                             Hi-Hat
                         </li>
                         <li>
@@ -55,6 +56,12 @@
                 </div> -->
         </div>
 
+        <div class="mute">
+            <div class="mute-solo-button"></div> M
+        </div>
+        <div class="solo">
+            <div class="mute-solo-button"></div> S
+        </div>
         <div class='meter'>
             <span class="anim"></span>
         </div>
@@ -89,7 +96,7 @@ import RangeSelector from "./range-selector.vue";
 
 export default {
     name: 'instrument',
-    props: ['title' , 'id'],
+    props: ['title', 'shortTitle', 'id'],
     data() {
         return {
             selectorArr: [
@@ -127,6 +134,11 @@ export default {
 
     selectInstrument: function(e) {
         $(e.target).children("ul").toggleClass("active");
+    },
+
+    changeSample: function(){
+        var name = this.instrumentList.map(function(e) { return e.title; })[this.id];
+        // console.log(name);
     }
   }
 }

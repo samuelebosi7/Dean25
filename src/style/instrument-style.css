@@ -177,18 +177,21 @@ body {
 
 .instrument-name {
   position: relative;
-  padding-top:10px;
-  padding-left:10px;
-  padding-right:10px;
-  padding-bottom:5px;
-  width: max-content;
-  height: 18px;
-  margin-top: 8px;
-  margin-left: 10px;
-  background-color: rgba(199, 199, 199, 0.5);
-  border: 1px solid black;
-  border-radius: 4px;
-  cursor: pointer;
+    padding-top: 7px;
+    padding-left: 11px;
+    padding-right: 12px;
+    padding-bottom: 13px;
+    width: max-content;
+    height: 15px;
+    top: 8px;
+    left: 6px;
+    background-color: rgba(199, 199, 199, 0.5);
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
 }
 
 .arrow{
@@ -210,6 +213,8 @@ ul.sub-menu.genre{
   padding-left:0px;
   border-radius: 2px;
   opacity:0;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
   pointer-events: none;
 }
@@ -240,6 +245,7 @@ ul.sub-menu li:hover{
 .instrument-name:hover{
   background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.2));
 }
+
 .active {
   z-index:1;
   opacity:1 !important;
@@ -263,6 +269,29 @@ li.genre3:hover .sub-menu.item.genre3{
 
 .sub-menu.item{
   margin-left: 20px;
+}
+
+.mute{
+  position: absolute;
+  top: 14px;
+  left: 93px;
+}
+
+.solo{
+  position: absolute;
+  top: 36px;
+  left: 93px;
+}
+
+.mute-solo-button{
+  position: absolute;
+  height: 9px;
+  width: 9px;
+  left: -13px;
+  top: 1px;
+  border-radius: 50%;
+  background-color: #404040;
+  border: 1px solid black;
 }
 
 .meter{
@@ -290,9 +319,9 @@ li.genre3:hover .sub-menu.item.genre3{
 }
 
 .euclidean-input {
-  position:relative;
-  margin-top:0px;
-  margin-left: 20px;
+  position: relative;
+    top: 0px;
+    left: 80px;
 }
 
 /* inizio prova */
