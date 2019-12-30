@@ -8,10 +8,12 @@
 </template>
 
 <script>
+import { EventBus } from '/Users/marcodonzelli/Desktop/ACTaM_clone/ACTaM-project/src/app.vue';
 export default {
 name: "sequencer",
  data() {
     return {
+      currentStep: 0
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
@@ -22,6 +24,14 @@ name: "sequencer",
       this.stepNum = this.binSeq.length;
       this.oneNum = this.binSeq.filter(x => x==1).length
     } */
+  },
+
+  created() {
+    EventBus.$on('suxstep', (data) => {
+      this.currentStep++; 
+      //console.log(this.currentStep);
+      }
+      );
   },
 
   methods: { 

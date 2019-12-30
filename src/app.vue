@@ -12,6 +12,7 @@
 import Vuex from 'vuex'
 import CentralPart from './components/central-part.vue'
 import TopBar from './components/top-bar.vue'
+export const EventBus = new Vue();
 
 Vue.use(Vuex);
 
