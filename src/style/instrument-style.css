@@ -90,18 +90,19 @@ body {
 /* instrument css */
 .instrument {
   padding: 5px;
-  border: 1px solid #00000061;
-  border-radius: 5px;
-  margin-top: 4px;
-  margin-left: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  background-color: grey;
-  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
-  position: absolute;
-  width: 40%;
-  top: 0px;
-  display: inline-flex;
+    border: 1px solid #000000a1;
+    border-radius: 3px 0px 0px 3px;
+    margin-top: 4px;
+    margin-left: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: #636363;
+    background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25), 0 6px 20px rgba(0,0,0,0.22);
+    position: absolute;
+    width: 30%;
+    top: 0px;
+    display: inline-flex;
 }
 
 .instrument-line{
@@ -130,10 +131,10 @@ body {
 
 .instrument-channel {
   position: absolute;
-  width: 58%;
+  width: 68.8%;
   height: 100px;
   right: 0px;
-  top:0px;
+  top: 0px;
   margin-top: 4px;
 }
 
@@ -167,12 +168,13 @@ body {
   transition: all .7s;
 }
 .input-label {
-  position:relative;
-  left:85%;
-  top:26px;
-  transform: translateX(-60%);
-  display: inline-block;
-  width:58px;
+  position: relative;
+    left: 43%;
+    top: 34px;
+    font-size: 11px;
+    transform: translateX(-60%);
+    display: inline-block;
+    width: 58px;
 }
 
 .instrument-name {
@@ -182,17 +184,19 @@ body {
     padding-right: 12px;
     padding-bottom: 13px;
     width: max-content;
-    height: 15px;
-    top: 8px;
-    left: 6px;
+    height: 17px;
+    top: 5px;
+    left: 12px;
     background-color: rgba(199, 199, 199, 0.5);
     border: 1px solid black;
     border-radius: 4px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
     text-align: center;
     cursor: pointer;
 }
+
+
 
 .arrow{
   width: 20px;
@@ -283,15 +287,26 @@ li.genre3:hover .sub-menu.item.genre3{
   left: 93px;
 }
 
-.mute-solo-button{
+.mute-button, .solo-button{
   position: absolute;
   height: 9px;
   width: 9px;
   left: -13px;
   top: 1px;
   border-radius: 50%;
-  background-color: #404040;
+  background: radial-gradient(#404040, #252525 81%);
   border: 1px solid black;
+  cursor: pointer;
+}
+
+.active-solo{
+  background: radial-gradient(rgb(239, 255, 0), rgba(89, 90, 0, 0.74) 100%);
+    box-shadow: 0 0 3px #a7c500;
+}
+
+.active-mute{
+  background: radial-gradient(#ff0000, rgba(45, 0, 0, 0.74) 100%);
+    box-shadow: 0 0 3px #ff2f2f;
 }
 
 .meter{
@@ -321,7 +336,7 @@ li.genre3:hover .sub-menu.item.genre3{
 .euclidean-input {
   position: relative;
     top: 0px;
-    left: 80px;
+    left: 88px;
 }
 
 /* inizio prova */
@@ -338,24 +353,25 @@ li.genre3:hover .sub-menu.item.genre3{
   margin-left: 0px;
 }
 .range-selector.PULSES{
-  margin-left: 98px;
+  margin-left: 50px;
 }
 .range-selector.OFFSET{
-  margin-left: 196px;
+  margin-left: 100px;
 }
 
 .change-value.decrement-value,
 .change-value.increment-value
 {
   position: absolute;
-  background-color: #404040;
+    background-color: #404040;
     background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
-  width: 25px;
-  height:25px;
-  border: 1px solid black;
-  color:#dadada;
-  font-size: 22px;
-  cursor: pointer;
+    width: 18px;
+    height: 15px;
+    border: 1px solid black;
+    color: #dadada;
+    font-size: 19px;
+    top: 17px;
+    cursor: pointer;
 }
 
 .change-value.decrement-value:active,
@@ -365,29 +381,31 @@ li.genre3:hover .sub-menu.item.genre3{
 }
 
 .decrement-value{
-  border-radius:5px 0px 0px 5px;
-  line-height: 21px;
+  border-radius: 0px 0px 0px 3px;
+    line-height: 13px;
 }
 
 .increment-value{
-  margin-left:64px;
-  border-radius:0px 5px 5px 0px;
-  line-height: 25px;
+  left: 20px;
+    border-radius: 0px 0px 3px 0px;
+    line-height: 17px;
 }
 
 .actual-value{
   position: absolute;
-  margin-left:25px;
-  background-color: #d8d8d8;
+    background-color: #d8d8d8;
     background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
-  width:40px;
-  height:27px;
-  border: 1px solid black;
-  color:black;
-  text-align: center;
-  line-height: 24.7px;
-  font-weight: 700;
-  font-size: 17px;
+    width: 40px;
+    height: 22px;
+    top: -4px;
+    border: 1px solid black;
+    border-radius: 2px 2px 0px 0px;
+    color: black;
+    line-height: 12.7px;
+    line-height: 24.7px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 17px;
 }
 
 
@@ -466,7 +484,7 @@ input::-webkit-inner-spin-button {
 }
 
 .instr-knobs{
-  margin-left: 290px;
+  margin-left: 145px;
 }
 
 .input-knob{

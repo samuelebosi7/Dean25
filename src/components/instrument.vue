@@ -57,10 +57,10 @@
         </div>
 
         <div class="mute">
-            <div class="mute-solo-button"></div> M
+            <div v-on:click="MuteClicked" class="mute-button"></div> M
         </div>
         <div class="solo">
-            <div class="mute-solo-button"></div> S
+            <div v-on:click="SoloClicked" class="solo-button"></div> S
         </div>
         <div class='meter'>
             <span class="anim"></span>
@@ -73,13 +73,13 @@
                     <knob>
                     </knob>
                     </br>
-                    VOL
+                    Vol
                 </div>
                 <div class='input-knob pan'>
                     <knob>
                     </knob>
                     </br>
-                    PAN
+                    Pan
                 </div>
             </div>
         </div>
@@ -100,9 +100,9 @@ export default {
     data() {
         return {
             selectorArr: [
-                {id: 0, name: "STEPS", val: 1 , initialValue: 1},
-                {id: 1, name: "PULSES", val: 1 , initialValue: 1 },
-                {id: 2, name: "OFFSET", val: 0 , initialValue: 0},
+                {id: 0, name: "Steps", val: 1 , initialValue: 1},
+                {id: 1, name: "Pulses", val: 1 , initialValue: 1 },
+                {id: 2, name: "Offset", val: 0 , initialValue: 0},
             ],
         }
     },
@@ -139,13 +139,19 @@ export default {
     changeSample: function(){
         var name = this.instrumentList.map(function(e) { return e.title; })[this.id];
         // console.log(name);
-    }
+    },
+
+    MuteClicked: function(){
+        document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+    },
+
+    SoloClicked: function(){
+        document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo");
+    },
   }
 }
+
 // $(document).ready(function() {
-//     $(".instrument-name").click(function() {
-//         $(".genre").toggleClass("active-inst");
-//         return false;
-//     });
 // });
+
 </script>

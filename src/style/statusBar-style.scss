@@ -46,7 +46,7 @@ div:focus {
 
 .add-rem-inst{
   margin-top: 8px;
-  background: #181818 linear-gradient(#171616, transparent);
+  background: #292929 linear-gradient(#1b1a1a, transparent);
   border: 1px solid #383838;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
@@ -58,6 +58,12 @@ div:focus {
   margin-left: 16px;
   width: 60px;
   height: 25px;
+}
+
+.add-rem-inst.add-inst:active,
+.add-rem-inst.rem-inst:active
+{
+  background: #1b1b1b  linear-gradient(#0a0a0a, transparent);
 }
 
 .add-rem-inst.rem-inst{
