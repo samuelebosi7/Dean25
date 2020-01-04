@@ -2,25 +2,29 @@
     <div id='transport-bar'>
         <div id='inst-mod'>
             <div v-on:click="addInstrument"  class="add-rem-inst add-inst">
-                <div class="plus-symbol">+</div>
+                <div class="plus-symbol" title="Add Instrument">+</div>
             </div>
-            <div v-on:click="showButtonsDelete" class="add-rem-inst rem-inst">
+            <div v-on:click="showButtonsDelete" class="add-rem-inst rem-inst" title="Remove Instruments">
                 <div class="minus-symbol">-</div> 
             </div>
         </div>
         <div id='rep-menu'>
+<<<<<<< HEAD
             <div class='play-pause' v-on:click = "playButton">
+=======
+            <div class='play-pause' title="Play/Pause">
+>>>>>>> 20232693f3cca6a14b90b2fb299ab96f15cf6cf0
             </div>
-            <div class='stop'>
+            <div class='stop' title="Stop">
             </div>
         </div>
             
-        <div class='volume'>
+        <div class='volume' title="Volume">
             <input id="duration" type="range" min="0" max="100">
         </div>
 
         <div id='tempoDisplays'>
-            <div class='tempoProp text-crono'>
+            <div class='tempoProp text-crono' title="Time">
                 <div type="text" class='crono'>00:00:00</div>
             </div>
             <div class='tempoProp text-bpm'>
@@ -75,8 +79,8 @@
 
     addInstrument: function (event) {
       var newId = this.getMaxId()+1;
-      this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-", color: Math.floor(Math.random()*16777215).toString(16)});
-    //   this.channelList.push({id: newId , seq: [0]})
+      this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
+      
     },
 
     getMaxId: function() {
