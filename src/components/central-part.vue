@@ -7,7 +7,7 @@
         </nav>
       </div>
             
-      <div id = "instrument-list"  > <!--v-on:click="emitPlaynote"-->
+      <div id = "instrument-list" v-on:click="emitPlaynote" >
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
           <instrument v-on:deleteChannel="deleteChannel" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
           <channel class="instrument-channel" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-//import { EventBus } from '/Users/marcodonzelli/Desktop/ACTaM_clone/ACTaM-project/src/app.vue';
+import { EventBus } from '../app.vue';
 import Instrument from './instrument.vue';
 import Channel from './channel.vue';
 
@@ -28,6 +28,7 @@ export default {
       color:'',
       channelList: [], // {id , seq[]}  seq[] è la sequenza binaria
       cLcm: 0,
+      count: 0,
     }
   },
   components: {
@@ -63,7 +64,7 @@ export default {
         ary = this.arrayRotate(ary , -value.offset)
         this.channelList.find(x => x.id === value.id).seq = ary;
         this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
-        //console.log(this.cLcm);
+        console.log(this.cLcm);
     },
 
     euclidean: function(tatum, tactus){
@@ -114,9 +115,15 @@ export default {
                 return input_array[l - 1];
     },
 
-    /*emitPlaynote:  function() {
-        EventBus.$emit('suxstep');
-    }*/
+    emitPlaynote:  function() {
+      this.count++;
+      if (this.count >= this.cLcm)
+        {
+        this.count = 0 
+        };
+      EventBus.$emit('suxstep', this.count);
+      setTimeout(this.emitPlaynote, 1000);
+    }
   }
 }
 </script>
