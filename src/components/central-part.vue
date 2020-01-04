@@ -48,13 +48,13 @@ export default {
   created() {
       this.createChannel();
 
-      EventBus.$on('playSeq', play  => {
+      /*EventBus.$on('playSeq', play  => {
         this.emitPlaynote();
       });
 
       EventBus.$on('stopSeq', play  => {
         this.emitPlaynote();
-      });
+      });*/
   },
   methods: {
 

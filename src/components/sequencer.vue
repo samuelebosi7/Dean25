@@ -14,35 +14,68 @@ name: "sequencer",
  data() {
     return {
       currentStep: 0,
-      isPlaying: false,
+      startTime: 0,
+      noteTime: 0,
+      ti: 0,
+      tic: 1,
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
   props: ["binSeq"],
-  watch: { 
-   /*  binSeq: function() {
-      this.stepNum = this.binSeq.length;
-      this.oneNum = this.binSeq.filter(x => x==1).length
-    } */
-  },
-
-  created() {
-    /*EventBus.$on('suxstep', (data) => {
-      this.currentStep++; 
-      console.log(this.currentStep);*/
-      EventBus.$on('suxstep', count => {
-        this.isPlaying = true;
-        this.currentStep = count % this.binSeq.length;
-      //console.log(this.currentStep + "seq" + this.binSeq.length);
+  watch: {
+    isPlaying: function () {
+      if(!isPlaying) {
+        this.stop();
       }
-      );
-  },
+      else {
+        this.play();
+      }
+    }
+    },
+  
+  computed: {
+    audiox () {
+      return this.$store.state.audiox;
+    },
+
+    isPlaying () {
+      return this.$store.state.isPlaying
+    }
+    },
 
   methods: { 
     onoff: function(event) {
         event.target.classList.toggle("seq-note");
-        }
+    },
+
+    stop: function() {
+      this.isPlaying = false;
+    },
+
+    play: function () {
+      this.audiox.resume();
+      this.isPlaying = !this.isPlaying;
+      //console.log('playing: ' + this.isPlaying);
+      this.startTime = this.audiox.currentTime + 0.005;
+      this.scheduleNote();
+    },
+
+    scheduleNote: function() {
+      if(!this.isPlaying) return false;
+      var ct = this.audiox.currentTime;
+      ct -= this.startTime;
+      while(this.noteTime < ct + 0.200) {
+      //console.log(this.currentStep);
+      this.currentStep++;
+      if (this.currentStep >= this.binSeq.length) 
+      {
+        this.currentStep = 0;
+      }
+      this.noteTime += this.tic;
+    }
+    this.ti = setTimeout(this.scheduleNote, 0);
+    }
     },
 }
 </script>

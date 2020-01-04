@@ -44,15 +44,16 @@
     import { EventBus } from '../app.vue';
     export default {
     name: 'top-bar',
-    data() {
-        return {
-            isPlaying: false,
-        }
-    },
+
     computed: {
         instrumentList () {
         return this.$store.state.instrumentList;
-        }
+        },
+        
+        isPlaying () {
+        return this.$store.state.isPlaying;
+        },
+        
     },
     methods: {
         showButtonsDelete: function() {
@@ -83,10 +84,11 @@
       else return -1;
     },
     playButton:  function() {
-        this.isPlaying = !this.isPlaying;
-        if(this.isPlaying)
-            EventBus.$emit('playSeq' , 1);
-        else EventBus.$emit('stopSeq' , 1);
+        this.$store.commit('App/setIsPlaying', !this.isPlaying);
+    },
+
+    stopButton: function() {
+        EventBus.$emit('stopSeq' , 1);
     }
 
     }
@@ -98,13 +100,13 @@
         $(".play-pause").toggleClass("paused");
         return false;
     });
-    $(".stop").click(function() {
+    /*$(".stop").click(function() {
         if(rec==true){
         rec=false;
         alr_play=false;
         }
         return false;
-    });
+    });*/
     $('.ed-div').keydown(function(e) {
      if(e.which == 13 ) {
         if($(this).text()!='')
