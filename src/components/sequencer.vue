@@ -25,7 +25,7 @@ name: "sequencer",
   props: ["binSeq"],
   watch: {
     isPlaying: function () {
-      if(!isPlaying) {
+      if(!this.isPlaying) {
         this.stop();
       }
       else {
@@ -49,13 +49,13 @@ name: "sequencer",
         event.target.classList.toggle("seq-note");
     },
 
-    stop: function() {
+    /*stop: function() {
       this.isPlaying = false;
-    },
+    },*/
 
     play: function () {
       this.audiox.resume();
-      this.isPlaying = !this.isPlaying;
+      //this.isPlaying = !this.isPlaying;
       //console.log('playing: ' + this.isPlaying);
       this.startTime = this.audiox.currentTime + 0.005;
       this.scheduleNote();

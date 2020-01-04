@@ -41,7 +41,8 @@
 
 <script>
     import Instrument from "./instrument.vue";
-    import { EventBus } from '../app.vue';
+    import store from '../app.vue';
+    //import { EventBus } from '../app.vue';
     export default {
     name: 'top-bar',
 
@@ -84,7 +85,7 @@
       else return -1;
     },
     playButton:  function() {
-        this.$store.commit('App/setIsPlaying', !this.isPlaying);
+        this.$store.commit('setIsPlaying', !this.isPlaying);
     },
 
     stopButton: function() {
