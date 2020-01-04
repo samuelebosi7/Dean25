@@ -68,6 +68,16 @@
         <div class="euclidean-input">
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
 
+            <div v-on:click="selectNoteDuration" class="noteDuration">
+                /16
+                <span>&blacktriangledown;</span>
+                <ul class="sub-menu genre dur">
+                    <li >/4</li>
+                    <li >/8</li>
+                    <li >/16</li>
+                    <li>/32</li>
+                </ul>
+            </div>
             <div class="instr-knobs">
                 <div class='input-knob vol'>
                     <knob>
@@ -148,6 +158,10 @@ export default {
     SoloClicked: function(){
         document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo");
     },
+
+    selectNoteDuration: function(e){
+        $(e.target).children("ul").toggleClass("active");
+    }
   }
 }
 

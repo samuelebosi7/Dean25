@@ -24,8 +24,8 @@ dial:before {
     width: 3px;
     height: 13px;
     border-radius: 0 0 2px 2px;
-    border: 1px solid #005d15;
-    background: #18da3f;
+    border: 1px solid #4c4c4c;
+    background: #d8d8d8;
 }
 
 dial:after {
@@ -36,7 +36,7 @@ dial:after {
     margin-left: -2px;
     width: 4px;
     height: 3px;
-    background: rgb(33, 70, 29);
+    background: rgb(64, 64, 64);
 }
 
 
