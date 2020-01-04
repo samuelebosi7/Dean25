@@ -9,7 +9,7 @@
             </div>
         </div>
         <div id='rep-menu'>
-            <div class='play-pause' title="Play/Pause">
+            <div class='play-pause' title="Play/Pause" v-on:click="playButton">
             </div>
             <div class='stop' title="Stop">
             </div>
@@ -41,9 +41,14 @@
 
 <script>
     import Instrument from "./instrument.vue";
-
+    import { EventBus } from '../app.vue';
     export default {
     name: 'top-bar',
+    data() {
+        return {
+            isPlaying: false,
+        }
+    },
     computed: {
         instrumentList () {
         return this.$store.state.instrumentList;
@@ -65,13 +70,11 @@
             });
         },
         
-
     addInstrument: function (event) {
       var newId = this.getMaxId()+1;
       this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
       
     },
-
     getMaxId: function() {
     //   console.log(this.instrumentList)
     //   console.log(this.channelList)
@@ -79,6 +82,12 @@
         return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
       else return -1;
     },
+    playButton:  function() {
+        this.isPlaying = !this.isPlaying;
+        if(this.isPlaying)
+            EventBus.$emit('playSeq' , 1);
+        else EventBus.$emit('stopSeq' , 1);
+    }
 
     }
     }
@@ -103,7 +112,6 @@
         return false;
       }
     });
-
     /*
     //Main volume slider script
     function createHoverState (myobject){

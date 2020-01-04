@@ -1,7 +1,7 @@
 <template>
   <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
-        <span v-for="step in binSeq" v-on:click="onoff" v-bind:class="{'seq-note': step == 1}" class="seq-ui"></span>
+        <span v-for="(step,index) in binSeq" v-on:click="onoff" v-bind:class="{'seq-note': step == 1, 'seq-playhead': index == currentStep && isPlaying }" class="seq-ui"></span>
         <!-- in realta non è un errore -->
       </div>
     </div>
@@ -13,7 +13,8 @@ export default {
 name: "sequencer",
  data() {
     return {
-      currentStep: 0
+      currentStep: 0,
+      isPlaying: false,
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
@@ -31,7 +32,9 @@ name: "sequencer",
       this.currentStep++; 
       console.log(this.currentStep);*/
       EventBus.$on('suxstep', count => {
-      console.log(`${count}`)
+        this.isPlaying = true;
+        this.currentStep = count % this.binSeq.length;
+      //console.log(this.currentStep + "seq" + this.binSeq.length);
       }
       );
   },
