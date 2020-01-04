@@ -41,8 +41,10 @@
 
 <script>
     import Instrument from "./instrument.vue";
-    import { EventBus } from '../app.vue';
+    import store from '../app.vue';
+    //import { EventBus } from '../app.vue';
     export default {
+<<<<<<< HEAD
         name: 'top-bar',
         data() {
             return {
@@ -75,6 +77,55 @@
             this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
             
             },
+=======
+    name: 'top-bar',
+
+    computed: {
+        instrumentList () {
+        return this.$store.state.instrumentList;
+        },
+        
+        isPlaying () {
+        return this.$store.state.isPlaying;
+        },
+        
+    },
+    methods: {
+        showButtonsDelete: function() {
+            // document.querySelectorAll(".on-inst").forEach(function(el){
+            //     el.classList.toggle("active");
+            // });
+            document.querySelectorAll(".on-inst").forEach(function(el){
+                el.classList.toggle("active");
+            });
+            document.querySelectorAll(".instrument-line").forEach(function(el){
+                el.classList.toggle("onDelete-instrument-line");
+            });
+            document.querySelectorAll(".channel").forEach(function(el){
+                el.classList.toggle("onDelete-channel");
+            });
+        },
+        
+    addInstrument: function (event) {
+      var newId = this.getMaxId()+1;
+      this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
+      
+    },
+    getMaxId: function() {
+    //   console.log(this.instrumentList)
+    //   console.log(this.channelList)
+      if(this.instrumentList.length >0)
+        return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
+      else return -1;
+    },
+    playButton:  function() {
+        this.$store.commit('setIsPlaying', !this.isPlaying);
+    },
+
+    stopButton: function() {
+        EventBus.$emit('stopSeq' , 1);
+    }
+>>>>>>> 3f77711537373b00954f2bb46335dd9dc6e53f62
 
             getMaxId: function() {
             //   console.log(this.instrumentList)
@@ -110,14 +161,19 @@
         $(".play-pause").toggleClass("paused");
         return false;
     });
-    $(".stop").click(function() {
+    /*$(".stop").click(function() {
         if(rec==true){
         rec=false;
         alr_play=false;
         }
         return false;
+<<<<<<< HEAD
     });
     $('.enter-to-unselect').keydown(function(e) {
+=======
+    });*/
+    $('.ed-div').keydown(function(e) {
+>>>>>>> 3f77711537373b00954f2bb46335dd9dc6e53f62
      if(e.which == 13 ) {
         if($(this).text()!='')
             $(this).blur().next().focus();
