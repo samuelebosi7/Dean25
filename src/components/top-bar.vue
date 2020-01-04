@@ -9,11 +9,7 @@
             </div>
         </div>
         <div id='rep-menu'>
-<<<<<<< HEAD
-            <div class='play-pause' v-on:click = "playButton">
-=======
-            <div class='play-pause' title="Play/Pause">
->>>>>>> 20232693f3cca6a14b90b2fb299ab96f15cf6cf0
+            <div class='play-pause' title="Play/Pause" v-on:click="playButton">
             </div>
             <div class='stop' title="Stop">
             </div>
@@ -46,7 +42,6 @@
 <script>
     import Instrument from "./instrument.vue";
     import { EventBus } from '../app.vue';
-
     export default {
     name: 'top-bar',
     data() {
@@ -54,7 +49,6 @@
             isPlaying: false,
         }
     },
-
     computed: {
         instrumentList () {
         return this.$store.state.instrumentList;
@@ -76,13 +70,11 @@
             });
         },
         
-
     addInstrument: function (event) {
       var newId = this.getMaxId()+1;
       this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
       
     },
-
     getMaxId: function() {
     //   console.log(this.instrumentList)
     //   console.log(this.channelList)
@@ -90,10 +82,9 @@
         return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
       else return -1;
     },
-
     playButton:  function() {
-        this.isPlaying = !isPlaying;
-        if(isPlaying)
+        this.isPlaying = !this.isPlaying;
+        if(this.isPlaying)
             EventBus.$emit('playSeq' , 1);
         else EventBus.$emit('stopSeq' , 1);
     }
@@ -121,7 +112,6 @@
         return false;
       }
     });
-
     /*
     //Main volume slider script
     function createHoverState (myobject){
