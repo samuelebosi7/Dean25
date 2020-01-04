@@ -24,7 +24,7 @@
                 <div type="text" class='crono'>00:00:00</div>
             </div>
             <div class='tempoProp text-bpm'>
-                <div contenteditable="true" class='ed-div bpm'>120</div> bpm
+                <div @keypress="isNumber($event)" contenteditable="true" class='enter-to-unselect bpm'>120</div> bpm
             </div>
             <div class='tempoProp text-tot-steps'>
                 <div class='tot-steps'>0</div> steps
@@ -43,53 +43,65 @@
     import Instrument from "./instrument.vue";
     import { EventBus } from '../app.vue';
     export default {
-    name: 'top-bar',
-    data() {
-        return {
-            isPlaying: false,
-        }
-    },
-    computed: {
-        instrumentList () {
-        return this.$store.state.instrumentList;
-        }
-    },
-    methods: {
-        showButtonsDelete: function() {
-            // document.querySelectorAll(".on-inst").forEach(function(el){
-            //     el.classList.toggle("active");
-            // });
-            document.querySelectorAll(".on-inst").forEach(function(el){
-                el.classList.toggle("active");
-            });
-            document.querySelectorAll(".instrument-line").forEach(function(el){
-                el.classList.toggle("onDelete-instrument-line");
-            });
-            document.querySelectorAll(".channel").forEach(function(el){
-                el.classList.toggle("onDelete-channel");
-            });
+        name: 'top-bar',
+        data() {
+            return {
+                isPlaying: false,
+            }
         },
-        
-    addInstrument: function (event) {
-      var newId = this.getMaxId()+1;
-      this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
-      
-    },
-    getMaxId: function() {
-    //   console.log(this.instrumentList)
-    //   console.log(this.channelList)
-      if(this.instrumentList.length >0)
-        return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
-      else return -1;
-    },
-    playButton:  function() {
-        this.isPlaying = !this.isPlaying;
-        if(this.isPlaying)
-            EventBus.$emit('playSeq' , 1);
-        else EventBus.$emit('stopSeq' , 1);
-    }
+        computed: {
+            instrumentList () {
+            return this.$store.state.instrumentList;
+            }
+        },
+        methods: {
+            showButtonsDelete: function() {
+                // document.querySelectorAll(".on-inst").forEach(function(el){
+                //     el.classList.toggle("active");
+                // });
+                document.querySelectorAll(".on-inst").forEach(function(el){
+                    el.classList.toggle("active");
+                });
+                document.querySelectorAll(".instrument-line").forEach(function(el){
+                    el.classList.toggle("onDelete-instrument-line");
+                });
+                document.querySelectorAll(".channel").forEach(function(el){
+                    el.classList.toggle("onDelete-channel");
+                });
+            },
+            
+            addInstrument: function (event) {
+            var newId = this.getMaxId()+1;
+            this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
+            
+            },
 
-    }
+            getMaxId: function() {
+            //   console.log(this.instrumentList)
+            //   console.log(this.channelList)
+            if(this.instrumentList.length >0)
+                return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
+            else return -1;
+            },
+
+            playButton:  function() {
+                this.isPlaying = !this.isPlaying;
+                if(this.isPlaying)
+                    EventBus.$emit('playSeq' , 1);
+                else EventBus.$emit('stopSeq' , 1);
+            },
+
+            isNumber: function(evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                    evt.preventDefault();;
+                } else {
+                    return true;
+                }
+            }
+
+        }
     }
     
     $(document).ready(function() {
@@ -105,7 +117,7 @@
         }
         return false;
     });
-    $('.ed-div').keydown(function(e) {
+    $('.enter-to-unselect').keydown(function(e) {
      if(e.which == 13 ) {
         if($(this).text()!='')
             $(this).blur().next().focus();

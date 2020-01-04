@@ -8,7 +8,8 @@ $c-shadow: rgba(0, 0, 0, 0.4);
 
 .channel {
     position: relative;
-    width: 100%;
+    min-width: 100%;
+    max-width: max-content;
     height: 49px;
     display: inline-block;
     white-space: nowrap;
@@ -55,11 +56,13 @@ $c-shadow: rgba(0, 0, 0, 0.4);
         }
       }
       &.seq-playhead {
-        border-color: $c-blue;
-        box-shadow: 0 0 30px $c-blue;
+        // border-color: $c-blue;
+        // box-shadow: 0 0 30px $c-blue;
+        border-color: #dadada;
+        box-shadow: 0 0 7px #b9b9b9;
       }
       &:hover {
-        border-color: $c-orange;
+        border-color: #ffd400;
       }
     }
   }

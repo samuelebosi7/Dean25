@@ -68,7 +68,7 @@
         <div class="euclidean-input">
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
 
-            <div v-on:click="selectNoteDuration" class="noteDuration">
+            <div v-on:click="selectNoteDuration" class="noteDuration" title="Note Duration">
                 /16
                 <span>&blacktriangledown;</span>
                 <ul class="sub-menu genre dur">

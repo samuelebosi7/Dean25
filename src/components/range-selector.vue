@@ -1,7 +1,7 @@
 <template>
     <div class='range-selector' :class="selName">
         <div v-on:click="decrementValue" class="change-value decrement-value" data-field="quantity">-</div>
-        <input v-on:change="inputChange" min='0' max='16' class="actual-value" name="quantity" :value="this.inVal">
+        <input v-on:change="inputChange" min='0' max='16' class="enter-to-unselect actual-value" @keypress="isNumber($event)" name="quantity" :value="this.inVal" >
         <div v-on:click="incrementValue" class="change-value increment-value" data-field="quantity">+</div>
         <div class="input-label"> {{selName}}</div> 
     </div>
@@ -57,7 +57,26 @@ export default {
 
         updateInstrument: function(val) {
             this.$emit('upValue', {select_id: this.selId, inputVal: val});
+        },
+
+        isNumber: function(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                evt.preventDefault();;
+            } else {
+                return true;
         }
     }
+    }
 }
+$(document).ready(function() {
+    $('.enter-to-unselect').keydown(function(e) {
+     if(e.which == 13 ) {
+        if($(this).text()!='')
+            $(this).blur().next().focus();
+        return false;
+      }
+    });
+});
 </script>
