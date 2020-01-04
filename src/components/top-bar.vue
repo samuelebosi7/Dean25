@@ -9,7 +9,7 @@
             </div>
         </div>
         <div id='rep-menu'>
-            <div class='play-pause'>
+            <div class='play-pause' v-on:click = "playButton">
             </div>
             <div class='stop'>
             </div>
@@ -41,9 +41,16 @@
 
 <script>
     import Instrument from "./instrument.vue";
+    import { EventBus } from '../app.vue';
 
     export default {
     name: 'top-bar',
+    data() {
+        return {
+            isPlaying: false,
+        }
+    },
+
     computed: {
         instrumentList () {
         return this.$store.state.instrumentList;
@@ -79,6 +86,13 @@
         return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
       else return -1;
     },
+
+    playButton:  function() {
+        this.isPlaying = !isPlaying;
+        if(isPlaying)
+            EventBus.$emit('playSeq' , 1);
+        else EventBus.$emit('stopSeq' , 1);
+    }
 
     }
     }

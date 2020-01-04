@@ -7,7 +7,7 @@
         </nav>
       </div>
             
-      <div id = "instrument-list" v-on:click="emitPlaynote" >
+      <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
           <instrument v-on:deleteChannel="deleteChannel" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
           <channel class="instrument-channel" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
@@ -27,8 +27,8 @@ export default {
     return {
       color:'',
       channelList: [], // {id , seq[]}  seq[] è la sequenza binaria
-      cLcm: 0,
-      count: 0,
+      cLcm: 0,    //minimo comune multiplo
+      count: 0,  //conteggio globale mcm
     }
   },
   components: {
@@ -47,6 +47,14 @@ export default {
   },
   created() {
       this.createChannel();
+
+      EventBus.$on('playSeq', play  => {
+        this.emitPlaynote();
+      });
+
+      EventBus.$on('stopSeq', play  => {
+        this.emitPlaynote();
+      });
   },
   methods: {
 
@@ -117,10 +125,9 @@ export default {
 
     emitPlaynote:  function() {
       this.count++;
-      if (this.count >= this.cLcm)
-        {
+      if (this.count >= this.cLcm){
         this.count = 0 
-        };
+      };
       EventBus.$emit('suxstep', this.count);
       setTimeout(this.emitPlaynote, 1000);
     }
