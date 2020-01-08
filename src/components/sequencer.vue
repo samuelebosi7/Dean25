@@ -1,7 +1,7 @@
 <template>
   <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
-        <span v-for="(step,index) in binSeq" v-on:click="onoff" v-bind:class="{'seq-note': step == 1, 'seq-playhead': index == currentStep && isPlaying }" class="seq-ui"></span>
+        <span v-for="(step,index) in binSeq" v-on:click="onoff" v-bind:class="{'seq-note': step == 1, 'seq-playhead': index == currentStep && !isStop }" class="seq-ui"></span>
         <!-- in realta non è un errore -->
       </div>
     </div>
@@ -9,6 +9,7 @@
 
 <script>
 import { EventBus } from '../app.vue';
+
 export default {
 name: "sequencer",
  data() {
@@ -17,64 +18,69 @@ name: "sequencer",
       startTime: 0,
       noteTime: 0,
       ti: 0,
-      tic: 1,
+      tic: 0.5,
+      isPlaying: false,
+      isStop: true,
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
   props: ["binSeq"],
-  watch: {
-    isPlaying: function () {
-      if(!this.isPlaying) {
-        this.stop();
-      }
-      else {
-        this.play();
-      }
-    }
-    },
-  
   computed: {
     audiox () {
       return this.$store.state.audiox;
     },
+  },
+  created() {
 
-    isPlaying () {
-      return this.$store.state.isPlaying
-    }
-    },
+    EventBus.$on('playSeq', payload  => {
+      this.setPlayStop(payload.isPlaying , payload.isStop);
+      this.play();
+    });
 
+    EventBus.$on('stopSeq', payload  => {
+      this.setPlayStop(payload.isPlaying , payload.isStop);
+    });
+
+  },
   methods: { 
     onoff: function(event) {
         event.target.classList.toggle("seq-note");
     },
 
-    /*stop: function() {
-      this.isPlaying = false;
-    },*/
+    setPlayStop: function(isPlaying , isStop) {
+      this.isPlaying = isPlaying;
+      this.isStop = isStop;
+    },
 
     play: function () {
-      this.audiox.resume();
-      //this.isPlaying = !this.isPlaying;
-      //console.log('playing: ' + this.isPlaying);
+      if(this.isStop || !this.isPlaying)
+        this.audiox.suspend();
+      else this.audiox.resume();
+      
       this.startTime = this.audiox.currentTime + 0.005;
+      this.noteTime = 0;
       this.scheduleNote();
     },
 
     scheduleNote: function() {
-      if(!this.isPlaying) return false;
+      if(this.isStop){
+        this.currentStep = 0; //se ho premuto stop torno al primo step
+        return false;
+      } else if(!this.isPlaying) return false;  //se ho premuto pausa tengo slavato lo step corrente
+      
       var ct = this.audiox.currentTime;
       ct -= this.startTime;
+      
       while(this.noteTime < ct + 0.200) {
-      //console.log(this.currentStep);
-      this.currentStep++;
-      if (this.currentStep >= this.binSeq.length) 
-      {
-        this.currentStep = 0;
+        this.currentStep++;
+        if (this.currentStep >= this.binSeq.length) {
+          this.currentStep = 0;
+        }
+        this.noteTime += this.tic;
       }
-      this.noteTime += this.tic;
-    }
-    this.ti = setTimeout(this.scheduleNote, 0);
+    
+      this.ti = setTimeout(this.scheduleNote, 0);
     }
     },
 }

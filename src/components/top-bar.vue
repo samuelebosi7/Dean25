@@ -11,7 +11,7 @@
         <div id='rep-menu'>
             <div class='play-pause' title="Play/Pause" v-on:click="playButton">
             </div>
-            <div class='stop' title="Stop">
+            <div class='stop' title="Stop" v-on:click="stopButton">
             </div>
         </div>
             
@@ -42,53 +42,19 @@
 <script>
     import Instrument from "./instrument.vue";
     import store from '../app.vue';
-    //import { EventBus } from '../app.vue';
-    export default {
-<<<<<<< HEAD
-        name: 'top-bar',
-        data() {
-            return {
-                isPlaying: false,
-            }
-        },
-        computed: {
-            instrumentList () {
-            return this.$store.state.instrumentList;
-            }
-        },
-        methods: {
-            showButtonsDelete: function() {
-                // document.querySelectorAll(".on-inst").forEach(function(el){
-                //     el.classList.toggle("active");
-                // });
-                document.querySelectorAll(".on-inst").forEach(function(el){
-                    el.classList.toggle("active");
-                });
-                document.querySelectorAll(".instrument-line").forEach(function(el){
-                    el.classList.toggle("onDelete-instrument-line");
-                });
-                document.querySelectorAll(".channel").forEach(function(el){
-                    el.classList.toggle("onDelete-channel");
-                });
-            },
-            
-            addInstrument: function (event) {
-            var newId = this.getMaxId()+1;
-            this.instrumentList.push({ id: newId, title: "Instrument " + newId , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});
-            
-            },
-=======
-    name: 'top-bar',
+    import { EventBus } from '../app.vue';
 
+    export default {
+    name: 'top-bar',
+    data() {
+        return {
+            isPlaying: false,
+        }
+    },
     computed: {
         instrumentList () {
         return this.$store.state.instrumentList;
         },
-        
-        isPlaying () {
-        return this.$store.state.isPlaying;
-        },
-        
     },
     methods: {
         showButtonsDelete: function() {
@@ -118,41 +84,37 @@
         return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
       else return -1;
     },
+
     playButton:  function() {
-        this.$store.commit('setIsPlaying', !this.isPlaying);
+        this.isPlaying = !this.isPlaying;
+        EventBus.$emit('playSeq' , {isPlaying: this.isPlaying , isStop: false});
     },
 
     stopButton: function() {
-        EventBus.$emit('stopSeq' , 1);
-    }
->>>>>>> 3f77711537373b00954f2bb46335dd9dc6e53f62
+        this.isPlaying = false;
+        $(".play-pause").removeClass("paused");
+        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
+    },
 
-            getMaxId: function() {
-            //   console.log(this.instrumentList)
-            //   console.log(this.channelList)
-            if(this.instrumentList.length >0)
-                return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
-            else return -1;
-            },
+    getMaxId: function() {
+        //  console.log(this.instrumentList)
+        //   console.log(this.channelList)
+        if(this.instrumentList.length >0)
+            return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
+        else return -1;
+    },
 
-            playButton:  function() {
-                this.isPlaying = !this.isPlaying;
-                if(this.isPlaying)
-                    EventBus.$emit('playSeq' , 1);
-                else EventBus.$emit('stopSeq' , 1);
-            },
-
-            isNumber: function(evt) {
-                evt = (evt) ? evt : window.event;
-                var charCode = (evt.which) ? evt.which : evt.keyCode;
-                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-                    evt.preventDefault();;
-                } else {
-                    return true;
-                }
-            }
-
+    isNumber: function(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+            evt.preventDefault();;
+        } else {
+            return true;
         }
+    }
+
+    }
     }
     
     $(document).ready(function() {
@@ -167,13 +129,8 @@
         alr_play=false;
         }
         return false;
-<<<<<<< HEAD
-    });
-    $('.enter-to-unselect').keydown(function(e) {
-=======
     });*/
     $('.ed-div').keydown(function(e) {
->>>>>>> 3f77711537373b00954f2bb46335dd9dc6e53f62
      if(e.which == 13 ) {
         if($(this).text()!='')
             $(this).blur().next().focus();
