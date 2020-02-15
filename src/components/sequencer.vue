@@ -73,6 +73,8 @@ name: "sequencer",
       ct -= this.startTime;
       
       while(this.noteTime < ct + 0.200) {
+        //insert play function here
+        this.playSine();
         this.currentStep++;
         if (this.currentStep >= this.binSeq.length) {
           this.currentStep = 0;
@@ -81,6 +83,25 @@ name: "sequencer",
       }
     
       this.ti = setTimeout(this.scheduleNote, 0);
+    },
+    
+    playSine: function() {
+      if (this.binSeq[this.currentStep]==1) {
+        this.sine();
+      }
+      //else console.log("porcodio"); 
+    },
+
+    sine: function() {
+      //console.log("dentro");
+      var o = this.audiox.createOscillator();
+      var g = this.audiox.createGain();
+      o.connect(g);
+      g.connect(this.audiox.destination);
+      o.start();
+      g.gain.setValueAtTime(0.25,this.audiox.currentTime);
+      //g.gain.linearRampToValueAtTime(0.25,this.audiox.currentTime+0.5);
+      g.gain.linearRampToValueAtTime(0,this.audiox.currentTime+0.5);
     }
     },
 }
