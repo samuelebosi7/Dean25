@@ -33,19 +33,27 @@ name: "sequencer",
   },
   created() {
 
-    EventBus.$on('playSeq', payload  => {
-      this.setPlayStop(payload.isPlaying , payload.isStop);
-      this.play();
-    });
+    EventBus.$on('playSeq', this.playListener);
 
-    EventBus.$on('stopSeq', payload  => {
-      this.setPlayStop(payload.isPlaying , payload.isStop);
-    });
+    EventBus.$on('stopSeq', this.stopListener);
 
+  },
+  beforeDestroy(){
+     EventBus.$off('playSeq', this.playListener);
+    console.log("seq destroyed");
   },
   methods: { 
     onoff: function(event) {
         event.target.classList.toggle("seq-note");
+    },
+
+    playListener(payload) {
+      this.setPlayStop(payload.isPlaying , payload.isStop);
+      this.play();
+    },
+
+    stopListener(payload) {
+      this.setPlayStop(payload.isPlaying , payload.isStop);
     },
 
     setPlayStop: function(isPlaying , isStop) {
@@ -93,7 +101,7 @@ name: "sequencer",
     },
 
     sine: function() {
-      //console.log("dentro");
+      console.log("dentro");
       var o = this.audiox.createOscillator();
       var g = this.audiox.createGain();
       o.connect(g);
