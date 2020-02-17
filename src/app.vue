@@ -10,9 +10,18 @@
 
 <script>
 import Vuex from 'vuex'
+import * as firebase from 'firebase';
 import CentralPart from './components/central-part.vue'
 import TopBar from './components/top-bar.vue'
 export const EventBus = new Vue();
+
+var app = firebase.initializeApp({ apiKey: "AIzaSyA1j4rhDzKf1CD8ndIIRrNve3lSri-vbA8",
+    authDomain: "actam-test-ed131.firebaseapp.com",
+    databaseURL: "https://actam-test-ed131.firebaseio.com",
+    projectId: "actam-test-ed131",
+    storageBucket: "actam-test-ed131.appspot.com",
+    messagingSenderId: "516631775225",
+    appId: "1:516631775225:web:81bb8274c50bb5ce375f28" });
 
 Vue.use(Vuex);
 
@@ -22,7 +31,9 @@ const store = new Vuex.Store({
     instrumentList: [
       { id: 0, title: 'Instrument 0' , shortTitle: 'I'/*, color:'red'*/},
       { id: 1, title: 'Instrument 1' , shortTitle: 'I'/*, color: 'blue'*/},
-      { id: 2, title: 'Instrument 2' , shortTitle: 'I'/*, color: 'orange'*/}]
+      { id: 2, title: 'Instrument 2' , shortTitle: 'I'/*, color: 'orange'*/}],
+      
+    db: firebase.firestore(),
   },
 })
 
