@@ -15,6 +15,8 @@ name: "sequencer",
  data() {
     return {
       currentStep: -1,
+      tatumSeq: 8, //il numero di nextStep che devi ricevere per avanzare di uno
+      nextStepReceived: 0,
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
@@ -42,12 +44,18 @@ name: "sequencer",
     },
 
     scheduleNote: function() {
-      this.currentStep++;
-      if (this.currentStep >= this.binSeq.length) {
-        this.currentStep = 0;
-      }
 
-      this.playSine();
+      this.nextStepReceived++;
+
+      if(this.nextStepReceived == this.tatumSeq){
+        this.currentStep++;
+        if (this.currentStep >= this.binSeq.length) {
+          this.currentStep = 0;
+        }
+
+        this.playSine();
+        this.nextStepReceived = 0;
+      }
     },
     
     playSine: function() {

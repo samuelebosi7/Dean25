@@ -145,6 +145,7 @@ export default {
     setPlayStop: function(isPlaying , isStop) {
       this.isPlaying = isPlaying;
       this.isStop = isStop;
+      this.play();
     },
 
     play: function () {
