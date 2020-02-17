@@ -29,6 +29,9 @@ name: "sequencer",
       return this.$store.state.audiox;
     },
   },
+  beforeDestroy(){
+     EventBus.$off('nextStep', this.scheduleNote);
+  },
   methods: { 
     onoff: function(event) {
         event.target.classList.toggle("seq-note");

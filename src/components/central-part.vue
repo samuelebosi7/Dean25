@@ -35,7 +35,7 @@ export default {
       noteTime: 0,
       ti: 0,
       tic: 0.5,
-
+      i:0,
       //play/stop var
       isPlaying: false,
       isStop: true,
@@ -63,9 +63,6 @@ export default {
 
       EventBus.$on('playSeq', this.playListener);
       EventBus.$on('stopSeq', this.stopListener);
-  },
-  beforeDestroy(){
-     EventBus.$off('playSeq', this.playListener);
   },
   methods: {
 
@@ -173,7 +170,6 @@ export default {
         EventBus.$emit('nextStep');
         this.noteTime += this.tic; 
       }
-    
       this.ti = setTimeout(this.emitPlaynote, 0);
     }
 
