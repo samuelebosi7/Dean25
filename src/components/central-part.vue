@@ -29,6 +29,16 @@ export default {
       channelList: [], // {id , seq[]}  seq[] è la sequenza binaria
       cLcm: 0,    //minimo comune multiplo
       count: 0,  //conteggio globale mcm
+
+      //timing var
+      startTime: 0,
+      noteTime: 0,
+      ti: 0,
+      tic: 0.5,
+
+      //play/stop var
+      isPlaying: false,
+      isStop: true,
     }
   },
   components: {
@@ -38,7 +48,10 @@ export default {
   computed: {
     instrumentList () {
       return this.$store.state.instrumentList;
-    }
+    },
+    audiox () {
+      return this.$store.state.audiox;
+    },
   },
   watch: {
     instrumentList: function () {
@@ -48,13 +61,11 @@ export default {
   created() {
       this.createChannel();
 
-      /*EventBus.$on('playSeq', play  => {
-        this.emitPlaynote();
-      });
-
-      EventBus.$on('stopSeq', play  => {
-        this.emitPlaynote();
-      });*/
+      EventBus.$on('playSeq', this.playListener);
+      EventBus.$on('stopSeq', this.stopListener);
+  },
+  beforeDestroy(){
+     EventBus.$off('playSeq', this.playListener);
   },
   methods: {
 
@@ -123,14 +134,50 @@ export default {
                 return input_array[l - 1];
     },
 
+    //TIMING
+
+    playListener(payload) {
+      this.setPlayStop(payload.isPlaying , payload.isStop);
+      this.play();
+    },
+
+    stopListener(payload) {
+      this.setPlayStop(payload.isPlaying , payload.isStop);
+    },
+
+    setPlayStop: function(isPlaying , isStop) {
+      this.isPlaying = isPlaying;
+      this.isStop = isStop;
+    },
+
+    play: function () {
+      if(this.isStop || !this.isPlaying)
+        this.audiox.suspend();
+      else this.audiox.resume();
+      
+      this.startTime = this.audiox.currentTime + 0.005;
+      this.noteTime = 0;
+      this.emitPlaynote();
+    },
+
     emitPlaynote:  function() {
-      this.count++;
-      if (this.count >= this.cLcm){
-        this.count = 0 
-      };
-      EventBus.$emit('suxstep', this.count);
-      setTimeout(this.emitPlaynote, 1000);
+       if(this.isStop){
+        EventBus.$emit('stopSeq');
+        return false;
+      } else if(!this.isPlaying) return false;  //se ho premuto pausa tengo slavato lo step corrente
+      
+      var ct = this.audiox.currentTime;
+      ct -= this.startTime;
+
+      while(this.noteTime < ct + 0.200) {
+        EventBus.$emit('nextStep');
+        this.noteTime += this.tic; 
+      }
+    
+      this.ti = setTimeout(this.emitPlaynote, 0);
     }
+
+    
   }
 }
 </script>
