@@ -30,6 +30,10 @@ name: "sequencer",
     audiox () {
       return this.$store.state.audiox;
     },
+
+    db () {
+      return this.$store.state.db;
+    }
   },
   beforeDestroy(){
      EventBus.$off('nextStep', this.scheduleNote);
