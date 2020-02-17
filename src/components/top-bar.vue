@@ -24,7 +24,7 @@
                 <div type="text" class='crono'>00:00:00</div>
             </div>
             <div class='tempoProp text-bpm'>
-                <div @keypress="isNumber($event)" contenteditable="true" class='enter-to-unselect bpm'>120</div> bpm
+                <input v-on:change="bpmChange" @keypress="isNumber($event)" contenteditable="true" class='enter-to-unselect bpm'>120 bpm
             </div>
             <div class='tempoProp text-tot-steps'>
                 <div class='tot-steps'>0</div> steps
@@ -96,6 +96,11 @@
         EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
     },
 
+    bpmChange: function(e) {
+        EventBus.$emit('changeBpm' , {newBpm: e.target.value});
+        console.log(e.target.value);
+    },
+
     getMaxId: function() {
         //  console.log(this.instrumentList)
         //   console.log(this.channelList)
@@ -123,6 +128,7 @@
         $(".play-pause").toggleClass("paused");
         return false;
     });
+
     /*$(".stop").click(function() {
         if(rec==true){
         rec=false;

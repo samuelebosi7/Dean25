@@ -14,7 +14,7 @@ export default {
 name: "sequencer",
  data() {
     return {
-      currentStep: 0,
+      currentStep: -1,
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
@@ -22,7 +22,7 @@ name: "sequencer",
   props: ["binSeq"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
-      EventBus.$on('stopSeq', this.stopSeq);
+      EventBus.$on('stopStep', this.stopSeq);
   },
   computed: {
     audiox () {
@@ -38,7 +38,7 @@ name: "sequencer",
     },
 
     stopSeq:function() {
-      this.currentStep = 0;
+      this.currentStep = -1;
     },
 
     scheduleNote: function() {

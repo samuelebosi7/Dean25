@@ -35,7 +35,6 @@ export default {
       noteTime: 0,
       ti: 0,
       tic: 0.5,
-      i:0,
       //play/stop var
       isPlaying: false,
       isStop: true,
@@ -63,6 +62,7 @@ export default {
 
       EventBus.$on('playSeq', this.playListener);
       EventBus.$on('stopSeq', this.stopListener);
+      EventBus.$on('changeBpm', this.changeBpm);
   },
   methods: {
 
@@ -159,20 +159,23 @@ export default {
 
     emitPlaynote:  function() {
        if(this.isStop){
-        EventBus.$emit('stopSeq');
+        EventBus.$emit('stopStep');
         return false;
       } else if(!this.isPlaying) return false;  //se ho premuto pausa tengo slavato lo step corrente
       
       var ct = this.audiox.currentTime;
       ct -= this.startTime;
 
-      while(this.noteTime < ct + 0.200) {
+      while(this.noteTime < ct + this.tic) {
         EventBus.$emit('nextStep');
         this.noteTime += this.tic; 
       }
       this.ti = setTimeout(this.emitPlaynote, 0);
-    }
+    },
 
+    changeBpm: function(payload) {
+        this.tic = 60/(payload.newBpm*8);
+    },
     
   }
 }
