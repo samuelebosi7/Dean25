@@ -18,7 +18,7 @@ name: "sequencer",
       startTime: 0,
       noteTime: 0,
       ti: 0,
-      tic: 0.5,
+      tic: 0.1,
       isPlaying: false,
       isStop: true,
       //stepNum: this.binSeq.length,
@@ -68,6 +68,7 @@ name: "sequencer",
       
       this.startTime = this.audiox.currentTime + 0.005;
       this.noteTime = 0;
+      console.log("start-time in play: "+  this.startTime);
       this.scheduleNote();
     },
 
@@ -79,15 +80,16 @@ name: "sequencer",
       
       var ct = this.audiox.currentTime;
       ct -= this.startTime;
-      
+
       while(this.noteTime < ct + 0.200) {
-        //insert play function here
-        this.playSine();
+        
         this.currentStep++;
         if (this.currentStep >= this.binSeq.length) {
           this.currentStep = 0;
         }
-        this.noteTime += this.tic;
+        
+        this.playSine();
+        this.noteTime += this.tic; 
       }
     
       this.ti = setTimeout(this.scheduleNote, 0);
@@ -101,7 +103,6 @@ name: "sequencer",
     },
 
     sine: function() {
-      console.log("dentro");
       var o = this.audiox.createOscillator();
       var g = this.audiox.createGain();
       o.connect(g);
