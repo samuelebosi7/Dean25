@@ -183,7 +183,7 @@ body {
     padding-left: 11px;
     padding-right: 12px;
     padding-bottom: 13px;
-    width: max-content;
+    width: 26px;
     height: 17px;
     top: 5px;
     left: 12px;
@@ -481,6 +481,10 @@ input::-webkit-inner-spin-button {
 
 .button-plus {
   left: -11px;
+}
+
+.duration{
+  height: 0px;
 }
 
 .noteDuration{
