@@ -32,8 +32,19 @@ const store = new Vuex.Store({
       { id: 1, title: 'Instrument 1' , shortTitle: 'I'/*, color: 'blue'*/},
       { id: 2, title: 'Instrument 2' , shortTitle: 'I'/*, color: 'orange'*/}],
       
-    db: firebase.firestore(),
+    links: [],
   },
+  actions:{
+        getFirebaseData: ({commit}) => {
+            //you can use firebase like this
+            var db = firebase.firestore()
+            db.collection("test").doc("ZYnzyE17KXvTcHarUYqb").get().then(
+              function(doc) {
+                console.log(doc.data());
+              }
+            )
+    }
+  }
 })
 
 export default {

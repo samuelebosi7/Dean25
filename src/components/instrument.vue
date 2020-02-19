@@ -4,22 +4,24 @@
             <div class="minus-symbol">-</div> 
         </div>
         <div v-on:click="selectInstrument" v-bind:title='title' class="instrument-name">
-            <div :id="'actualSample'+id">Cy</div>
+            Cy<!-- {{shortTitle}} -->
+            <!-- <span class='arrow'>&#9660;</span> -->
+            
             <ul class="sub-menu genre">
                 <li class="genre1">
                     Rock
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre1">
-                        <li v-on:click='updateSample("Hi")'>
+                        <li v-on:click="changeSample">
                             Hi-Hat
                         </li>
-                        <li v-on:click='updateSample("Ki")'>
+                        <li>
                             Kick
                         </li>
-                        <li v-on:click='updateSample("Sn")'>
+                        <li>
                             Snare
                         </li>
-                        <li v-on:click='updateSample("Cy")'>
+                        <li>
                             Cymbal
                         </li>
                     </ul>
@@ -28,10 +30,10 @@
                     African
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre2">
-                        <li v-on:click='updateSample("Xi")'>
+                        <li>
                             Xilofone
                         </li>
-                        <li v-on:click='updateSample("Dj")'>
+                        <li>
                             Djembe
                         </li>
                     </ul>
@@ -40,7 +42,7 @@
                     Latino
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre3">
-                        <li v-on:click='updateSample("Ma")'>
+                        <li>
                             Maracas
                         </li>
                     </ul>
@@ -67,13 +69,13 @@
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
 
             <div v-on:click="selectNoteDuration" class="noteDuration" title="Note Duration">
-                <div :id="'actualDuration'+id" class="duration">/16</div>
-                <!-- &blacktriangledown; -->
+                /16
+                <span>&blacktriangledown;</span>
                 <ul class="sub-menu genre dur">
-                    <li v-on:click='updateDuration(4)'>/4</li>
-                    <li v-on:click='updateDuration(8)'>/8</li>
-                    <li v-on:click='updateDuration(16)'>/16</li>
-                    <li v-on:click='updateDuration(32)'>/32</li>
+                    <li >/4</li>
+                    <li >/8</li>
+                    <li >/16</li>
+                    <li>/32</li>
                 </ul>
             </div>
             <div class="instr-knobs">
@@ -124,6 +126,10 @@ export default {
         }
     },
     methods: {
+    accessStore: function() {
+        //console.log("dentro");
+        this.$store.dispatch('getFirebaseData');
+    },
     
     deleteInstrument: function () {
       var pos = this.instrumentList.map(function(e) { return e.id; }).indexOf(this.id);
@@ -140,19 +146,13 @@ export default {
         this.$emit('setStep', {id: this.id, step: this.selectorArr[0].val, pulses: this.selectorArr[1].val , offset: this.selectorArr[2].val });
     },
 
-    updateDuration: function(val) {
-        $('#actualDuration'+this.id).text('/'+val);
-        $('.sub-menu.genre').removeClass('active'); //to close the selection menu after the choice is made
-    },
-
     selectInstrument: function(e) {
         $(e.target).children("ul").toggleClass("active");
+        this.accessStore();
     },
 
-    updateSample: function(val){
-        $('#actualSample'+this.id).text(val);
-        $('.sub-menu.genre').removeClass('active'); //to close the selection menu after the choice is made
-        //var name = this.instrumentList.map(function(e) { return e.title; })[this.id];
+    changeSample: function(){
+        var name = this.instrumentList.map(function(e) { return e.title; })[this.id];
         // console.log(name);
     },
 
