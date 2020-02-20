@@ -127,8 +127,7 @@ export default {
     },
     methods: {
     accessStore: function() {
-        //console.log("dentro");
-        this.$store.dispatch('getFirebaseData');
+        console.log(this.$store.state.links[1]["808 sn"])
     },
     
     deleteInstrument: function () {
