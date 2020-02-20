@@ -4,24 +4,25 @@
             <div class="minus-symbol">-</div> 
         </div>
         <div v-on:click="selectInstrument" v-bind:title='title' class="instrument-name">
-            Cy<!-- {{shortTitle}} -->
-            <!-- <span class='arrow'>&#9660;</span> -->
+            <div :id="'actualSample'+id">
+                Cy
+            </div>
             
             <ul class="sub-menu genre">
                 <li class="genre1">
                     Rock
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre1">
-                        <li v-on:click="changeSample">
+                        <li v-on:click="updateSample('Hi')">
                             Hi-Hat
                         </li>
-                        <li>
+                        <li v-on:click="updateSample('Ki')">
                             Kick
                         </li>
-                        <li>
+                        <li v-on:click="updateSample('Sn')">
                             Snare
                         </li>
-                        <li>
+                        <li v-on:click="updateSample('Cy')">
                             Cymbal
                         </li>
                     </ul>
@@ -30,10 +31,10 @@
                     African
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre2">
-                        <li>
+                        <li v-on:click="updateSample('Xi')">
                             Xilofone
                         </li>
-                        <li>
+                        <li v-on:click="updateSample('Dj')">
                             Djembe
                         </li>
                     </ul>
@@ -42,7 +43,7 @@
                     Latino
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre3">
-                        <li>
+                        <li v-on:click="updateSample('Ma')">
                             Maracas
                         </li>
                     </ul>
@@ -69,13 +70,15 @@
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
 
             <div v-on:click="selectNoteDuration" class="noteDuration" title="Note Duration">
+                <div :id="'actualDuration'+id">
                 /16
+                </div>
                 <span>&blacktriangledown;</span>
                 <ul class="sub-menu genre dur">
-                    <li >/4</li>
-                    <li >/8</li>
-                    <li >/16</li>
-                    <li>/32</li>
+                    <li v-on:click="updateDuration(4)">/4</li>
+                    <li v-on:click="updateDuration(8)">/8</li>
+                    <li v-on:click="updateDuration(16)">/16</li>
+                    <li v-on:click="updateDuration(32)">/32</li>
                 </ul>
             </div>
             <div class="instr-knobs">
@@ -150,9 +153,14 @@ export default {
         this.accessStore();
     },
 
-    changeSample: function(){
-        var name = this.instrumentList.map(function(e) { return e.title; })[this.id];
-        // console.log(name);
+    updateDuration: function(val){
+        $('#actualDuration'+this.id).html("/"+val);
+        $(".sub-menu.genre").removeClass("active");
+    },
+
+    updateSample: function(val){
+        $('#actualSample'+this.id).html(val);
+        $(".sub-menu.genre").removeClass("active");
     },
 
     MuteClicked: function(){
