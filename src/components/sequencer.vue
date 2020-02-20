@@ -15,13 +15,13 @@ name: "sequencer",
  data() {
     return {
       currentStep: -1,
-      tatumSeq: 8, //il numero di nextStep che devi ricevere per avanzare di uno
+      tatumSeq: 2, //il numero di nextStep che devi ricevere per avanzare di uno
       nextStepReceived: 0,
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["binSeq"],
+  props: ["binSeq", "noteDur"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
@@ -48,9 +48,13 @@ name: "sequencer",
     },
 
     scheduleNote: function() {
-
+      if(this.tatumSeq!=this.noteDur)
+      {  
+        this.tatumSeq=this.noteDur;
+      }
+      //console.log(this.noteDur);
       this.nextStepReceived++;
-
+      
       if(this.nextStepReceived == this.tatumSeq){
         this.currentStep++;
         if (this.currentStep >= this.binSeq.length) {

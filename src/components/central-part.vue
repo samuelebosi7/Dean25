@@ -9,8 +9,8 @@
             
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
-          <instrument v-on:deleteChannel="deleteChannel" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
+          <instrument v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+          <channel class="instrument-channel" v-bind:duration="noteDuration" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
   </div>
@@ -27,6 +27,7 @@ export default {
     return {
       color:'',
       channelList: [], // {id , seq[]}  seq[] è la sequenza binaria
+      noteDuration: 2,
       cLcm: 0,    //minimo comune multiplo
       count: 0,  //conteggio globale mcm
 
@@ -34,7 +35,7 @@ export default {
       startTime: 0,
       noteTime: 0,
       ti: 0,
-      tic: 0.5,
+      tic: 0.0625,
       //play/stop var
       isPlaying: false,
       isStop: true,
@@ -81,6 +82,13 @@ export default {
         this.channelList.find(x => x.id === value.id).seq = ary;
         this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
         console.log(this.cLcm);
+    },
+
+    updateDuration: function(value) {
+        //var newDuration=this.channelList.find(x => x.id === value.id);
+        //console.log(value.dur);
+        this.noteDuration=parseInt(value.dur,10);
+        //console.log(value.id+", "+value.dur);
     },
 
     euclidean: function(tatum, tactus){

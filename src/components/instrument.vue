@@ -130,7 +130,7 @@ export default {
     },
     methods: {
     accessStore: function() {
-        console.log(this.$store.state.links[1]["808 sn"])
+        console.log(this.$store.state.links[2])
     },
     
     deleteInstrument: function () {
@@ -156,11 +156,14 @@ export default {
     updateDuration: function(val){
         $('#actualDuration'+this.id).html("/"+val);
         $(".sub-menu.genre").removeClass("active");
+        val=32/val;
+        this.$emit('updateDuration', {id: this.id, dur: val});
     },
 
     updateSample: function(val){
         $('#actualSample'+this.id).html(val);
         $(".sub-menu.genre").removeClass("active");
+        //console.log(this.$store.state.links[1])
     },
 
     MuteClicked: function(){

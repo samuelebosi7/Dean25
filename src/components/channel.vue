@@ -5,7 +5,7 @@
         <div class="control meter vertical">
             <span></span>
         </div> -->
-        <sequencer v-bind:binSeq="this.singleChannel.seq">  
+        <sequencer v-bind:binSeq="this.singleChannel.seq" v-bind:noteDur="this.duration">  
         </sequencer>
     </div>
 </template>
@@ -21,7 +21,7 @@ name: "channel",
   components: {
     Sequencer,
   },
-  props: ["singleChannel"],
+  props: ["singleChannel", "duration"],
   methods: { 
     
   }   
