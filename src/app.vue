@@ -35,31 +35,31 @@ const store = new Vuex.Store({
     links: [],
   },
   actions:{
-        getFirebaseData: ({commit}) => {
-            //you can use firebase like this
+        getFirebaseData: ({commit}) => { //downloads data from firebase
             var db = firebase.firestore()
             db.collection("samples").get().then(querySnapshot => { 
            if (querySnapshot.empty) {
-             console.log("No sample links on database!")
+             console.log("Couldn't retrieve sample links from database!")
            }
            else {
              //this.loading = false;
              var links = [];
              querySnapshot.forEach(doc => {
              links.push(doc.data());});
+             console.log("Sample links retrieved, saved in this.$store.state.links[]")
             }
-            commit("setLinks", links);
+            commit("setLinks", links); //triggers "setLinks" mutation
         });
     }
   },
   mutations:{
-    setLinks(state, val) {
+    setLinks(state, val) {//copies value downloaded from firebase in state.links
       state.links = val;
     }
   }
 })
 
-store.dispatch("getFirebaseData");
+store.dispatch("getFirebaseData"); //triggers "getFirebaseData" action upon startup
 
 export default {
   data() {
