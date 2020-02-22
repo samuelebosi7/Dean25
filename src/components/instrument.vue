@@ -13,17 +13,17 @@
                     Rock
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre1">
-                        <li v-on:click="updateSample('Hi')">
+                        <li v-on:click="updateSample('Hi-Hat')">
                             Hi-Hat
                         </li>
-                        <li v-on:click="updateSample('Ki')">
+                        <li v-on:click="updateSample('Kick')">
                             Kick
                         </li>
-                        <li v-on:click="updateSample('Sn')">
+                        <li v-on:click="updateSample('Snare')">
                             Snare
                         </li>
-                        <li v-on:click="updateSample('Cy')">
-                            Cymbal
+                        <li v-on:click="updateSample('Cymbals')">
+                            Cymbals
                         </li>
                     </ul>
                 </li>
@@ -31,10 +31,10 @@
                     African
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre2">
-                        <li v-on:click="updateSample('Xi')">
+                        <li v-on:click="updateSample('Xilofone')">
                             Xilofone
                         </li>
-                        <li v-on:click="updateSample('Dj')">
+                        <li v-on:click="updateSample('Djembe')">
                             Djembe
                         </li>
                     </ul>
@@ -43,7 +43,7 @@
                     Latino
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre3">
-                        <li v-on:click="updateSample('Ma')">
+                        <li v-on:click="updateSample('Maracas')">
                             Maracas
                         </li>
                     </ul>
@@ -57,14 +57,14 @@
                 </div> -->
         </div>
 
-        <div class="mute">
+        <div class="mute" title='Mute'>
             <div v-on:click="MuteClicked" class="mute-button"></div> M
         </div>
-        <div class="solo">
+        <div class="solo" title='Solo'>
             <div v-on:click="SoloClicked" class="solo-button"></div> S
         </div>
         <div class='meter'>
-            <span class="anim"></span>
+            <span :id="'spike-bar'+id" class="anim"></span>
         </div>
         <div class="euclidean-input">
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
@@ -161,8 +161,10 @@ export default {
     },
 
     updateSample: function(val){
-        $('#actualSample'+this.id).html(val);
+
+        $('#actualSample'+this.id).html(val.substring(0, 2));
         $(".sub-menu.genre").removeClass("active");
+        this.title=val;
         //console.log(this.$store.state.links[1])
     },
 
