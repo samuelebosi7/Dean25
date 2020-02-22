@@ -83,13 +83,13 @@
             </div>
             <div class="instr-knobs">
                 <div class='input-knob vol'>
-                    <knob>
+                    <knob v-on:updateValueKnob="updateGain">
                     </knob>
                     </br>
                     Vol
                 </div>
                 <div class='input-knob pan'>
-                    <knob>
+                    <knob v-on:updateValueKnob="updatePan">
                     </knob>
                     </br>
                     Pan
@@ -117,6 +117,8 @@ export default {
                 {id: 1, name: "Pulses", val: 1 , initialValue: 1 },
                 {id: 2, name: "Offset", val: 0 , initialValue: 0},
             ],
+            gain: 0.5,
+            pan: 0
         }
     },
     components: {
@@ -223,6 +225,16 @@ export default {
 
     selectNoteDuration: function(e){
         $(e.target).children("ul").toggleClass("active");
+    },
+
+    updatePan: function(value){
+        this.pan = value;
+        this.$emit("updateGainPan", {id:this.id, gain: this.gain, pan:this.pan});
+    },
+    
+    updateGain: function(value){
+        this.gain = value;
+        this.$emit("updateGainPan", {id:this.id, gain: this.gain, pan:this.pan});
     }
   }
 }

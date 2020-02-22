@@ -8,9 +8,9 @@
       </div>
             
       <div id = "instrument-list">
-        <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id" >
-          <instrument v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)" v-bind:id="instrument.id"></channel>
+        <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
+          <instrument v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+          <channel class="instrument-channel" v-bind:duration="noteDuration" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
   </div>
@@ -68,12 +68,12 @@ export default {
   methods: {
 
     createChannel: function(){
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], noteDuration: 2}));
+        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2}));
     },
 
     updateChannel: function() {
         var idArr = this.channelList.map(el => el.id);
-        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], noteDuration: 2}) : {});
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2}) : {});
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
@@ -136,6 +136,10 @@ export default {
                     }
                 }
                 return input_array[l - 1];
+    },
+    updateGP: function(value) {
+      this.channelList.find(x => x.id === value.id).pan = value.pan;
+      this.channelList.find(x => x.id === value.id).gain = value.gain;
     },
 
     //TIMING
