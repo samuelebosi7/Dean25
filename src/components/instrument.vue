@@ -125,12 +125,37 @@ export default {
     },
     computed: {
         instrumentList () {
-        return this.$store.state.instrumentList;
+            return this.$store.state.instrumentList;
+        },
+
+        links () {
+            return this.$store.state.links;
         }
     },
     methods: {
     accessStore: function() {
-        console.log(this.$store.state.links[2])
+        
+        var data = this.createData();
+
+        this.links.forEach(element => {
+            console.log(element.id);    //con element.id accedo al nome della collection
+        });
+
+        data.forEach(element => {
+            Object.keys(element).forEach(el => {
+                console.log(el);
+            });
+        }); 
+    },
+
+    createData() {
+        var l = [];
+
+        this.links.forEach(doc => {
+            l.push(doc.data());
+        });
+
+        return l;
     },
     
     deleteInstrument: function () {

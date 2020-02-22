@@ -45,10 +45,11 @@ const store = new Vuex.Store({
              //this.loading = false;
              var links = [];
              querySnapshot.forEach(doc => {
-             links.push(doc.data());});
+             links.push(doc);});
              console.log("Sample links retrieved, saved in this.$store.state.links[]")
             }
             commit("setLinks", links); //triggers "setLinks" mutation
+            
         });
     }
   },
