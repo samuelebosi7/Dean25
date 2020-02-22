@@ -64,7 +64,7 @@ name: "sequencer",
       //console.log(this.noteDur);
       this.nextStepReceived++;
       
-      if(this.nextStepReceived == this.tatumSeq){
+      if(this.nextStepReceived >= this.tatumSeq){
         this.currentStep++;
         if (this.currentStep >= this.binSeq.length) {
           this.currentStep = 0;
