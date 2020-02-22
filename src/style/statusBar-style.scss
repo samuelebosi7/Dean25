@@ -1,5 +1,9 @@
 //@import "~compass/css3";
 
+::selection {
+  background: #818181; /* WebKit/Blink Browsers */
+}
+
 body{
   background-color:#252a2d;
   font-family: Roboto Condensed,sans-serif;
