@@ -33,8 +33,17 @@ name: "sequencer",
 
     db () {
       return this.$store.state.db;
+    },
+  
+  },
+
+  watch: {
+    noteDur(newValue) {
+      this.tatumSeq = newValue;
+      console.log(this.tatumSeq);
     }
   },
+
   beforeDestroy(){
      EventBus.$off('nextStep', this.scheduleNote);
   },
@@ -48,10 +57,10 @@ name: "sequencer",
     },
 
     scheduleNote: function() {
-      if(this.tatumSeq!=this.noteDur)
+      /*if(this.tatumSeq!=this.noteDur)
       {  
         this.tatumSeq=this.noteDur;
-      }
+      }*/
       //console.log(this.noteDur);
       this.nextStepReceived++;
       
