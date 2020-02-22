@@ -61,7 +61,7 @@ name: "sequencer",
       {  
         this.tatumSeq=this.noteDur;
       }*/
-      //console.log(this.noteDur);
+      console.log(this.noteDur);
       this.nextStepReceived++;
       
       if(this.nextStepReceived >= this.tatumSeq){

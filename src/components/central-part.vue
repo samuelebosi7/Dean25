@@ -10,7 +10,7 @@
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id" >
           <instrument v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-bind:duration="noteDuration" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)" v-bind:id="instrument.id"></channel>
+          <channel class="instrument-channel" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)" v-bind:id="instrument.id"></channel>
         </div>
       </div>
   </div>
@@ -26,8 +26,8 @@ export default {
   data() {
     return {
       color:'',
-      channelList: [], // {id , seq[]}  seq[] è la sequenza binaria
-      noteDuration: 2,
+      channelList: [], // {id , seq[], noteDuration}  seq[] è la sequenza binaria
+      //noteDuration: 2,
       cLcm: 0,    //minimo comune multiplo
       count: 0,  //conteggio globale mcm
 
@@ -68,12 +68,12 @@ export default {
   methods: {
 
     createChannel: function(){
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1]}));
+        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], noteDuration: 2}));
     },
 
     updateChannel: function() {
         var idArr = this.channelList.map(el => el.id);
-        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1]}) : {});
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], noteDuration: 2}) : {});
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
@@ -85,10 +85,9 @@ export default {
     },
 
     updateDuration: function(value) {
-        //var newDuration=this.channelList.find(x => x.id === value.id);
-        //console.log(value.dur);
-        this.noteDuration=parseInt(value.dur,10);
-        //console.log(value.id+", "+value.dur);
+        this.channelList.find(x => x.id === value.id).noteDuration = parseInt(value.dur,10);
+        console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).noteDuration);
+        // this.noteDuration=parseInt(value.dur,10);
     },
 
     euclidean: function(tatum, tactus){

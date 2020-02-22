@@ -9,7 +9,7 @@
             </div>
             
             <ul class="sub-menu genre">
-                <li class="genre1">
+                <!-- <li class="genre1">
                     Rock
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre1">
@@ -47,7 +47,7 @@
                             Maracas
                         </li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
                 <!-- <div class="submenu">
                     <div class="element-in-menu menu-item"><a>Rock</a></div>
@@ -132,20 +132,40 @@ export default {
             return this.$store.state.links;
         }
     },
+
+    created(){
+       // this.accessStore();
+    },
+
     methods: {
-    accessStore: function() {
+    accessStore: function(e) {
         
         var data = this.createData();
+        var i=0;
+        //var menu='<ul class="sub-menu genre">';
+        var menu='';
 
+        //Per stampare nomi collection e nomi relativi elementi di ogni collection
         this.links.forEach(element => {
-            console.log(element.id);    //con element.id accedo al nome della collection
-        });
-
-        data.forEach(element => {
-            Object.keys(element).forEach(el => {
-                console.log(el);
+            //console.log(element.id);    //Per stampare i nomi delle collection
+            menu=menu+'<li class="genre'+i+'">'+element.id+'<span>&blacktriangleright;</span><ul class="sub-menu item genre'+i+'">';
+            Object.keys(data[i]).forEach(el => {    //Per stampare i relativi elementi di ogni collection
+                //console.log(el);
+                menu=menu+'<li v-on:click="updateSample(';
+                menu=menu+"'"+el+"'";
+                menu=menu+')">'+el+'</li>';
             });
-        }); 
+            menu=menu+'</ul></li>'
+            i++;
+        });
+        //menu=menu+'</ul>'
+        $(e.target).children("ul").html(menu);
+        //console.log(menu);
+        // data.forEach(element => {
+        //     Object.keys(element).forEach(el => {
+        //         console.log(el);
+        //     });
+        // }); 
     },
 
     createData() {
@@ -175,7 +195,7 @@ export default {
 
     selectInstrument: function(e) {
         $(e.target).children("ul").toggleClass("active");
-        this.accessStore();
+        this.accessStore(e);
     },
 
     updateDuration: function(val){
