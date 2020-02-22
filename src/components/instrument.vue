@@ -8,7 +8,7 @@
                 Cy
             </div>
             
-            <ul class="sub-menu genre">
+            <ul class="sub-menu genre sample">
                 <!-- <li class="genre1">
                     Rock
                     <span>&blacktriangleright;</span>
@@ -112,6 +112,7 @@ export default {
     props: ['title', 'shortTitle', 'id'],
     data() {
         return {
+            sampleLoaded: 0,
             selectorArr: [
                 {id: 0, name: "Steps", val: 1 , initialValue: 1},
                 {id: 1, name: "Pulses", val: 1 , initialValue: 1 },
@@ -135,12 +136,12 @@ export default {
         }
     },
 
-    created(){
-       // this.accessStore();
-    },
+    // created(){
+    //    this.accessStore();
+    // },
 
     methods: {
-    accessStore: function(e) {
+    accessStore: function() {
         
         var data = this.createData();
         var i=0;
@@ -150,7 +151,7 @@ export default {
         //Per stampare nomi collection e nomi relativi elementi di ogni collection
         this.links.forEach(element => {
             //console.log(element.id);    //Per stampare i nomi delle collection
-            menu=menu+'<li class="genre'+i+'">'+element.id+'<span>&blacktriangleright;</span><ul class="sub-menu item genre'+i+'">';
+            menu=menu+'<li class="genre'+(i+1)+'">'+element.id+'<span>&blacktriangleright;</span><ul class="sub-menu item genre'+i+'">';
             Object.keys(data[i]).forEach(el => {    //Per stampare i relativi elementi di ogni collection
                 //console.log(el);
                 menu=menu+'<li v-on:click="updateSample(';
@@ -161,8 +162,8 @@ export default {
             i++;
         });
         //menu=menu+'</ul>'
-        $(e.target).children("ul").html(menu);
-        //console.log(menu);
+        $(".sub-menu.genre.sample").html(menu);
+        console.log("habemus "+menu);
         // data.forEach(element => {
         //     Object.keys(element).forEach(el => {
         //         console.log(el);
@@ -196,8 +197,8 @@ export default {
     },
 
     selectInstrument: function(e) {
+        
         $(e.target).children("ul").toggleClass("active");
-        this.accessStore(e);
     },
 
     updateDuration: function(val){
@@ -217,6 +218,7 @@ export default {
 
     MuteClicked: function(){
         document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+        this.accessStore();
     },
 
     SoloClicked: function(){
@@ -239,7 +241,8 @@ export default {
   }
 }
 
-// $(document).ready(function() {
-// });
+ $(document).ready(function() {
+    this.accessStore();
+ });
 
 </script>

@@ -21,7 +21,7 @@ name: "sequencer",
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["binSeq", "noteDur", "pan", "gain"],
+  props: ["id","binSeq", "noteDur", "pan", "gain"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
@@ -41,7 +41,6 @@ name: "sequencer",
   watch: {
     noteDur(newValue) {
       this.tatumSeq = newValue;
-      console.log(this.tatumSeq);
     },
     
     pan(value) {
@@ -66,11 +65,6 @@ name: "sequencer",
     },
 
     scheduleNote: function() {
-      /*if(this.tatumSeq!=this.noteDur)
-      {  
-        this.tatumSeq=this.noteDur;
-      }*/
-      console.log(this.noteDur);
       this.nextStepReceived++;
       
       if(this.nextStepReceived >= this.tatumSeq){
@@ -86,6 +80,7 @@ name: "sequencer",
     
     playSine: function() {
       if (this.binSeq[this.currentStep]==1) {
+        console.log("entrato in "+this.id);
         var bar=$("#spike-bar"+this.id)
         bar.removeClass('fade');
         bar.css('transform', 'scaleY(1)');
@@ -94,7 +89,7 @@ name: "sequencer",
           bar.css('transform', 'scaleY(0)');  
         }, 50);
 
-        this.sine();
+        //this.sine();
       }
     },
 
