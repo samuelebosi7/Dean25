@@ -86,6 +86,14 @@ name: "sequencer",
     
     playSine: function() {
       if (this.binSeq[this.currentStep]==1) {
+        var bar=$("#spike-bar"+this.id)
+        bar.removeClass('fade');
+        bar.css('transform', 'scaleY(1)');
+        setTimeout(function() {
+          bar.addClass('fade');
+          bar.css('transform', 'scaleY(0)');  
+        }, 50);
+
         this.sine();
       }
     },

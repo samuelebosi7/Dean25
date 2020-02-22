@@ -21,7 +21,7 @@ name: "channel",
   components: {
     Sequencer,
   },
-  props: ["singleChannel", "duration"],
+  props: ["id","singleChannel", "duration"],
   methods: { 
     
   }   

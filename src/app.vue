@@ -28,9 +28,9 @@ const store = new Vuex.Store({
   state: {
     audiox : new AudioContext,
     instrumentList: [
-      { id: 0, title: 'Instrument 0' , shortTitle: 'I'/*, color:'red'*/},
-      { id: 1, title: 'Instrument 1' , shortTitle: 'I'/*, color: 'blue'*/},
-      { id: 2, title: 'Instrument 2' , shortTitle: 'I'/*, color: 'orange'*/}],
+      { id: 0, title: 'Cymbals' },
+      { id: 1, title: 'Cymbals' },
+      { id: 2, title: 'Cymbals' }],
       
     links: [],
   },
