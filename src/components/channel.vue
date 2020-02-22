@@ -5,7 +5,7 @@
         <div class="control meter vertical">
             <span></span>
         </div> -->
-        <sequencer v-bind:binSeq="this.singleChannel.seq" v-bind:noteDur="this.duration">  
+        <sequencer v-bind:binSeq="this.singleChannel.seq" v-bind:noteDur="this.duration" v-bind:pan="this.singleChannel.pan" v-bind:gain="this.singleChannel.gain">  
         </sequencer>
     </div>
 </template>

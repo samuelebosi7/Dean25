@@ -21,10 +21,11 @@ name: "sequencer",
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["binSeq", "noteDur"],
+  props: ["binSeq", "noteDur", "pan", "gain"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
+      this.audioChannel();
   },
   computed: {
     audiox () {
@@ -41,6 +42,14 @@ name: "sequencer",
     noteDur(newValue) {
       this.tatumSeq = newValue;
       console.log(this.tatumSeq);
+    },
+    
+    pan(value) {
+      this.p.pan.linearRampToValueAtTime((value*2)-1, this.audiox.currentTime+0.025);
+    },
+    
+    gain(value) {
+      this.g.gain.linearRampToValueAtTime(value, this.audiox.currentTime+0.025);
     }
   },
 
@@ -79,18 +88,15 @@ name: "sequencer",
       if (this.binSeq[this.currentStep]==1) {
         this.sine();
       }
-      //else console.log("porcodio"); 
     },
 
-    sine: function() {
-      var o = this.audiox.createOscillator();
-      var g = this.audiox.createGain();
-      o.connect(g);
-      g.connect(this.audiox.destination);
-      o.start();
-      g.gain.setValueAtTime(0.25,this.audiox.currentTime);
-      //g.gain.linearRampToValueAtTime(0.25,this.audiox.currentTime+0.5);
-      g.gain.linearRampToValueAtTime(0,this.audiox.currentTime+0.5);
+    audioChannel: function() {
+      this.p = this.audiox.createStereoPanner();
+      this.g = this.audiox.createGain();
+      this.g.connect(this.p);
+      this.p.connect(this.audiox.destination);
+      /*g.gain.linearRampToValueAtTime(this.gain, this.audiox.currentTime+0.025);
+      p.pan.linearRampToValueAtTime(this.pan, this.audiox.currentTime+0.025);*/
     }
     },
 }
