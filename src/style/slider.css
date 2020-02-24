@@ -68,10 +68,12 @@
     padding: 2px 5px;
     min-width: 20px;
     text-align: center;
-    color: #fff;
+    color: #000000;
+    font-weight: 600;
     border-radius: 5px;
-    border-color: #17e841;
     background-color: #17e841;
+    background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.2));
+    border: 1px solid #181818;
     box-sizing: content-box;
   }
   .vue-slider-dot-tooltip-inner::after {
