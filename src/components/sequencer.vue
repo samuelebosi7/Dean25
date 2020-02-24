@@ -25,7 +25,7 @@ name: "sequencer",
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["binSeq", "noteDur", "pan", "gain"],
+  props: ["id","binSeq", "noteDur", "pan", "gain"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);

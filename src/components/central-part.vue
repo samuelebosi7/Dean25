@@ -10,7 +10,7 @@
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
           <instrument v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-bind:duration="noteDuration" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
+          <channel class="instrument-channel" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
   </div>
@@ -85,7 +85,7 @@ export default {
 
     updateDuration: function(value) {
         this.channelList.find(x => x.id === value.id).noteDuration = parseInt(value.dur,10);
-        console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).noteDuration);
+        //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).noteDuration);
         // this.noteDuration=parseInt(value.dur,10);
     },
 

@@ -4,6 +4,8 @@ import './style/menu-style.css';
 import './style/statusBar-style.scss';
 import '@fortawesome/fontawesome-free/js/all';
 import './style/sequencer.scss';
+import './style/slider.css';
+
 import App from './app.vue';
 
 

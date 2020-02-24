@@ -15,8 +15,10 @@
             </div>
         </div>
             
-        <div class='volume' title="Volume">
-            <input id="duration" type="range" min="0" max="100">
+        <div id='app' title="Volume">
+            <!-- <input id="duration" type="range" min="0" max="100"> -->
+            <slider></slider>
+            <!-- <h1>{{ value }}</h1> -->
         </div>
 
         <div id='tempoDisplays'>
@@ -24,7 +26,7 @@
                 <div type="text" class='crono'>00:00:00</div>
             </div>
             <div class='tempoProp text-bpm'>
-                <input v-on:change="bpmChange" @keypress="isNumber($event)" contenteditable="true" class='enter-to-unselect bpm' value="120"> bpm
+                <input v-on:change="bpmChange" @keypress="isNumber($event)" class='enter-to-unselect bpm' value="120"> bpm
             </div>
             <div class='tempoProp text-tot-steps'>
                 <div class='tot-steps'>0</div> steps
@@ -41,6 +43,7 @@
 
 <script>
     import Instrument from "./instrument.vue";
+    import Slider from "./slider.vue";
     import store from '../app.vue';
     import { EventBus } from '../app.vue';
 
@@ -56,6 +59,24 @@
         return this.$store.state.instrumentList;
         },
     },
+        
+    components: {
+        Slider
+    },
+    // mounted() {
+    //     $(function(){
+    //         if ($('#volume').length) {
+    //             console.log("ciao");
+    //             $("#volume").slider({
+    //                 orientation: "horizontal",
+    //                 range: "min",
+    //                 max: 100,
+    //                 value: 0,
+    //                 animate: 1300
+    //             });
+    //         }
+    //     })
+    // },
     methods: {
         showButtonsDelete: function() {
             // document.querySelectorAll(".on-inst").forEach(function(el){
@@ -136,36 +157,36 @@
         }
         return false;
     });*/
-    $('.ed-div').keydown(function(e) {
+    $('.enter-to-unselect').keydown(function(e) {
      if(e.which == 13 ) {
-        if($(this).text()!='')
+        if($(this).val()!='')
             $(this).blur().next().focus();
         return false;
       }
     });
-    /*
-    //Main volume slider script
-    function createHoverState (myobject){
-        myobject.hover(function() {
-        $(this).prev().toggleClass('hilite');
-        });
-        myobject.mousedown(function() {
-        $(this).prev().addClass('dragging');
-        $("*").mouseup(function() {
-            $(myobject).prev().removeClass('dragging');
-        });
-        });
-    }
     
-    $(".volume").slider({
-        orientation: "horizontal",
-        range: "min",
-        max: 100,
-        value: 0,
-        animate: 1300
-    });
-    $("#main").slider( "value", 100 );
+    // //Main volume slider script
+    // function createHoverState (myobject){
+    //     myobject.hover(function() {
+    //     $(this).prev().toggleClass('hilite');
+    //     });
+    //     myobject.mousedown(function() {
+    //     $(this).prev().addClass('dragging');
+    //     $("*").mouseup(function() {
+    //         $(myobject).prev().removeClass('dragging');
+    //     });
+    //     });
+    // }
     
-    createHoverState($(".volume a.ui-slider-handle"));*/
+    // $("#volume").slider({
+    //     orientation: "horizontal",
+    //     range: "min",
+    //     max: 100,
+    //     value: 0,
+    //     animate: 1300
+    // });
+    // $("#main").slider( "value", 100 );
+    
+    // createHoverState($(".volume a.ui-slider-handle"));
     });
 </script>

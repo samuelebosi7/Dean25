@@ -3,12 +3,12 @@
         <div v-on:click="deleteInstrument" class="add-rem-inst rem-inst on-inst">
             <div class="minus-symbol">-</div> 
         </div>
-        <div v-on:click="selectInstrument" v-bind:title='title' class="instrument-name">
-            <div :id="'actualSample'+id">
+        <div v-bind:title='title' class="instrument-name">
+            <div :id="'actualSample'+id" v-on:click="selectInstrument">
                 Cy
             </div>
             
-            <ul class="sub-menu genre">
+            <ul class="sub-menu genre sample">
                 <!-- <li class="genre1">
                     Rock
                     <span>&blacktriangleright;</span>
@@ -64,16 +64,16 @@
             <div v-on:click="SoloClicked" class="solo-button"></div> S
         </div>
         <div class='meter'>
-            <span :id="'spike-bar'+id" class="anim"></span>
+            <span :id="'spike-bar'+id" class="anim fade" style="transform: scaleY(0)"></span>
         </div>
         <div class="euclidean-input">
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
 
-            <div v-on:click="selectNoteDuration" class="noteDuration" title="Note Duration">
-                <div :id="'actualDuration'+id">
+            <div class="noteDuration" title="Note Duration">
+                <div :id="'actualDuration'+id" v-on:click="selectNoteDuration">
                 /16
                 </div>
-                <span>&blacktriangledown;</span>
+                <span v-on:click="selectNoteDuration">&blacktriangledown;</span>
                 <ul class="sub-menu genre dur">
                     <li v-on:click="updateDuration(4)">/4</li>
                     <li v-on:click="updateDuration(8)">/8</li>
@@ -112,6 +112,7 @@ export default {
     props: ['title', 'shortTitle', 'id'],
     data() {
         return {
+            sampleLoaded: 0,
             selectorArr: [
                 {id: 0, name: "Steps", val: 1 , initialValue: 1},
                 {id: 1, name: "Pulses", val: 1 , initialValue: 1 },
@@ -135,12 +136,12 @@ export default {
         }
     },
 
-    created(){
-       // this.accessStore();
-    },
+    // created(){
+    //    this.accessStore();
+    // },
 
     methods: {
-    accessStore: function(e) {
+    accessStore: function() {
         
         var data = this.createData();
         var i=0;
@@ -150,7 +151,7 @@ export default {
         //Per stampare nomi collection e nomi relativi elementi di ogni collection
         this.links.forEach(element => {
             //console.log(element.id);    //Per stampare i nomi delle collection
-            menu=menu+'<li class="genre'+i+'">'+element.id+'<span>&blacktriangleright;</span><ul class="sub-menu item genre'+i+'">';
+            menu=menu+'<li class="genre'+(i+1)+'">'+element.id+'<span>&blacktriangleright;</span><ul class="sub-menu item genre'+i+'">';
             Object.keys(data[i]).forEach(el => {    //Per stampare i relativi elementi di ogni collection
                 //console.log(el);
                 menu=menu+'<li v-on:click="updateSample(';
@@ -161,8 +162,8 @@ export default {
             i++;
         });
         //menu=menu+'</ul>'
-        $(e.target).children("ul").html(menu);
-        //console.log(menu);
+        $(".sub-menu.genre.sample").html(menu);
+        console.log("habemus "+menu);
         // data.forEach(element => {
         //     Object.keys(element).forEach(el => {
         //         console.log(el);
@@ -196,8 +197,7 @@ export default {
     },
 
     selectInstrument: function(e) {
-        $(e.target).children("ul").toggleClass("active");
-        this.accessStore(e);
+        $(e.target).parent("div").children("ul").toggleClass("active");
     },
 
     updateDuration: function(val){
@@ -217,6 +217,7 @@ export default {
 
     MuteClicked: function(){
         document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+        this.accessStore();
     },
 
     SoloClicked: function(){
@@ -224,7 +225,7 @@ export default {
     },
 
     selectNoteDuration: function(e){
-        $(e.target).children("ul").toggleClass("active");
+        $(e.target).parent("div").children("ul").toggleClass("active");
     },
 
     updatePan: function(value){
@@ -239,7 +240,8 @@ export default {
   }
 }
 
-// $(document).ready(function() {
-// });
+ $(document).ready(function() {
+    this.accessStore();
+ });
 
 </script>
