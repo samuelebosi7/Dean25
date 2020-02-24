@@ -24,7 +24,7 @@
                 <div type="text" class='crono'>00:00:00</div>
             </div>
             <div class='tempoProp text-bpm'>
-                <input v-on:change="bpmChange" @keypress="isNumber($event)" contenteditable="true" class='enter-to-unselect bpm' value="120"> bpm
+                <input v-on:change="bpmChange" @keypress="isNumber($event)" class='enter-to-unselect bpm' value="120"> bpm
             </div>
             <div class='tempoProp text-tot-steps'>
                 <div class='tot-steps'>0</div> steps
@@ -136,9 +136,9 @@
         }
         return false;
     });*/
-    $('.ed-div').keydown(function(e) {
+    $('.enter-to-unselect').keydown(function(e) {
      if(e.which == 13 ) {
-        if($(this).text()!='')
+        if($(this).val()!='')
             $(this).blur().next().focus();
         return false;
       }

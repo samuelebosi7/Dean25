@@ -81,12 +81,12 @@ export default {
         ary = this.arrayRotate(ary , -value.offset)
         this.channelList.find(x => x.id === value.id).seq = ary;
         this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
-        console.log(this.cLcm);
+        //console.log(this.cLcm);
     },
 
     updateDuration: function(value) {
         this.channelList.find(x => x.id === value.id).noteDuration = parseInt(value.dur,10);
-        console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).noteDuration);
+        //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).noteDuration);
         // this.noteDuration=parseInt(value.dur,10);
     },
 

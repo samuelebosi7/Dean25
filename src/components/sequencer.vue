@@ -80,7 +80,6 @@ name: "sequencer",
     
     playSine: function() {
       if (this.binSeq[this.currentStep]==1) {
-        console.log("entrato in "+this.id);
         var bar=$("#spike-bar"+this.id)
         bar.removeClass('fade');
         bar.css('transform', 'scaleY(1)');
@@ -89,7 +88,7 @@ name: "sequencer",
           bar.css('transform', 'scaleY(0)');  
         }, 50);
 
-        //this.sine();
+        this.audioChannel();
       }
     },
 
