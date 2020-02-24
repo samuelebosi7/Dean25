@@ -33,6 +33,7 @@ const store = new Vuex.Store({
       { id: 2, title: 'Cymbals' }],
       
     links: [],
+    storage: firebase.storage(),
   },
   actions:{
         getFirebaseData: ({commit}) => { //downloads data from firebase

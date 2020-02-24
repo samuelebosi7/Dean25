@@ -81,7 +81,6 @@ export default {
         ary = this.arrayRotate(ary , -value.offset)
         this.channelList.find(x => x.id === value.id).seq = ary;
         this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
-        console.log(this.cLcm);
     },
 
     updateDuration: function(value) {
