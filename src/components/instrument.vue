@@ -64,7 +64,7 @@
             <div v-on:click="SoloClicked" class="solo-button"></div> S
         </div>
         <div class='meter'>
-            <span :id="'spike-bar'+id" class="anim"></span>
+            <span :id="'spike-bar'+id" class="anim fade" style="transform: scaleY(0)"></span>
         </div>
         <div class="euclidean-input">
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
