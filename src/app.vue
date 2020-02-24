@@ -13,6 +13,7 @@ import Vuex from 'vuex'
 import * as firebase from 'firebase';
 import CentralPart from './components/central-part.vue'
 import TopBar from './components/top-bar.vue'
+import VueSlider from 'vue-slider-component'
 export const EventBus = new Vue();
 
 var app = firebase.initializeApp({ apiKey: "AIzaSyA1j4rhDzKf1CD8ndIIRrNve3lSri-vbA8",
@@ -71,7 +72,8 @@ export default {
   store,
   components: {
     CentralPart,
-    TopBar
+    TopBar,
+    VueSlider
   }
 }
 </script>

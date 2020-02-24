@@ -70,13 +70,4 @@ export default {
     }
     }
 }
-$(document).ready(function() {
-    $('.enter-to-unselect').keydown(function(e) {
-     if(e.which == 13 ) {
-        if($(this).text()!='')
-            $(this).blur().next().focus();
-        return false;
-      }
-    });
-});
 </script>

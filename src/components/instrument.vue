@@ -3,8 +3,8 @@
         <div v-on:click="deleteInstrument" class="add-rem-inst rem-inst on-inst">
             <div class="minus-symbol">-</div> 
         </div>
-        <div v-on:click="selectInstrument" v-bind:title='title' class="instrument-name">
-            <div :id="'actualSample'+id">
+        <div v-bind:title='title' class="instrument-name">
+            <div :id="'actualSample'+id" v-on:click="selectInstrument">
                 Cy
             </div>
             
@@ -69,11 +69,11 @@
         <div class="euclidean-input">
             <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
 
-            <div v-on:click="selectNoteDuration" class="noteDuration" title="Note Duration">
-                <div :id="'actualDuration'+id">
+            <div class="noteDuration" title="Note Duration">
+                <div :id="'actualDuration'+id" v-on:click="selectNoteDuration">
                 /16
                 </div>
-                <span>&blacktriangledown;</span>
+                <span v-on:click="selectNoteDuration">&blacktriangledown;</span>
                 <ul class="sub-menu genre dur">
                     <li v-on:click="updateDuration(4)">/4</li>
                     <li v-on:click="updateDuration(8)">/8</li>
@@ -197,8 +197,7 @@ export default {
     },
 
     selectInstrument: function(e) {
-        
-        $(e.target).children("ul").toggleClass("active");
+        $(e.target).parent("div").children("ul").toggleClass("active");
     },
 
     updateDuration: function(val){
@@ -226,7 +225,7 @@ export default {
     },
 
     selectNoteDuration: function(e){
-        $(e.target).children("ul").toggleClass("active");
+        $(e.target).parent("div").children("ul").toggleClass("active");
     },
 
     updatePan: function(value){

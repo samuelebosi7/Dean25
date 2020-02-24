@@ -15,8 +15,10 @@
             </div>
         </div>
             
-        <div class='volume' title="Volume">
-            <input id="duration" type="range" min="0" max="100">
+        <div id='app' title="Volume">
+            <!-- <input id="duration" type="range" min="0" max="100"> -->
+            <slider></slider>
+            <!-- <h1>{{ value }}</h1> -->
         </div>
 
         <div id='tempoDisplays'>
@@ -41,6 +43,7 @@
 
 <script>
     import Instrument from "./instrument.vue";
+    import Slider from "./slider.vue";
     import store from '../app.vue';
     import { EventBus } from '../app.vue';
 
@@ -56,6 +59,24 @@
         return this.$store.state.instrumentList;
         },
     },
+        
+    components: {
+        Slider
+    },
+    // mounted() {
+    //     $(function(){
+    //         if ($('#volume').length) {
+    //             console.log("ciao");
+    //             $("#volume").slider({
+    //                 orientation: "horizontal",
+    //                 range: "min",
+    //                 max: 100,
+    //                 value: 0,
+    //                 animate: 1300
+    //             });
+    //         }
+    //     })
+    // },
     methods: {
         showButtonsDelete: function() {
             // document.querySelectorAll(".on-inst").forEach(function(el){
@@ -143,29 +164,29 @@
         return false;
       }
     });
-    /*
-    //Main volume slider script
-    function createHoverState (myobject){
-        myobject.hover(function() {
-        $(this).prev().toggleClass('hilite');
-        });
-        myobject.mousedown(function() {
-        $(this).prev().addClass('dragging');
-        $("*").mouseup(function() {
-            $(myobject).prev().removeClass('dragging');
-        });
-        });
-    }
     
-    $(".volume").slider({
-        orientation: "horizontal",
-        range: "min",
-        max: 100,
-        value: 0,
-        animate: 1300
-    });
-    $("#main").slider( "value", 100 );
+    // //Main volume slider script
+    // function createHoverState (myobject){
+    //     myobject.hover(function() {
+    //     $(this).prev().toggleClass('hilite');
+    //     });
+    //     myobject.mousedown(function() {
+    //     $(this).prev().addClass('dragging');
+    //     $("*").mouseup(function() {
+    //         $(myobject).prev().removeClass('dragging');
+    //     });
+    //     });
+    // }
     
-    createHoverState($(".volume a.ui-slider-handle"));*/
+    // $("#volume").slider({
+    //     orientation: "horizontal",
+    //     range: "min",
+    //     max: 100,
+    //     value: 0,
+    //     animate: 1300
+    // });
+    // $("#main").slider( "value", 100 );
+    
+    // createHoverState($(".volume a.ui-slider-handle"));
     });
 </script>

@@ -4,7 +4,7 @@ html {
 
 body {
     overflow: hidden; 
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 #command-line {
@@ -187,7 +187,8 @@ body {
     height: 17px;
     top: 5px;
     left: 12px;
-    background-color: rgba(199, 199, 199, 0.5);
+    background-color: #e4e4e4;
+    background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
     border: 1px solid black;
     border-radius: 4px;
     font-size: 22px;
@@ -251,9 +252,17 @@ ul.sub-menu li:hover{
   background-color: #565656;
     background-image: radial-gradient(transparent, rgba(255, 255, 255, 0.35));
 }
+
 .instrument-name:hover{
-  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.2));
+  background-color: #fafafa;
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
 }
+
+.noteDuration:hover{
+  background-color: #fafafa;
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
+}
+
 
 .active {
   z-index:1;
@@ -510,10 +519,10 @@ input::-webkit-inner-spin-button {
 .button-plus {
   left: -11px;
 }
-
+/* 
 .duration{
   height: 0px;
-}
+} */
 
 .noteDuration{
   position: absolute;
@@ -528,7 +537,7 @@ input::-webkit-inner-spin-button {
     left: 153px;
     font-size: 15px;
     line-height: 1;
-    background-color: #d8d8d8;
+    background-color: #d1d1d1;
     background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
     cursor: pointer;
 }
