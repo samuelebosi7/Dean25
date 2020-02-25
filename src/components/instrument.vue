@@ -133,12 +133,18 @@ export default {
 
         links () {
             return this.$store.state.links;
-        }
+        },
+
+        // prova () {
+        //     this.accessStore();
+        //     console.log("ciao" + this.links);
+        // }
     },
 
-    // created(){
-    //    this.accessStore();
-    // },
+    created(){
+       this.accessStore();
+       console.log("ciao" + this.$store.state.links);
+    },
 
     methods: {
     accessStore: function() {
@@ -198,6 +204,7 @@ export default {
 
     selectInstrument: function(e) {
         $(e.target).parent("div").children("ul").toggleClass("active");
+        this.accessStore();
     },
 
     updateDuration: function(val){
@@ -240,8 +247,8 @@ export default {
   }
 }
 
- $(document).ready(function() {
-    this.accessStore();
- });
+//  $(document).ready(function() {
+//     this.accessStore();
+//  });
 
 </script>

@@ -1,11 +1,13 @@
 <template>
-  <div id="app">
-    <top-bar></top-bar>
-    <div id = "central-part">
-      <central-part></central-part>
+  
+    <div id="app">
+      <top-bar></top-bar>
+      <div id = "central-part">
+        <central-part></central-part>
+      </div>
+      <div id = "mixer"></div>
     </div>
-    <div id = "mixer"></div>
-  </div>
+  
 </template>
 
 <script>
@@ -29,9 +31,10 @@ const store = new Vuex.Store({
   state: {
     audiox : new AudioContext,
     instrumentList: [
-      { id: 0, title: 'Cymbals' },
-      { id: 1, title: 'Cymbals' },
-      { id: 2, title: 'Cymbals' }],
+      // { id: 0, title: 'Cymbals' },
+      // { id: 1, title: 'Cymbals' },
+      // { id: 2, title: 'Cymbals' }
+      ],
       
     links: [],
     storage: firebase.storage(),
