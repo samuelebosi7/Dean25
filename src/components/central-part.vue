@@ -10,7 +10,7 @@
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
           <instrument v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
+          <channel class="instrument-channel" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
   </div>
@@ -23,11 +23,11 @@ import Channel from './channel.vue';
 
 export default {
   name: 'central-part',
+  props: ["mastVolume"],
   data() {
     return {
       color:'',
       channelList: [], // {id , seq[], noteDuration}  seq[] è la sequenza binaria
-      //noteDuration: 2,
       cLcm: 0,    //minimo comune multiplo
       count: 0,  //conteggio globale mcm
 

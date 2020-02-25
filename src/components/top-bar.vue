@@ -17,7 +17,7 @@
             
         <div id='app' title="Volume">
             <!-- <input id="duration" type="range" min="0" max="100"> -->
-            <slider></slider>
+            <slider v-on:changeVolume="changeVolume"></slider>
             <!-- <h1>{{ value }}</h1> -->
         </div>
 
@@ -115,6 +115,11 @@
         this.isPlaying = false;
         $(".play-pause").removeClass("paused");
         EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
+    },
+
+    changeVolume: function(value){
+        this.$emit('changeVolume', {volume: value.volume});
+        console.log("in top-bar il volume è "+value.volume);
     },
 
     bpmChange: function(e) {

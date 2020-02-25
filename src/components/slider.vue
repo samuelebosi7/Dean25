@@ -1,6 +1,6 @@
 
 <template>
-  <vue-slider v-model="value" />
+  <vue-slider v-model="value" v-on:change="changeVolume"></vue-slider>
 </template>
  
 <script>
@@ -15,6 +15,12 @@ export default {
   data () {
     return {
       value: 50
+    }
+  },
+  methods:{
+    changeVolume: function(){
+      this.$emit('changeVolume', {volume: this.value});
+      console.log("volume cambiato a "+this.value);
     }
   }
 }

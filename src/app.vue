@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <top-bar></top-bar>
+    <top-bar v-on:changeVolume="changeVolume"></top-bar>
     <div id = "central-part">
-      <central-part></central-part>
+      <central-part v-bind:mastVolume="masterVolume"></central-part>
     </div>
     <div id = "mixer"></div>
   </div>
@@ -68,6 +68,7 @@ export default {
   data() {
     return {
       message: ' World',
+      masterVolume: 50
     };
   },
   store,
@@ -75,6 +76,12 @@ export default {
     CentralPart,
     TopBar,
     VueSlider
+  },
+  methods: {
+    changeVolume: function(value){
+      this.masterVolume=value.volume;
+      console.log("in app volume a "+this.masterVolume);
+    }
   }
 }
 </script>

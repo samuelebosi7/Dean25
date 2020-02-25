@@ -25,7 +25,7 @@ name: "sequencer",
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain"],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "masterVolume"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
@@ -105,7 +105,7 @@ name: "sequencer",
           bar.addClass('fade');
           bar.css('transform', 'scaleY(0)');  
         }, 50);
-
+        console.log("il volume in sequencer è "+this.masterVolume);
         this.playSample();
       }
     },
