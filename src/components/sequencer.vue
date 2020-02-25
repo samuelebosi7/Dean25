@@ -31,7 +31,14 @@ name: "sequencer",
       EventBus.$on('stopStep', this.stopSeq);
       this.audioChannel();
       var gsReference = this.storage.refFromURL('gs://actam-test-ed131.appspot.com/909/bd01.wav');
-      this.getData(gsReference);
+      // gsReference.getDownloadURL().then( this.getData(url, this.audiox, this.data));
+      //this.getData(gsReference.getDownloadURL(), this.audiox, this.data);
+      gsReference.getDownloadURL().then(url => {
+        this.getData(url, this.audiox, this.data);
+        }).catch(function(error) {
+        // Handle any errors
+      });
+      
   },
   computed: {
     audiox () {
@@ -75,7 +82,7 @@ name: "sequencer",
     },
 
     audioChannel: function() {
-      this.source = this.audiox.createBufferSource();
+      //this.source = this.audiox.createBufferSource();
       this.p = this.audiox.createStereoPanner();
       this.g = this.audiox.createGain();
       this.g.connect(this.p);
@@ -90,7 +97,7 @@ name: "sequencer",
         if (this.currentStep >= this.binSeq.length) {
           this.currentStep = 0;
         }
-
+        //this.getData("https://firebasestorage.googleapis.com/v0/b/actam-test-ed131.appspot.com/o/909%2Fbd01.wav?alt=media&token=7bb295b8-8210-495b-916e-1aead6532d8d", this.audiox, this.data);
         this.playStep();
         this.nextStepReceived = 0;
       }
@@ -115,12 +122,13 @@ name: "sequencer",
 
       o.connect(this.g);
       o.start(); */
-      this.source.buffer = data.buffer;
-      this.source.connect(this.g);
-      this.source.start();
+      var source = this.audiox.createBufferSource();
+      source.buffer = this.data.buffer;
+      source.connect(this.g);
+      source.start();
     },
 
-    getData: function(url) {
+    getData: function(url, audioCtx, data) {
       console.log("starting")
       var request = new XMLHttpRequest();
 
@@ -130,7 +138,6 @@ name: "sequencer",
 
       request.onload = function() {
         var audioData = request.response;
-        console.log("loadaed")
         audioCtx.decodeAudioData(audioData, function(buffer) {
           data.buffer = buffer;
           console.log("loaded", data)
