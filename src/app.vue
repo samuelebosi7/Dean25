@@ -4,6 +4,7 @@
     <div id = "central-part">
       <central-part v-bind:mastVolume="masterVolume"></central-part>
     </div>
+  </div>
   
 </template>
 
