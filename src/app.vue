@@ -5,6 +5,7 @@
       <central-part v-bind:mastVolume="masterVolume"></central-part>
     </div>
   </div>
+  
 </template>
 
 <script>
