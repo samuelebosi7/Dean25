@@ -9,7 +9,7 @@
             
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
-          <instrument v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+          <instrument v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changedMute" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
           <channel class="instrument-channel" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
@@ -68,12 +68,12 @@ export default {
   methods: {
 
     createChannel: function(){
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2}));
+        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1}));
     },
 
     updateChannel: function() {
         var idArr = this.channelList.map(el => el.id);
-        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2}) : {});
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1}) : {});
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
@@ -87,6 +87,11 @@ export default {
         this.channelList.find(x => x.id === value.id).noteDuration = parseInt(value.dur,10);
         //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).noteDuration);
         // this.noteDuration=parseInt(value.dur,10);
+    },
+
+    changedMute: function(value) {
+        this.channelList.find(x => x.id === value.id).mute = value.mute;
+        //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).mute);
     },
 
     euclidean: function(tatum, tactus){

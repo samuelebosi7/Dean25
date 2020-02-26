@@ -25,7 +25,7 @@ name: "sequencer",
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain", "masterVolume"],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "masterVolume"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
@@ -65,7 +65,15 @@ name: "sequencer",
     },
     
     gain(value) {
-      this.g.gain.linearRampToValueAtTime(value, this.audiox.currentTime+0.025);
+      this.g.gain.linearRampToValueAtTime(this.mute*(value*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+    },
+
+    masterVolume(value) {
+      this.g.gain.linearRampToValueAtTime(this.mute*(this.gain*2)*(value/100), this.audiox.currentTime+0.025);
+    },
+
+    mute(value){
+      this.g.gain.linearRampToValueAtTime(value*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
     }
   },
 
@@ -85,6 +93,7 @@ name: "sequencer",
       //this.source = this.audiox.createBufferSource();
       this.p = this.audiox.createStereoPanner();
       this.g = this.audiox.createGain();
+      this.g.gain.value=this.masterVolume/100;
       this.g.connect(this.p);
       this.p.connect(this.audiox.destination);
     },
@@ -107,12 +116,11 @@ name: "sequencer",
       if (this.binSeq[this.currentStep]==1) {
         var bar=$("#spike-bar"+this.id)
         bar.removeClass('fade');
-        bar.css('transform', 'scaleY(1)');
+        bar.css('transform', 'scaleY('+(this.gain)*(this.masterVolume/100)+')');
         setTimeout(function() {
           bar.addClass('fade');
           bar.css('transform', 'scaleY(0)');  
         }, 50);
-        console.log("il volume in sequencer è "+this.masterVolume);
         this.playSample();
       }
     },

@@ -63,6 +63,16 @@
     components: {
         Slider
     },
+    created: function () {
+        let that = this;
+        document.addEventListener('keyup', function (evt) {
+            if (evt.keyCode == 32 ) {   //se schiacchiato spazio, fa il play degli strumenti
+                that.playButton();
+            } else {
+                evt.preventDefault();
+            }
+        });
+    },
     // mounted() {
     //     $(function(){
     //         if ($('#volume').length) {
@@ -107,10 +117,11 @@
     },
 
     playButton:  function() {
+        $(".play-pause").toggleClass("paused");
         this.isPlaying = !this.isPlaying;
         EventBus.$emit('playSeq' , {isPlaying: this.isPlaying , isStop: false});
     },
-
+    
     stopButton: function() {
         this.isPlaying = false;
         $(".play-pause").removeClass("paused");
@@ -150,10 +161,10 @@
     
     $(document).ready(function() {
     //Play-Pause-Record script
-    $(".play-pause").click(function() {
-        $(".play-pause").toggleClass("paused");
-        return false;
-    });
+    // $(".play-pause").click(function() {
+    //     $(".play-pause").toggleClass("paused");
+    //     return false;
+    // });
 
     /*$(".stop").click(function() {
         if(rec==true){
