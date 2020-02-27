@@ -319,7 +319,7 @@ li.genre3:hover .sub-menu.item.genre3{
 }
 
 .active-mute{
-  background: radial-gradient(#ff0000, rgba(45, 0, 0, 0.74) 100%);
+  background: radial-gradient(#ff0000, rgba(135, 0, 0, 0.74) 100%);
     box-shadow: 0 0 3px #ff2f2f;
 }
 

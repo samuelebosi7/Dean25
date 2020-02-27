@@ -81,7 +81,6 @@ export default {
   methods: {
     changeVolume: function(value){
       this.masterVolume=value.volume;
-      console.log("in app volume a "+this.masterVolume);
     }
   }
 }
