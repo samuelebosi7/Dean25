@@ -1,15 +1,19 @@
 <template>
     <div :id="'inst'+id" class="instrument disable-select">
+        
         <div v-on:click="deleteInstrument" class="add-rem-inst rem-inst on-inst">
             <div class="minus-symbol">-</div> 
         </div>
         <div v-bind:title='title' class="instrument-name">
-            <div :id="'actualSample'+id" v-on:click="selectInstrument">
+            <!-- <div :id="'actualSample'+id" v-on:click="selectInstrument">
                 Cy
-            </div>
+            </div> -->
             
-            <ul class="sub-menu genre sample">
-                <!-- <li class="genre1">
+            <prova v-bind:id = this.id>
+
+            </prova>
+            <!-- <ul class="sub-menu genre sample">
+                <li class="genre1">
                     Rock
                     <span>&blacktriangleright;</span>
                     <ul class="sub-menu item genre1">
@@ -47,8 +51,8 @@
                             Maracas
                         </li>
                     </ul>
-                </li> -->
-            </ul>
+                </li> 
+            </ul> -->
                 <!-- <div class="submenu">
                     <div class="element-in-menu menu-item"><a>Rock</a></div>
                     <div class="element-in-menu menu-item"><a>African</a></div>
@@ -106,6 +110,7 @@
 <script>
 import Knob from "./knob.vue";
 import RangeSelector from "./range-selector.vue";
+import Prova from "./prova.vue";
 
 export default {
     name: 'instrument',
@@ -125,7 +130,8 @@ export default {
     },
     components: {
         Knob,
-        RangeSelector
+        RangeSelector,
+        Prova,
     },
     computed: {
         instrumentList () {
@@ -136,15 +142,11 @@ export default {
             return this.$store.state.links;
         },
 
-        // prova () {
-        //     this.accessStore();
-        //     console.log("ciao" + this.links);
-        // }
     },
 
     created(){
-       this.accessStore();
-       console.log("ciao" + this.$store.state.links);
+       //this.accessStore();
+       //console.log("ciao" + this.$store.state.links);
     },
 
     methods: {
@@ -205,7 +207,6 @@ export default {
 
     selectInstrument: function(e) {
         $(e.target).parent("div").children("ul").toggleClass("active");
-        this.accessStore();
     },
 
     updateDuration: function(val){

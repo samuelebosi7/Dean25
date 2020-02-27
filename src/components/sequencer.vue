@@ -31,8 +31,6 @@ name: "sequencer",
       EventBus.$on('stopStep', this.stopSeq);
       this.audioChannel();
       var gsReference = this.storage.refFromURL('gs://actam-test-ed131.appspot.com/909/bd01.wav');
-      // gsReference.getDownloadURL().then( this.getData(url, this.audiox, this.data));
-      //this.getData(gsReference.getDownloadURL(), this.audiox, this.data);
       gsReference.getDownloadURL().then(url => {
         this.getData(url, this.audiox, this.data);
         }).catch(function(error) {
