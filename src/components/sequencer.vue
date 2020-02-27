@@ -30,7 +30,7 @@ name: "sequencer",
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
       this.audioChannel();
-      var gsReference = this.storage.refFromURL('gs://actam-test-ed131.appspot.com/909/bd01.wav');
+      var gsReference = this.storage.refFromURL('gs://actam-test-ed131.appspot.com/PERCUSSIONS/cp04.wav');
       gsReference.getDownloadURL().then(url => {
         this.getData(url, this.audiox, this.data);
         }).catch(function(error) {
@@ -85,6 +85,7 @@ name: "sequencer",
 
     stopSeq:function() {
       this.currentStep = -1;
+      this.nextStepReceived = 0;
     },
 
     audioChannel: function() {

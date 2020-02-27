@@ -14,7 +14,8 @@ name: "knob",
 
   watch:{
     val(value) {
-      this.$emit('updateValueKnob', (value+160)/320);
+      var ltodb = Math.pow((value+160)/320, 2);
+      this.$emit('updateValueKnob', ltodb);
     }
   },
 
