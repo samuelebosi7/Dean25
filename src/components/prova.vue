@@ -18,8 +18,8 @@
 
 
     <ul class="sub-menu genre sample"  v-bind:class="{active: isActive}">
-      <ul v-for=" el in genre" :class="'genre'+(el.j+1)">
-        <li v-text="el.gen" @mouseover="el.disp = true" @mouseout="el.disp = false" ></li>
+      <ul class="sub-menu1 genre" v-for=" el in genre" :class="'genre'+(el.j+1)" >
+        <li v-text="el.gen+' ►'" v-on:click="el=subMenuClick(el)" ></li>
         <ul :class="['sub-menu', 'item' , 'genre'+(el.j), el.disp ? 'active' : '',]"> 
           <li v-for="sub in el.sub" v-text="sub" @mouseover="el.disp = true" @mouseout="el.disp = false" v-on:click="updateSample(sub)"></li>
         </ul>
@@ -88,6 +88,16 @@ name: 'prova',
 
     updateSample(el) {
     
+    },
+
+    subMenuClick: function(el) {
+      if(el.disp)
+        $(".sub-menu.item.genre"+el.j).removeClass("active");
+      else
+        $(".sub-menu.item.genre"+el.j).addClass("active");
+      el.disp=!el.disp;
+      return el;
+        
     },
 
     mouseOver: function() {
