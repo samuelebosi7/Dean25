@@ -225,6 +225,8 @@ export default {
 
     MuteClicked: function(){
         document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+        if(document.querySelectorAll(".solo-button")[this.id].classList.contains("active-solo"))
+            document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo")
         if(this.mute==1)
             this.mute=0;
         else
@@ -235,6 +237,12 @@ export default {
 
     SoloClicked: function(){
         document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo");
+        if(document.querySelectorAll(".mute-button")[this.id].classList.contains("active-mute"))
+        {
+                document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+                this.mute=1;
+        }
+        this.$emit('changedMute', {id: this.id, mute: this.mute});
     },
 
     selectNoteDuration: function(e){
