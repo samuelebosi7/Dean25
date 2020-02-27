@@ -130,7 +130,6 @@
 
     changeVolume: function(value){
         this.$emit('changeVolume', {volume: value.volume});
-        console.log("in top-bar il volume è "+value.volume);
     },
 
     bpmChange: function(e) {
