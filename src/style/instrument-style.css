@@ -268,6 +268,7 @@ ul.sub-menu li:hover{
   z-index:1;
   opacity:1 !important;
   pointer-events: all !important;
+  visibility: unset !important;
 }
 
 li.genre1:hover .sub-menu.item.genre1{
@@ -287,6 +288,7 @@ li.genre3:hover .sub-menu.item.genre3{
 
 .sub-menu.item{
   margin-left: 20px;
+  visibility: hidden;
 }
 
 .mute{
