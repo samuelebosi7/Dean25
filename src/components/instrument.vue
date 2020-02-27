@@ -124,7 +124,8 @@ export default {
                 {id: 2, name: "Offset", val: 0 , initialValue: 0},
             ],
             gain: 0.5,
-            pan: 0
+            pan: 0,
+            mute: 1 // 1 -> mute disabilitato, 0 -> mute abilitato
         }
     },
     components: {
@@ -216,7 +217,6 @@ export default {
     },
 
     updateSample: function(val){
-
         $('#actualSample'+this.id).html(val.substring(0, 2));
         $(".sub-menu.genre").removeClass("active");
         this.title=val;
@@ -225,7 +225,12 @@ export default {
 
     MuteClicked: function(){
         document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
-        this.accessStore();
+        if(this.mute==1)
+            this.mute=0;
+        else
+            this.mute=1;
+        this.$emit('changedMute', {id: this.id, mute: this.mute});
+        //this.accessStore();
     },
 
     SoloClicked: function(){

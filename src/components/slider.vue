@@ -17,10 +17,14 @@ export default {
       value: 50
     }
   },
+  // computed: {
+  //   value(val){
+  //     val=50;
+  //   }
+  // },
   methods:{
     changeVolume: function(){
       this.$emit('changeVolume', {volume: this.value});
-      console.log("volume cambiato a "+this.value);
     }
   }
 }
