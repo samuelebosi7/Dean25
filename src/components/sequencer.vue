@@ -25,7 +25,7 @@ name: "sequencer",
      // oneNum: this.binSeq.filter(x => x==1).length,
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "masterVolume"],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
@@ -72,6 +72,11 @@ name: "sequencer",
 
     mute(value){
       this.g.gain.linearRampToValueAtTime(value*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+    },
+
+    solo(value){
+       this.g.gain.linearRampToValueAtTime(this.mute*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+    
     }
   },
 

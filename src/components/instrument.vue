@@ -125,7 +125,8 @@ export default {
             ],
             gain: 0.5,
             pan: 0,
-            mute: 1 // 1 -> mute disabilitato, 0 -> mute abilitato
+            mute: 1, // 1 -> mute disabilitato, 0 -> mute abilitato
+            solo: false // true -> attivo, false -> disattivo
         }
     },
     components: {
@@ -235,14 +236,15 @@ export default {
         //this.accessStore();
     },
 
-    SoloClicked: function(){
-        document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo");
+    SoloClicked: function(){ 
         if(document.querySelectorAll(".mute-button")[this.id].classList.contains("active-mute"))
         {
-                document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
-                this.mute=1;
+            document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+            this.mute=1;
         }
-        this.$emit('changedMute', {id: this.id, mute: this.mute});
+        document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo");
+        this.solo=!this.solo; 
+        this.$emit('changedSolo', {id: this.id, solo: this.solo});
     },
 
     selectNoteDuration: function(e){
