@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div :id="'actualSample'+id" v-on:click="selectInstrument">
+  <div :id="'SampleSlot'+id">
+    <div :id="'actualSample'+id" v-on:click="selectInstrument" >
       Cy
     </div>
 
@@ -86,6 +86,9 @@ name: 'prova',
 
     updateSample(elIndex , sub) {
       var l = this.createData();
+      var cathegory=this.genre.find(x => x.j === elIndex).gen;
+      $('#actualSample'+this.id).html(cathegory.substring(0,2));
+      $('#SampleSlot'+this.id).attr('title', cathegory+' - '+sub);
       this.$emit('updateLink', l[elIndex][sub]);
     },
 
