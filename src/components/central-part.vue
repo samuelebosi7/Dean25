@@ -80,12 +80,12 @@ export default {
     },
 
     createChannel: function(){
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1 , url: ''}));
+        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1, solo:false , url: ''}));
     },
 
     updateChannel: function() {
         var idArr = this.channelList.map(el => el.id);
-        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1 , url: ''}) : {});
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1, solo:false , url: ''}) : {});
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
@@ -104,6 +104,44 @@ export default {
     changedMute: function(value) {
         this.channelList.find(x => x.id === value.id).mute = value.mute;
         //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).mute);
+    },
+
+    changedSolo: function(value) {
+        // //this.channelList.find(x => x.id === value.id).solo = value.mute;
+        // var alrSolo=false;
+        //   console.log("lo strumento selezionato è "+value.id+" ha solo "+value.solo);
+        // //this.channelList.find(x => x.id === value.id).solo = value.solo;
+        // this.channelList.forEach(x => {
+        //   if(x.solo)
+        //     alrSolo=true;
+        // })
+
+        // if(!alrSolo)
+        // {
+        //   this.channelList.forEach(x => {
+        //     if(x.id!=value.id)
+        //     {
+        //       if(x.mute==1)
+        //         x.mute=0;
+        //       else
+        //         x.mute=1;
+        //     }
+        //     else
+        //       x.solo=value.solo;
+        //     console.log("lo strumento "+x.id+" ha solo "+x.solo+" e mute "+x.mute);
+        //   })
+        // }
+        // else{
+        //   //this.channelList.find(x => x.id === value.id)=!(this.channelList.find(x => x.id === value.id));
+        //   // this.channelList.find(x => x.id === value.id).function() {
+        //   //   x.solo=!x.solo;
+        //   //   if(x.mute==1)
+        //   //     x.mute=0;
+        //   //   else
+        //   //     x.mute=1;
+        //   //};
+        //   console.log("lo strumento "+x.id+" ha solo "+x.solo+" e mute "+x.mute);
+        // }
     },
 
     euclidean: function(tatum, tactus){

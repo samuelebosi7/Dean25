@@ -22,19 +22,24 @@
         </div>
 
         <div id='tempoDisplays'>
-            <div class='tempoProp text-crono' title="Time">
+            <!-- <div class='tempoProp text-crono' title="Time">
                 <div type="text" class='crono'>00:00:00</div>
-            </div>
+            </div> -->
+            
             <div class='tempoProp text-bpm'>
+                <div class='bpm-selector'>
+                    <div v-on:click="bpmButtChange(0.1)" class='bpm-selectorButt bpm-selectorButt-up'>˄</div>
+                    <div v-on:click="bpmButtChange(-0.1)" class='bpm-selectorButt bpm-selectorButt-down'>˅</div>
+                </div>
                 <input v-on:change="bpmChange" @keypress="isNumber($event)" class='enter-to-unselect bpm' value="120"> bpm
             </div>
-            <div class='tempoProp text-tot-steps'>
+            <!-- <div class='tempoProp text-tot-steps'>
                 <div class='tot-steps'>0</div> steps
-            </div>
+            </div> -->
         </div>
-        <div id='metronomeDisplay'>
+        <!-- <div id='metronomeDisplay'>
             Metronome:<div id='metronome' class='active' ></div>
-        </div>
+        </div> -->
         <!-- <img src="./src/svg/metronome.svg" class='metronome-svg'> -->
         
         <div contenteditable="true" id='songTitle' class="ed-div">New project</div>
@@ -135,6 +140,13 @@
     bpmChange: function(e) {
         EventBus.$emit('changeBpm' , {newBpm: e.target.value});
         console.log(e.target.value);
+    },
+
+    bpmButtChange: function(val){
+        var actual=parseFloat($(".bpm").val());
+        actual=(actual+val).toFixed(1);
+        $(".bpm").val(actual);
+        EventBus.$emit('changeBpm' , {newBpm: actual});
     },
 
     getMaxId: function() {

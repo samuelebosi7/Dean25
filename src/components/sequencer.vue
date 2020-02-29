@@ -27,7 +27,7 @@ name: "sequencer",
      clock: {},
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "masterVolume" , "url"],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
@@ -76,8 +76,11 @@ name: "sequencer",
         }).catch(function(error) {
         // Handle any errors
       });
-
+    },
       
+    solo(value){
+       this.g.gain.linearRampToValueAtTime(this.mute*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+    
     }
   },
 

@@ -9,9 +9,9 @@
                 Cy
             </div> -->
             
-            <prova v-bind:id = this.id v-on:updateLink = "updateLink">
+            <instrument-selector v-bind:id = this.id v-on:updateLink = "updateLink">
 
-            </prova>
+            </instrument-selector>
             
         </div>
 
@@ -64,7 +64,7 @@
 <script>
 import Knob from "./knob.vue";
 import RangeSelector from "./range-selector.vue";
-import Prova from "./prova.vue";
+import InstrumentSelector from "./instrument-selector.vue";
 
 export default {
     name: 'instrument',
@@ -79,13 +79,14 @@ export default {
             ],
             gain: 0.5,
             pan: 0,
-            mute: 1 // 1 -> mute disabilitato, 0 -> mute abilitato
+            mute: 1, // 1 -> mute disabilitato, 0 -> mute abilitato
+            solo: false // true -> attivo, false -> disattivo
         }
     },
     components: {
         Knob,
         RangeSelector,
-        Prova,
+        InstrumentSelector,
     },
     computed: {
         instrumentList () {
@@ -133,6 +134,8 @@ export default {
 
     MuteClicked: function(){
         document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+        if(document.querySelectorAll(".solo-button")[this.id].classList.contains("active-solo"))
+            document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo")
         if(this.mute==1)
             this.mute=0;
         else
@@ -141,8 +144,15 @@ export default {
         //this.accessStore();
     },
 
-    SoloClicked: function(){
+    SoloClicked: function(){ 
+        if(document.querySelectorAll(".mute-button")[this.id].classList.contains("active-mute"))
+        {
+            document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
+            this.mute=1;
+        }
         document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo");
+        this.solo=!this.solo; 
+        this.$emit('changedSolo', {id: this.id, solo: this.solo});
     },
 
     selectNoteDuration: function(e){

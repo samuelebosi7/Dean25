@@ -89,6 +89,7 @@ div:focus {
   position: relative;
   left:18.7px;
   top:-10px;
+  user-select: none; 
 }
 
 .minus-symbol{
@@ -102,6 +103,7 @@ div:focus {
   position: relative;
   left:3.5px;
   top:-11.5px;
+  user-select: none; 
  }
 
 #songTitle{
@@ -189,43 +191,79 @@ div:focus {
   width: 85px;
 }
 
-.tempoProp.text-crono{
-  position: absolute;
-  margin-top:-5px;
-  margin-left:0px;
-}
+// .tempoProp.text-crono{
+//   position: absolute;
+//   margin-top:-5px;
+//   margin-left:0px;
+// }
 
 .tempoProp.text-bpm{
   position: absolute;
-  padding-left: 3px;
-  padding-right: 3px;
-  margin-top: -5px;
-  margin-left:100px;
-  width: 63px;
-  text-align: right;
-  font-size: 12px;
-  line-height: 29px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-top: -5px;
+    /* margin-left: 100px; */
+    width: 82px;
+    text-align: right;
+    font-size: 12px;
+    line-height: 29px;
+    user-select: none; 
 }
 
-.tempoProp.text-tot-steps{
+// .tempoProp.text-tot-steps{
+//   position: absolute;
+//   padding-left: 3px;
+//   padding-right: 3px;
+//   margin-top:-5px;
+//   margin-left:200px;
+//   width: 63px;
+//   text-align:right;
+//   font-size: 12px;
+//   line-height: 29px;
+// }
+.bpm-selector{
   position: absolute;
-  padding-left: 3px;
-  padding-right: 3px;
-  margin-top:-5px;
-  margin-left:200px;
-  width: 63px;
-  text-align:right;
-  font-size: 12px;
-  line-height: 29px;
+  margin-left: -2px;
+  background-color: transparent;
+  height: 25px;
+  width: 9px;
+}
+
+.bpm-selectorButt{
+  position: absolute;
+    left: 0px;
+    width: 12px;
+    height: 12px;
+    line-height: 1;
+    text-align: center;
+    font-weight: 700;
+    background-color: transparent;
+    color: #7d7d7d;
+    user-select: none; 
+    cursor: pointer;
+}
+
+.bpm-selectorButt-up:hover, .bpm-selectorButt-down:hover{
+  background-color: #00000026;
+  color: #181818;
+}
+
+.bpm-selectorButt.bpm-selectorButt-up{
+  border-radius: 2.5px 0px 0px 0px;
+}
+
+.bpm-selectorButt.bpm-selectorButt-down{
+  top: 13px;
+  border-radius: 0px 0px 0px 2.5px;
 }
 
 .bpm{
   position: absolute;
   padding-left: 0px;
   padding-right: 0px;
-  margin-left: -38px;
+  margin-left: -49px;
   height: 25px;
-  width: 35px;
+  width: 46px;
   text-align: right;
   font-size: 18px;
   line-height: 25px;

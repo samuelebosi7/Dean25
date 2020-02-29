@@ -5,7 +5,11 @@
         <div class="control meter vertical">
             <span></span>
         </div> -->
+<<<<<<< HEAD
         <sequencer v-bind:masterVolume="this.masterVolume" v-bind:binSeq="this.singleChannel.seq" v-bind:mute="this.singleChannel.mute" v-bind:noteDur="this.singleChannel.noteDuration" v-bind:id="this.singleChannel.id" v-bind:pan="this.singleChannel.pan" v-bind:gain="this.singleChannel.gain" v-bind:url="this.singleChannel.url">  
+=======
+        <sequencer v-bind:masterVolume="this.masterVolume" v-bind:binSeq="this.singleChannel.seq" v-bind:mute="this.singleChannel.mute" v-bind:solo="this.singleChannel.solo" v-bind:noteDur="this.singleChannel.noteDuration" v-bind:id="this.singleChannel.id" v-bind:pan="this.singleChannel.pan" v-bind:gain="this.singleChannel.gain">  
+>>>>>>> 71e4f9ff21b1b76ad240ab6037d2ad9620eec896
         </sequencer>
     </div>
 </template>
