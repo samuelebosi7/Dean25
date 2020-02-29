@@ -9,7 +9,7 @@
             
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
-          <instrument v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changedMute" v-on:changedSolo="changedSolo" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+          <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changedMute" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
           <channel class="instrument-channel" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
@@ -20,6 +20,7 @@
 import { EventBus } from '../app.vue';
 import Instrument from './instrument.vue';
 import Channel from './channel.vue';
+import WAAClock from 'waaclock'
 
 export default {
   name: 'central-part',
@@ -32,10 +33,15 @@ export default {
       count: 0,  //conteggio globale mcm
 
       //timing var
-      startTime: 0,
-      noteTime: 0,
-      ti: 0,
-      tic: 0.0625,
+      clock: {},
+      tickEvent: 0,
+      tic: 0.0625,  
+      prev:0,
+
+      // startTime: 0,
+      // noteTime: 0,
+      // ti: 0,
+      
       //play/stop var
       isPlaying: false,
       isStop: true,
@@ -60,20 +66,26 @@ export default {
   },
   created() {
       this.createChannel();
-
-      EventBus.$on('playSeq', this.playListener);
-      EventBus.$on('stopSeq', this.stopListener);
+      this.clock = new WAAClock(this.audiox);
+      
+      EventBus.$on('playSeq', this.setPlayStop);
+      EventBus.$on('stopSeq', this.setPlayStop);
       EventBus.$on('changeBpm', this.changeBpm);
   },
   methods: {
 
+    updateLink: function(value) {
+        this.channelList.find(x => x.id === value.id).url = value.link;
+        console.log("central "+value);
+    },
+
     createChannel: function(){
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1, solo:false}));
+        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1, solo:false , url: ''}));
     },
 
     updateChannel: function() {
         var idArr = this.channelList.map(el => el.id);
-        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1, solo:false}) : {});
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1, solo:false , url: ''}) : {});
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
@@ -171,32 +183,72 @@ export default {
 
     //TIMING
 
-    playListener(payload) {
-      this.setPlayStop(payload.isPlaying , payload.isStop);
-      this.play();
-    },
+    // playListener(payload) {
+    //   this.setPlayStop(payload.isPlaying , payload.isStop);
+    //   //this.play();
+    // },
 
-    stopListener(payload) {
-      this.setPlayStop(payload.isPlaying , payload.isStop);
-    },
+    // stopListener(payload) {
+    //   this.setPlayStop(payload.isPlaying , payload.isStop);
+    // },
 
-    setPlayStop: function(isPlaying , isStop) {
-      this.isPlaying = isPlaying;
-      this.isStop = isStop;
+    setPlayStop: function(payload) {
+      this.isPlaying = payload.isPlaying ;
+      this.isStop = payload.isStop;
       this.play();
     },
 
     play: function () {
-      if(this.isStop || !this.isPlaying)
+      /* if(this.isStop || !this.isPlaying)
         this.audiox.suspend();
-      else this.audiox.resume();
+      else this.audiox.resume(); */
       
-      this.startTime = this.audiox.currentTime + 0.005;
-      this.noteTime = 0;
-      this.emitPlaynote();
+
+      if(this.isStop){
+        this.suspendClock();
+        EventBus.$emit('stopStep');
+        return false;
+      } else if(!this.isPlaying) {
+        this.suspendClock();
+        return false;  //se ho premuto pausa tengo slavato lo step corrente
+      }
+
+
+      //this.startTime = this.audiox.currentTime + 0.005;
+      //this.noteTime = 0;
+      //this.emitPlaynote();
+      
+      this.audiox.resume();
+      this.startClock();
     },
 
-    emitPlaynote:  function() {
+    suspendClock: function() {
+        this.clock.stop();
+
+        if(this.tickEvent != null) {
+          this.tickEvent.clear();
+          this.tickEvent = null;
+        }
+
+        if(this.audiox.state === 'running') 
+          this.audiox.suspend();
+    },
+
+    startClock: function() {
+      this.clock.start();
+      this.tickEvent = this.clock.callbackAtTime(this.handleTick.bind(this), this.audiox.currentTime).repeat(this.tic)
+    },
+
+    handleTick: function({deadline}) {
+      EventBus.$emit('nextStep' , deadline);
+    },
+
+    changeBpm: function(payload) {
+        this.tic = 60/(payload.newBpm*8);
+    },
+
+   /*  emitPlaynote:  function() {
+      
        if(this.isStop){
         EventBus.$emit('stopStep');
         return false;
@@ -205,16 +257,15 @@ export default {
       var ct = this.audiox.currentTime;
       ct -= this.startTime;
 
+      console.log("time: "+ ct );
       while(this.noteTime < ct + this.tic) {
         EventBus.$emit('nextStep');
         this.noteTime += this.tic; 
       }
       this.ti = setTimeout(this.emitPlaynote, 0);
-    },
+    }, */
 
-    changeBpm: function(payload) {
-        this.tic = 60/(payload.newBpm*8);
-    },
+    
     
   }
 }
