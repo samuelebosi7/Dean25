@@ -9,9 +9,9 @@
                 Cy
             </div> -->
             
-            <prova v-bind:id = this.id>
+            <instrument-selector v-bind:id = this.id>
 
-            </prova>
+            </instrument-selector>
             <!-- <ul class="sub-menu genre sample">
                 <li class="genre1">
                     Rock
@@ -110,7 +110,7 @@
 <script>
 import Knob from "./knob.vue";
 import RangeSelector from "./range-selector.vue";
-import Prova from "./prova.vue";
+import InstrumentSelector from "./instrument-selector.vue";
 
 export default {
     name: 'instrument',
@@ -132,7 +132,7 @@ export default {
     components: {
         Knob,
         RangeSelector,
-        Prova,
+        InstrumentSelector,
     },
     computed: {
         instrumentList () {
