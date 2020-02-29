@@ -21,7 +21,7 @@
       <ul class="sub-menu1 genre" v-for=" el in genre" :class="'genre'+(el.j+1)" >
         <li v-text="el.gen+' ►'" v-on:click="el=subMenuClick(el)" ></li>
         <ul :class="['sub-menu', 'item' , 'genre'+(el.j), el.disp ? 'active' : '',]"> 
-          <li v-for="sub in el.sub" v-text="sub" @mouseover="el.disp = true" @mouseout="el.disp = false" v-on:click="updateSample(sub)"></li>
+          <li v-for="sub in el.sub" v-text="sub" @mouseover="el.disp = true" @mouseout="el.disp = false" v-on:click="updateSample(el.j , sub)"></li>
         </ul>
       </ul>
     </ul>
@@ -68,8 +68,6 @@ name: 'prova',
             });
             i++;
         });
-
-        this.genre.forEach(el => {console.log(el)})
     },
 
     createData() {
@@ -86,8 +84,9 @@ name: 'prova',
       this.isActive = !this.isActive;
     },
 
-    updateSample(el) {
-    
+    updateSample(elIndex , sub) {
+      var l = this.createData();
+      this.$emit('updateLink', l[elIndex][sub]);
     },
 
     subMenuClick: function(el) {
@@ -102,7 +101,6 @@ name: 'prova',
 
     mouseOver: function() {
       this.ciao = !this.ciao;
-      console.log(this.ciao)
     }
 
   }   

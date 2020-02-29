@@ -9,6 +9,7 @@
 
 <script>
 import { EventBus } from '../app.vue';
+import WAAClock from 'waaclock'
 
 export default {
 name: "sequencer",
@@ -16,27 +17,21 @@ name: "sequencer",
     return {
       currentStep: -1,
       tatumSeq: 2, //il numero di nextStep che devi ricevere per avanzare di uno
+      tatumDefault: 1,
       nextStepReceived: 0,
       p: 0,
       g: 0,
-      source: {},
       data: {},
       //stepNum: this.binSeq.length,
      // oneNum: this.binSeq.filter(x => x==1).length,
+     clock: {},
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "masterVolume"],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "masterVolume" , "url"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
       this.audioChannel();
-      var gsReference = this.storage.refFromURL('gs://actam-test-ed131.appspot.com/PERCUSSIONS/cp04.wav');
-      gsReference.getDownloadURL().then(url => {
-        this.getData(url, this.audiox, this.data);
-        }).catch(function(error) {
-        // Handle any errors
-      });
-      
   },
   computed: {
     audiox () {
@@ -72,6 +67,17 @@ name: "sequencer",
 
     mute(value){
       this.g.gain.linearRampToValueAtTime(value*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+    },
+
+    url(value) {
+      var gsReference = this.storage.refFromURL(value);
+      gsReference.getDownloadURL().then(url => {
+        this.getData(url, this.audiox, this.data);
+        }).catch(function(error) {
+        // Handle any errors
+      });
+
+      
     }
   },
 
@@ -97,21 +103,25 @@ name: "sequencer",
       this.p.connect(this.audiox.destination);
     },
 
-    scheduleNote: function() {
+    scheduleNote: function(deadline) {
+      var tat;
+      if(this.currentStep == -1)
+        tat = this.tatumDefault;
+      else tat = this.tatumSeq;
+
       this.nextStepReceived++;
       
-      if(this.nextStepReceived >= this.tatumSeq){
+      if(this.nextStepReceived >= tat){
         this.currentStep++;
         if (this.currentStep >= this.binSeq.length) {
           this.currentStep = 0;
         }
-        //this.getData("https://firebasestorage.googleapis.com/v0/b/actam-test-ed131.appspot.com/o/909%2Fbd01.wav?alt=media&token=7bb295b8-8210-495b-916e-1aead6532d8d", this.audiox, this.data);
-        this.playStep();
+        this.playStep(deadline);
         this.nextStepReceived = 0;
       }
     },
     
-    playStep: function() {
+    playStep: function(deadline) {
       if (this.binSeq[this.currentStep]==1) {
         var bar=$("#spike-bar"+this.id)
         bar.removeClass('fade');
@@ -120,22 +130,18 @@ name: "sequencer",
           bar.addClass('fade');
           bar.css('transform', 'scaleY(0)');  
         }, 50);
-        this.playSample();
+        this.playSample(deadline);
       }
     },
 
-    playSample: function() {
-      /* var o = this.audiox.createOscillator();
-
-      o.connect(this.g);
-      o.start(); */
+    playSample: function(deadline) {
       var source = this.audiox.createBufferSource();
       source.buffer = this.data.buffer;
       source.connect(this.g);
-      source.start();
+      source.start(deadline);
     },
 
-    getData: function(url, audioCtx, data) {
+    getData: function(url, audioCtx , b) {
       console.log("starting")
       var request = new XMLHttpRequest();
 
@@ -146,15 +152,13 @@ name: "sequencer",
       request.onload = function() {
         var audioData = request.response;
         audioCtx.decodeAudioData(audioData, function(buffer) {
-          data.buffer = buffer;
-          console.log("loaded", data)
+          b.buffer = buffer;
         },
-
+        
         function(e){ console.log("Error with decoding audio data" + e.err); });
       }
-
       request.send();
-      console.log("laoding")
+
     }
 
     },
