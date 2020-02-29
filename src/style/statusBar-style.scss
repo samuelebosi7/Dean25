@@ -57,6 +57,10 @@ div:focus {
   cursor: pointer;
 }
 
+.add-rem-inst:hover{
+  background: #434343 linear-gradient(#201e1e, transparent);
+}
+
 .add-rem-inst.add-inst{
   position: absolute;
   margin-left: 16px;

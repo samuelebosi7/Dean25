@@ -1,7 +1,7 @@
 <template>
-  <div :id="'SampleSlot'+id">
+  <div :id="'SampleSlot'+id" title="Click to choose a sample!">
     <div :id="'actualSample'+id" v-on:click="selectInstrument" >
-      Cy
+      Nd
     </div>
 
     <!-- <ul class="sub-menu genre sample"  v-bind:class="{active: isActive}">
@@ -89,6 +89,7 @@ name: 'prova',
       var cathegory=this.genre.find(x => x.j === elIndex).gen;
       $('#actualSample'+this.id).html(cathegory.substring(0,2));
       $('#SampleSlot'+this.id).attr('title', cathegory+' - '+sub);
+      $(".sub-menu.genre").removeClass("active");
       this.$emit('updateLink', l[elIndex][sub]);
     },
 
