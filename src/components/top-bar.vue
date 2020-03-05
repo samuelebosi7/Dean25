@@ -41,8 +41,28 @@
             Metronome:<div id='metronome' class='active' ></div>
         </div> -->
         <!-- <img src="./src/svg/metronome.svg" class='metronome-svg'> -->
+        <div id="projectMenuContainer">
+            <input id='projectTitle' class="enter-to-unselect" value="New project">
+            <span id="openProjectMenu" v-on:click="projectMenu">&blacktriangledown;</span>
         
-        <div contenteditable="true" id='songTitle' class="ed-div">New project</div>
+            <div id="projectMenu">
+                <ul class="sub-menu-project">
+                    <li class="sub-menu-project-elements">
+                        Save
+                    </li>
+                    <li class="sub-menu-project-elements">
+                        Export MIDI
+                    </li>
+                    <li class="sub-menu-project-elements">
+                        <label class="switch">
+                            <input id="freeMode" type="checkbox" v-on:click="changeFreeMode">
+                            <span class="slider round"></span>
+                        </label>
+                        Free Mode
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -124,7 +144,7 @@
     playButton:  function() {
         $(".play-pause").toggleClass("paused");
         $(".sub-menu.genre").removeClass("active");
-        $(".rem-inst, .add-inst").toggleClass("onDelete-channel");
+        $(".add-rem-inst").toggleClass("onDelete-channel");
         this.isPlaying = !this.isPlaying;
         EventBus.$emit('playSeq' , {isPlaying: this.isPlaying , isStop: false});
     },
@@ -133,7 +153,7 @@
         this.isPlaying = false;
         $(".play-pause").removeClass("paused");
         $(".sub-menu.genre").removeClass("active");
-        $(".rem-inst, .add-inst").removeClass("onDelete-channel");
+        $(".add-rem-inst").removeClass("onDelete-channel");
         EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
     },
 
@@ -154,6 +174,15 @@
         actual=(actual+val).toFixed(1);
         $(".bpm").val(actual);
         EventBus.$emit('changeBpm' , {newBpm: actual});
+    },
+
+    projectMenu: function(){
+        $("#projectMenu").toggleClass("active");
+        $("#openProjectMenu").toggleClass("rotated");
+    },
+
+    changeFreeMode: function(){
+        //console.log(document.getElementById("freeMode").checked);
     },
 
     getMaxId: function() {
