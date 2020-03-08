@@ -27,16 +27,16 @@ name: "sequencer",
      clock: {},
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url"],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url", "audiox" ],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
       this.audioChannel();
   },
   computed: {
-    audiox () {
+    /* audiox () {
       return this.$store.state.audiox;
-    },
+    }, */
 
     db () {
       return this.$store.state.db;

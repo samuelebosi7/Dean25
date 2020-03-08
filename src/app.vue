@@ -27,7 +27,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    audiox : new AudioContext,
+    //audiox : new AudioContext,
     instrumentList: [
       // { id: 0, title: 'Cymbals' },
       // { id: 1, title: 'Cymbals' },

@@ -10,7 +10,7 @@
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
           <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changedMute" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
+          <channel class="instrument-channel" v-bind:audiox = "audiox" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
   </div>
@@ -33,6 +33,7 @@ export default {
       count: 0,  //conteggio globale mcm
 
       //timing var
+      audiox : new AudioContext,
       clock: {},
       tickEvent: 0,
       tic: 0.0625,  
@@ -55,9 +56,9 @@ export default {
     instrumentList () {
       return this.$store.state.instrumentList;
     },
-    audiox () {
+    /* audiox () {
       return this.$store.state.audiox;
-    },
+    }, */
   },
   watch: {
     instrumentList: function () {

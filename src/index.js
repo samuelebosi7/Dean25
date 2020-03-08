@@ -7,7 +7,8 @@ import './style/sequencer.scss';
 import './style/slider.css';
 
 import App from './app.vue';
-
+Vue.config.devtools = true
+Vue.config.performance = true
 
 new Vue({
     el:'#app',
