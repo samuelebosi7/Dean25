@@ -124,7 +124,7 @@ export default {
     updateDuration: function(val){
         $('#actualDuration'+this.id).html("/"+val);
         $(".sub-menu.genre").removeClass("active");
-        val=32/val;
+        //val=32/val;
         this.$emit('updateDuration', {id: this.id, dur: val});
     },
 

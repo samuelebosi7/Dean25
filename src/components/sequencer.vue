@@ -16,15 +16,11 @@ name: "sequencer",
  data() {
     return {
       currentStep: -1,
-      tatumSeq: 2, //il numero di nextStep che devi ricevere per avanzare di uno
-      tatumDefault: 1,
-      nextStepReceived: 0,
+      tatumSeq: 4, //la durata della nota
+      noteDuration: 0.5,
       p: 0,
       g: 0,
       data: {},
-      //stepNum: this.binSeq.length,
-     // oneNum: this.binSeq.filter(x => x==1).length,
-     clock: {},
     }
   },
   props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url", "audiox" ],
@@ -51,6 +47,7 @@ name: "sequencer",
   watch: {
     noteDur(newValue) {
       this.tatumSeq = newValue;
+      this.noteDuration = 0.5*4/this.tatumSeq;
     },
     
     pan(value) {
@@ -107,24 +104,15 @@ name: "sequencer",
     },
 
     scheduleNote: function(deadline) {
-      var tat;
-      if(this.currentStep == -1)
-        tat = this.tatumDefault;
-      else tat = this.tatumSeq;
-
-      this.nextStepReceived++;
-      
-      if(this.nextStepReceived >= tat){
         this.currentStep++;
         if (this.currentStep >= this.binSeq.length) {
           this.currentStep = 0;
         }
         this.playStep(deadline);
-        this.nextStepReceived = 0;
-      }
     },
     
     playStep: function(deadline) {
+      var i = 0;
       if (this.binSeq[this.currentStep]==1) {
         var bar=$("#spike-bar"+this.id)
         bar.removeClass('fade');
@@ -133,15 +121,17 @@ name: "sequencer",
           bar.addClass('fade');
           bar.css('transform', 'scaleY(0)');  
         }, 50);
-        this.playSample(deadline);
+        
+        for(i = 0 ; i<this.tatumSeq/4 ; i++)
+          this.playSample(deadline + i*this.noteDuration);
       }
     },
 
-    playSample: function(deadline) {
+    playSample: function(playTime) {
       var source = this.audiox.createBufferSource();
       source.buffer = this.data.buffer;
       source.connect(this.g);
-      source.start(deadline);
+      source.start(playTime , 0 , this.noteDuration);
     },
 
     getData: function(url, audioCtx , b) {

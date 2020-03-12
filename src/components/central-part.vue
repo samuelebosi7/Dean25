@@ -36,7 +36,7 @@ export default {
       audiox : new AudioContext,
       clock: {},
       tickEvent: 0,
-      tic: 0.0625,  
+      tic: 0.5,  
       prev:0,
 
       // startTime: 0,
