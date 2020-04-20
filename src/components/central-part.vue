@@ -29,15 +29,18 @@ export default {
     return {
       color:'',
       channelList: [], // {id , seq[], noteDuration}  seq[] è la sequenza binaria
-      cLcm: 0,    //minimo comune multiplo
+      cLcm: 1,    //minimo comune multiplo
       count: 0,  //conteggio globale mcm
 
       //timing var
       audiox : new AudioContext,
       clock: {},
       tickEvent: 0,
+      updateEvent: 0,
       tic: 0.5,  
       prev:0,
+      noteDuration: 0.5, //note duration in seconds
+
 
       // startTime: 0,
       // noteTime: 0,
@@ -98,8 +101,11 @@ export default {
 
     updateDuration: function(value) {
         this.channelList.find(x => x.id === value.id).noteDuration = parseInt(value.dur,10);
-        //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).noteDuration);
-        // this.noteDuration=parseInt(value.dur,10);
+        this.noteDuration = this.tic*4/parseInt(value.dur,10);
+/* 
+        this.updateEvent.clear();
+        this.updateEvent = null;
+        this.updateEvent = this.clock.callbackAtTime(this.updateCurrentStep, this.audiox.currentTime).repeat(this.noteDuration) */
     },
 
     changedMute: function(value) {
@@ -211,7 +217,8 @@ export default {
         return false;
       } else if(!this.isPlaying) {
         this.suspendClock();
-        return false;  //se ho premuto pausa tengo slavato lo step corrente
+        EventBus.$emit('pauseStep');
+        return false;  //se ho premuto pausa tengo salvato lo step corrente
       }
 
 
@@ -219,14 +226,13 @@ export default {
       //this.noteTime = 0;
       //this.emitPlaynote();
       
-      this.audiox.resume();
       this.startClock();
     },
 
     suspendClock: function() {
         this.clock.stop();
 
-        if(this.tickEvent != null) {
+        if(this.tickEvent != null ) {
           this.tickEvent.clear();
           this.tickEvent = null;
         }
@@ -236,6 +242,7 @@ export default {
     },
 
     startClock: function() {
+      this.audiox.resume();
       this.clock.start();
       this.tickEvent = this.clock.callbackAtTime(this.handleTick.bind(this), this.audiox.currentTime).repeat(this.tic)
     },
@@ -245,7 +252,9 @@ export default {
     },
 
     changeBpm: function(payload) {
-        this.tic = 60/(payload.newBpm*8);
+        this.tic = 60/(payload.newBpm);
+        this.suspendClock();
+        this.startClock();
     },
 
    /*  emitPlaynote:  function() {
@@ -265,9 +274,6 @@ export default {
       }
       this.ti = setTimeout(this.emitPlaynote, 0);
     }, */
-
-    
-    
   }
 }
 </script>

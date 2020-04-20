@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <top-bar v-on:changeVolume="changeVolume"></top-bar>
-    <div id = "central-part">
-      <central-part v-bind:mastVolume="masterVolume"></central-part>
-    </div>
+      <top-bar v-on:changeVolume="changeVolume"></top-bar>
+      <div id = "central-part">
+        <central-part v-bind:mastVolume="masterVolume"></central-part>
+      </div>
   </div>
   
 </template>
@@ -27,7 +27,6 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    //audiox : new AudioContext,
     instrumentList: [
       // { id: 0, title: 'Cymbals' },
       // { id: 1, title: 'Cymbals' },
@@ -49,7 +48,6 @@ const store = new Vuex.Store({
              var links = [];
              querySnapshot.forEach(doc => {
              links.push(doc);});
-             console.log("Sample links retrieved, saved in this.$store.state.links[]")
             }
             commit("setLinks", links); //triggers "setLinks" mutation
             
@@ -68,7 +66,6 @@ store.dispatch("getFirebaseData"); //triggers "getFirebaseData" action upon star
 export default {
   data() {
     return {
-      message: ' World',
       masterVolume: 50
     };
   },

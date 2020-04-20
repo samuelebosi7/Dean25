@@ -1,7 +1,7 @@
 <template>
   <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
-        <span v-for="(step,index) in binSeq" v-on:click="onoff" v-bind:class="{'seq-note': step == 1, 'seq-playhead': index == currentStep }" class="seq-ui"></span>
+        <span v-for="(step,index) in binSeq" v-on:click="onoff" v-bind:class="{'seq-note': step == 1, 'seq-playhead': index == localStep }" class="seq-ui"></span>
         <!-- in realta non è un errore -->
       </div>
     </div>
@@ -15,28 +15,31 @@ export default {
 name: "sequencer",
  data() {
     return {
-      currentStep: -1,
+      localStep: -1,  // step used for graphic render
+      currentStep: 0, // step used for audio schedule
       tatumSeq: 4, //la durata della nota
-      noteDuration: 0.5,
+      noteDuration: 0.5, //note duration in seconds
+      tic: 0.5,
+      playGain: 0, // node gain after the source, used to stop sound
+      timerId: 0,  // timer ide for graphic render
       p: 0,
       g: 0,
       data: {},
+      prev: 0,
+      clock: {},
+      updateEvent: null,
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url", "audiox" ],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url", "audiox"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
+      EventBus.$on('pauseStep', this.pauseSeq);
+      EventBus.$on('changeBpm', this.changeBpm);
       this.audioChannel();
+      this.clock = new WAAClock(this.audiox);
   },
   computed: {
-    /* audiox () {
-      return this.$store.state.audiox;
-    }, */
-
-    db () {
-      return this.$store.state.db;
-    },
 
     storage () {
       return this.$store.state.storage;
@@ -47,7 +50,11 @@ name: "sequencer",
   watch: {
     noteDur(newValue) {
       this.tatumSeq = newValue;
-      this.noteDuration = 0.5*4/this.tatumSeq;
+      this.noteDuration = this.tic*4/this.tatumSeq;
+      
+      //reset the clock and update the note duration
+      this.suspendClock();
+      this.startClock();
     },
     
     pan(value) {
@@ -77,65 +84,131 @@ name: "sequencer",
       
     solo(value){
        this.g.gain.linearRampToValueAtTime(this.mute*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
-    
-    }
+    },
+
   },
 
   beforeDestroy(){
      EventBus.$off('nextStep', this.scheduleNote);
   },
+
   methods: { 
+
     onoff: function(event) {
         event.target.classList.toggle("seq-note");
     },
 
     stopSeq:function() {
-      this.currentStep = -1;
-      this.nextStepReceived = 0;
+      this.currentStep = 0;
+      this.localStep = -1;
+      this.suspendClock();
     },
 
+    pauseSeq: function() {
+      this.suspendClock();
+    },
+
+    changeBpm: function(payload) {
+        this.suspendClock();
+        this.tic = 60/(payload.newBpm);
+        this.noteDuration = this.tic*4/this.tatumSeq;
+        this.startClock();
+    },
+
+    suspendClock: function() {
+        this.clock.stop();
+
+        if(this.updateEvent != null ) {
+          this.updateEvent.clear();
+          this.updateEvent = null;
+        }
+    },
+
+    startClock: function() {
+        this.clock.start();
+        this.updateEvent = this.clock.callbackAtTime(this.updateCurrentStep, this.audiox.currentTime).repeat(this.noteDuration);
+    },
+
+//------------------AUDIO CHAIN------------------------------
+
     audioChannel: function() {
-      //this.source = this.audiox.createBufferSource();
       this.p = this.audiox.createStereoPanner();
       this.g = this.audiox.createGain();
+      this.playGain = this.audiox.createGain();
+      this.playGain.gain.value=1;
       this.g.gain.value=this.masterVolume/100;
+
+      this.playGain.connect(this.g);
       this.g.connect(this.p);
       this.p.connect(this.audiox.destination);
     },
 
+//------------------SCHEDULE------------------------------
+  
     scheduleNote: function(deadline) {
-        this.currentStep++;
-        if (this.currentStep >= this.binSeq.length) {
-          this.currentStep = 0;
-        }
-        this.playStep(deadline);
-    },
-    
-    playStep: function(deadline) {
-      var i = 0;
-      if (this.binSeq[this.currentStep]==1) {
-        var bar=$("#spike-bar"+this.id)
-        bar.removeClass('fade');
-        bar.css('transform', 'scaleY('+(this.gain)*(this.masterVolume/100)+')');
-        setTimeout(function() {
-          bar.addClass('fade');
-          bar.css('transform', 'scaleY(0)');  
-        }, 50);
-        
-        for(i = 0 ; i<this.tatumSeq/4 ; i++)
+      var that = this;
+      var seqlen = this.binSeq.length;
+      var len = this.tatumSeq/4;
+      var subSeq = this.rotation(this.binSeq , this.currentStep).slice(0 , len);
+
+      for(var i = 0 ; i <len - this.binSeq.length ; i++)
+        subSeq = subSeq.concat(subSeq);
+
+      subSeq = subSeq.slice(0 , len);   // si può migliorare
+      subSeq.forEach((el, i) => {
+        if (el==1) 
           this.playSample(deadline + i*this.noteDuration);
+      });
+
+      if(this.updateEvent == null) {
+        this.startClock();
       }
+      
+      this.currentStep = (this.currentStep+len) % this.binSeq.length;
     },
+
+    updateCurrentStep: function() {
+      this.localStep = (this.localStep+1) % this.binSeq.length;
+    },
+
 
     playSample: function(playTime) {
       var source = this.audiox.createBufferSource();
       source.buffer = this.data.buffer;
-      source.connect(this.g);
-      source.start(playTime , 0 , this.noteDuration);
+      source.connect(this.playGain);
+      source.start(playTime);
+      this.playGain.gain.setValueAtTime(1 , playTime)
+      this.playGain.gain.linearRampToValueAtTime(0 , playTime + this.noteDuration-0.01);
+    },
+
+
+//------------------UTILITY------------------------------
+
+    rotation: function(arrData, position) {
+      var newArr = arrData.slice();
+      var arrLen = newArr.length;
+
+      var num = (position < 0)
+                ? arrLen-(position%arrLen)
+                : position%arrLen;
+
+      var tempArr = newArr.splice(0, num);
+      newArr.push.apply(newArr, tempArr);
+
+      return newArr;
+    },
+
+    spikeBar: function() {
+      var bar=$("#spike-bar"+this.id)
+      bar.removeClass('fade');
+      bar.css('transform', 'scaleY('+(this.gain)*(this.masterVolume/100)+')');
+      setTimeout(function() {
+        bar.addClass('fade');
+        bar.css('transform', 'scaleY(0)');  
+      }, 50);
     },
 
     getData: function(url, audioCtx , b) {
-      console.log("starting")
       var request = new XMLHttpRequest();
 
       request.open('GET', url, true);
@@ -152,7 +225,7 @@ name: "sequencer",
       }
       request.send();
 
-    }
+    },
 
     },
 }
