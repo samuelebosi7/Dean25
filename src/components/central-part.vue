@@ -59,9 +59,6 @@ export default {
     instrumentList () {
       return this.$store.state.instrumentList;
     },
-    /* audiox () {
-      return this.$store.state.audiox;
-    }, */
   },
   watch: {
     instrumentList: function () {
@@ -72,15 +69,19 @@ export default {
       this.createChannel();
       this.clock = new WAAClock(this.audiox);
       
+      EventBus.$on('startAudioContext', this.startAudioContext);
       EventBus.$on('playSeq', this.setPlayStop);
       EventBus.$on('stopSeq', this.setPlayStop);
       EventBus.$on('changeBpm', this.changeBpm);
   },
   methods: {
 
+    startAudioContext: function() {
+        this.audiox.resume();
+    },
+
     updateLink: function(value) {
         this.channelList.find(x => x.id === value.id).url = value.link;
-        console.log("central "+value);
     },
 
     createChannel: function(){

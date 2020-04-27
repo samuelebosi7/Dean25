@@ -5,6 +5,7 @@ import './style/statusBar-style.scss';
 import '@fortawesome/fontawesome-free/js/all';
 import './style/sequencer.scss';
 import './style/slider.css';
+import './style/overlay.scss'
 
 import App from './app.vue';
 Vue.config.devtools = true

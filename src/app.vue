@@ -1,5 +1,7 @@
 <template>
+
   <div id="app">
+      <div id="overlay" v-bind:class="{overlayActive: isActive}">> <div id="overlay-text">ACTAM Project</div> <div id = "container"> <button class="btn draw-border" v-on:click="start">ENTER</button> </div></div>
       <top-bar v-on:changeVolume="changeVolume"></top-bar>
       <div id = "central-part">
         <central-part v-bind:mastVolume="masterVolume"></central-part>
@@ -66,7 +68,8 @@ store.dispatch("getFirebaseData"); //triggers "getFirebaseData" action upon star
 export default {
   data() {
     return {
-      masterVolume: 50
+      masterVolume: 50,
+      isActive: false,
     };
   },
   store,
@@ -78,6 +81,11 @@ export default {
   methods: {
     changeVolume: function(value){
       this.masterVolume=value.volume;
+    },
+
+    start: function(){
+      this.isActive = true;
+      EventBus.$emit("startAudioContext")
     }
   }
 }

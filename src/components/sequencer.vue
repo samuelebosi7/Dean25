@@ -52,6 +52,7 @@ name: "sequencer",
       this.tatumSeq = newValue;
       this.noteDuration = this.tic*4/this.tatumSeq;
       
+      //TODO controllare il current step che non sempre è corretto
       //reset the clock and update the note duration
       this.suspendClock();
       this.startClock();
