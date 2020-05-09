@@ -9,7 +9,7 @@
             
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
-          <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changedMute" v-on:setStep="updateStep" v-bind:id = "instrument.id" v-bind:title="instrument.title" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+          <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changeMute" v-on:changedSolo="changeSolo" v-on:setStep="updateStep" v-bind:id ="instrument.id" v-bind:title="instrument.title" v-bind:soloChannel ="channelList.find(x => x.id === instrument.id).solo" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
           <channel class="instrument-channel" v-bind:audiox = "audiox" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
@@ -73,6 +73,7 @@ export default {
       EventBus.$on('playSeq', this.setPlayStop);
       EventBus.$on('stopSeq', this.setPlayStop);
       EventBus.$on('changeBpm', this.changeBpm);
+      
   },
   methods: {
 
@@ -85,12 +86,12 @@ export default {
     },
 
     createChannel: function(){
-        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1, solo:false , url: ''}));
+        this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1, solo: 1 , url: ''}));
     },
 
     updateChannel: function() {
         var idArr = this.channelList.map(el => el.id);
-        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1, solo:false , url: ''}) : {});
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1, solo: 1 , url: ''}) : {});
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
@@ -109,32 +110,23 @@ export default {
         this.updateEvent = this.clock.callbackAtTime(this.updateCurrentStep, this.audiox.currentTime).repeat(this.noteDuration) */
     },
 
-    changedMute: function(value) {
-        this.channelList.find(x => x.id === value.id).mute = value.mute;
+    changeMute: function(value) {
+        var newVal;
+        value.mute ? newVal = 0 : newVal= 1;
+        this.channelList.find(x => x.id === value.id).mute = newVal;
         //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).mute);
     },
 
-    changedSolo: function(value) {
-        //this.channelList.find(x => x.id === value.id).solo = value.mute;
-        console.log(value);
-        this.channelList.forEach(x => {
-          if (x.id == value.id) {
-            x.solo=value.solo;
+    changeSolo: function(value) {
+        if(value.solo){
+          this.channelList.forEach(ch => { 
+            if(ch.id!=value.id){
+              ch.solo = 0;
+            }else{
+              ch.solo = 1;
             }
-          //console.log("Stato solo ch"+ x.id + "è" + x.solo);
-          if (!x.solo) {
-            if (x.id != value.id) {
-              if (x.mute == 1) {
-                  x.mute = 0;
-              }
-              else x.mute = x.mute;
-            }
-          }
-
-          if (x.solo) {
-            
-          }
-        })
+          })
+        }else this.channelList.forEach(ch => {ch.solo = 1})
     },
 
     euclidean: function(tatum, tactus){

@@ -16,10 +16,10 @@
         </div>
 
         <div class="mute" title='Mute'>
-            <div v-on:click="MuteClicked" class="mute-button"></div> M
+            <div v-on:click="MuteClicked" v-bind:class="{'active-mute': mute}"   class="mute-button"></div> M
         </div>
         <div class="solo" title='Solo'>
-            <div v-on:click="SoloClicked" class="solo-button"></div> S
+            <div v-on:click="SoloClicked" v-bind:class="{'active-solo': solo}" class="solo-button"></div> S
         </div>
         <div class='meter'>
             <span :id="'spike-bar'+id" class="anim fade" style="transform: scaleY(0)"></span>
@@ -29,7 +29,7 @@
 
             <div class="noteDuration" title="Note Duration">
                 <div :id="'actualDuration'+id" v-on:click="selectNoteDuration">
-                /16
+                /4
                 </div>
                 <span v-on:click="selectNoteDuration">&blacktriangledown;</span>
                 <ul class="sub-menu genre dur">
@@ -68,7 +68,7 @@ import InstrumentSelector from "./instrument-selector.vue";
 
 export default {
     name: 'instrument',
-    props: ['title', 'shortTitle', 'id'],
+    props: ['title', 'shortTitle', 'id', 'soloChannel'],
     data() {
         return {
             sampleLoaded: 0,
@@ -79,7 +79,7 @@ export default {
             ],
             gain: 0.5,
             pan: 0,
-            mute: 1, // 1 -> mute disabilitato, 0 -> mute abilitato
+            mute: false, // false -> mute disabilitato, true -> mute abilitato
             solo: false // true -> attivo, false -> disattivo
         }
     },
@@ -98,12 +98,12 @@ export default {
         },
 
     },
-
-    created(){
-       //this.accessStore();
-       //console.log("ciao" + this.$store.state.links);
+    watch: {
+        soloChannel(value){
+            value==1 && this.solo? this.solo = true : this.solo = false
+        }
     },
-
+    
     methods: {
 
     deleteInstrument: function () {
@@ -133,24 +133,13 @@ export default {
     },
 
     MuteClicked: function(){
-        document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
-        if(document.querySelectorAll(".solo-button")[this.id].classList.contains("active-solo"))
-            document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo")
-        if(this.mute==1)
-            this.mute=0;
-        else
-            this.mute=1;
+        this.mute = !this.mute;
         this.$emit('changedMute', {id: this.id, mute: this.mute});
-        //this.accessStore();
     },
 
     SoloClicked: function(){ 
-        if(document.querySelectorAll(".mute-button")[this.id].classList.contains("active-mute"))
-        {
-            document.querySelectorAll(".mute-button")[this.id].classList.toggle("active-mute");
-            this.mute=1;
-        }
-        document.querySelectorAll(".solo-button")[this.id].classList.toggle("active-solo");
+        this.mute = false;
+
         this.solo=!this.solo; 
         this.$emit('changedSolo', {id: this.id, solo: this.solo});
     },
@@ -170,9 +159,5 @@ export default {
     }
   }
 }
-
-//  $(document).ready(function() {
-//     this.accessStore();
-//  });
 
 </script>

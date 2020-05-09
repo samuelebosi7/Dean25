@@ -63,11 +63,11 @@ name: "sequencer",
     },
     
     gain(value) {
-      this.g.gain.linearRampToValueAtTime(this.mute*(value*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+      this.g.gain.linearRampToValueAtTime(this.solo*this.mute*(value*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
     },
 
     masterVolume(value) {
-      this.g.gain.linearRampToValueAtTime(this.mute*(this.gain*2)*(value/100), this.audiox.currentTime+0.025);
+      this.g.gain.linearRampToValueAtTime(this.solo*this.mute*(this.gain*2)*(value/100), this.audiox.currentTime+0.025);
     },
 
     mute(value){
@@ -84,7 +84,7 @@ name: "sequencer",
     },
       
     solo(value){
-       this.g.gain.linearRampToValueAtTime(this.mute*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+       this.g.gain.linearRampToValueAtTime(value*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
     },
 
   },

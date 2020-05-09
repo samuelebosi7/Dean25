@@ -89,7 +89,8 @@ name: 'prova',
       var cathegory=this.genre.find(x => x.j === elIndex).gen;
       $('#actualSample'+this.id).html(cathegory.substring(0,2));
       $('#SampleSlot'+this.id).attr('title', cathegory+' - '+sub);
-      $(".sub-menu.genre").removeClass("active");
+      //$(".sub-menu.genre").removeClass("active");
+      this.isActive = false;
       this.$emit('updateLink', l[elIndex][sub]);
     },
 
