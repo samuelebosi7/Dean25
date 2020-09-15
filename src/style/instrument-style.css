@@ -46,6 +46,9 @@ body {
     /* background-color: rgba(197, 196, 196, 0.5); */
 }
 
+
+/* INSTRUMENT CSS */
+
 #instrument-list {
   height: 83%;
   overflow-y: auto;
@@ -103,7 +106,7 @@ body {
     background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
     box-shadow: 0 4px 14px rgba(0,0,0,0.25), 0 6px 20px rgba(0,0,0,0.22);
     position: absolute;
-    width: 32%;
+    width: 34%;
     top: 0px;
     display: inline-flex;
 }
@@ -135,7 +138,7 @@ body {
 
 .instrument-channel {
   position: absolute;
-  width: 66.8%;
+  width: 65%;
   height: 100px;
   right: 0px;
   top: 0px;
@@ -212,6 +215,10 @@ ul{
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); */
 }
 
+
+
+/* SUBMENU CSS */
+
 ul.sub-menu.genre{
   position:absolute;
   background-color: rgb(44, 44, 44);
@@ -267,6 +274,11 @@ ul.sub-menu li:hover{
   background-color: #565656;
     background-image: radial-gradient(transparent, rgba(255, 255, 255, 0.35));
 }
+
+
+
+
+/* CONTROL PANEL ON INSTRUMENT CSS */
 
 .instrument-name:hover{
   background-color: #fafafa;

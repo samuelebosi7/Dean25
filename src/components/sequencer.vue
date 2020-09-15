@@ -28,6 +28,7 @@ name: "sequencer",
       prev: 0,
       clock: {},
       updateEvent: null,
+      numUpdate: 0,
     }
   },
   props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url", "audiox"],
@@ -53,6 +54,7 @@ name: "sequencer",
       this.noteDuration = this.tic*4/this.tatumSeq;
       
       //TODO controllare il current step che non sempre è corretto
+
       //reset the clock and update the note duration
       this.suspendClock();
       this.startClock();
@@ -106,6 +108,7 @@ name: "sequencer",
     },
 
     pauseSeq: function() {
+      this.currentStep = this.localStep+1;
       this.suspendClock();
     },
 
@@ -122,13 +125,16 @@ name: "sequencer",
         if(this.updateEvent != null ) {
           this.updateEvent.clear();
           this.updateEvent = null;
+          console.log("suspend: "+this.localStep);
         }
+        
     },
 
     startClock: function() {
         this.clock.start();
         this.updateEvent = this.clock.callbackAtTime(this.updateCurrentStep, this.audiox.currentTime).repeat(this.noteDuration);
     },
+
 
 //------------------AUDIO CHAIN------------------------------
 
@@ -151,6 +157,7 @@ name: "sequencer",
       var seqlen = this.binSeq.length;
       var len = this.tatumSeq/4;
       var subSeq = this.rotation(this.binSeq , this.currentStep).slice(0 , len);
+      var prev = this.currentStep;
 
       for(var i = 0 ; i <len - this.binSeq.length ; i++)
         subSeq = subSeq.concat(subSeq);
@@ -161,15 +168,15 @@ name: "sequencer",
           this.playSample(deadline + i*this.noteDuration);
       });
 
+      this.currentStep = (this.currentStep+len) % this.binSeq.length;
       if(this.updateEvent == null) {
         this.startClock();
       }
-      
-      this.currentStep = (this.currentStep+len) % this.binSeq.length;
     },
 
     updateCurrentStep: function() {
       this.localStep = (this.localStep+1) % this.binSeq.length;
+      //console.log("local: " + this.localStep);
     },
 
 

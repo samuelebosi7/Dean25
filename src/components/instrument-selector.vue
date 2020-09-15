@@ -82,6 +82,7 @@ name: 'prova',
 
     selectInstrument: function() {
       this.isActive = !this.isActive;
+      this.genre.forEach(subMenuEl => {subMenuEl.disp = false});
     },
 
     updateSample(elIndex , sub) {
@@ -96,18 +97,19 @@ name: 'prova',
 
     subMenuClick: function(el) {
       if(el.disp)
-        $(".sub-menu.item.genre"+el.j).removeClass("active");
+      {
+        //$(".sub-menu.item.genre"+el.j).removeClass("active");
+        el.disp = false;
+      }
       else
-        $(".sub-menu.item.genre"+el.j).addClass("active");
-      el.disp=!el.disp;
+      {
+        this.genre.forEach(subMenuEl => {subMenuEl.disp = false});
+       // $(".sub-menu.item.genre"+el.j).addClass("active");
+        el.disp = true;
+      }
+
       return el;
-        
     },
-
-    mouseOver: function() {
-      this.ciao = !this.ciao;
-    }
-
   }   
 }
 </script>
