@@ -20,7 +20,8 @@
 import { EventBus } from '../app.vue';
 import Instrument from './instrument.vue';
 import Channel from './channel.vue';
-import WAAClock from 'waaclock'
+import WAAClock from 'waaclock';
+import Recorder from 'recorder-js';
 
 export default {
   name: 'central-part',
@@ -34,14 +35,14 @@ export default {
 
       //timing var
       audiox : new AudioContext,
-      recx: new Recorder(this.audiox),
+      recx: {},
       clock: {},
       tickEvent: 0,
       updateEvent: 0,
       tic: 0.5,  
       prev:0,
       noteDuration: 0.5, //note duration in seconds
-      totcount: 0,
+      //totcount: 0,
 
 
       // startTime: 0,
@@ -70,7 +71,7 @@ export default {
   created() {
       this.createChannel();
       this.clock = new WAAClock(this.audiox);
-      
+      this.recx = new Recorder(this.audiox);
       EventBus.$on('startAudioContext', this.startAudioContext);
       //EventBus.$on('nextStep', this.advanceTic);
       EventBus.$on('playSeq', this.setPlayStop);
@@ -257,6 +258,7 @@ export default {
     },
 
     record: function() {
+      //recx = new Recorder(this.audiox);
       this.recx.start()
       while(this.totcount <= cLcm) {
       }
@@ -265,7 +267,7 @@ export default {
       blob = blob;});
 
       this.recx.download(blob, 'prova1');
-    },
+    }
 
    /*  emitPlaynote:  function() {
       
