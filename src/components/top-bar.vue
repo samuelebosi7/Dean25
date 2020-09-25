@@ -13,6 +13,8 @@
             </div>
             <div class='stop' title="Stop" v-on:click="stopButton">
             </div>
+            <div class='rec' title="Record" v-on:click="recButton">
+            </div>
         </div>
             
         <div id='masterVolume' title="Volume">
@@ -77,6 +79,7 @@
     data() {
         return {
             isPlaying: false,
+            isRecording: false,
         }
     },
     computed: {
@@ -154,7 +157,17 @@
         $(".play-pause").removeClass("paused");
         $(".sub-menu.genre").removeClass("active");
         $(".add-rem-inst").removeClass("onDelete-channel");
-        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
+        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
+    },
+
+    recButton: function() {
+        //this.isRecording=!this.isRecording;
+        $(".play-pause").removeClass("paused");
+        $(".sub-menu.genre").removeClass("active");
+        $(".add-rem-inst").removeClass("onDelete-channel");
+        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
+        EventBus.$emit('recSeq' , {});
+        EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
     },
 
     changeVolume: function(value){
