@@ -34,12 +34,14 @@ export default {
 
       //timing var
       audiox : new AudioContext,
+      recx: new Recorder(this.audiox),
       clock: {},
       tickEvent: 0,
       updateEvent: 0,
       tic: 0.5,  
       prev:0,
       noteDuration: 0.5, //note duration in seconds
+      totcount: 0,
 
 
       // startTime: 0,
@@ -70,8 +72,10 @@ export default {
       this.clock = new WAAClock(this.audiox);
       
       EventBus.$on('startAudioContext', this.startAudioContext);
+      //EventBus.$on('nextStep', this.advanceTic);
       EventBus.$on('playSeq', this.setPlayStop);
       EventBus.$on('stopSeq', this.setPlayStop);
+      EventBus.$on('recSeq', this.record);
       EventBus.$on('changeBpm', this.changeBpm);
       
   },
@@ -208,6 +212,7 @@ export default {
         this.suspendClock();
         EventBus.$emit('stopStep');
         return false;
+        this.totcount = 0;
       } else if(!this.isPlaying) {
         this.suspendClock();
         EventBus.$emit('pauseStep');
@@ -242,12 +247,24 @@ export default {
 
     handleTick: function({deadline}) {
       EventBus.$emit('nextStep' , deadline);
+      this.totcount += 1;
     },
 
     changeBpm: function(payload) {
         this.tic = 60/(payload.newBpm);
         this.suspendClock();
         this.startClock();
+    },
+
+    record: function() {
+      this.recx.start()
+      while(this.totcount <= cLcm) {
+      }
+      EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
+      this.recx.stop().then(({blob, buffer}) => {
+      blob = blob;});
+
+      this.recx.download(blob, 'prova1');
     },
 
    /*  emitPlaynote:  function() {
