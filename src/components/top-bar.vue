@@ -15,6 +15,13 @@
             </div>
             <div class='rec' title="Record" v-on:click="recButton">
             </div>
+            <div class='rec-time-left'>
+                <div class='speech-bubble'>
+                    <span class="rec-time-left-text">
+                        Time left: 12:01
+                    </span>
+                </div>
+            </div>
         </div>
             
         <div id='masterVolume' title="Volume">
@@ -80,6 +87,7 @@
         return {
             isPlaying: false,
             isRecording: false,
+            recTimeOut: {},
         }
     },
     computed: {
@@ -125,7 +133,7 @@
                 el.classList.toggle("onDelete-instrument-line");
             });
 
-            document.querySelectorAll(".channel, .add-inst, .play-pause, .stop, #masterVolume, .tempoProp").forEach(function(el){
+            document.querySelectorAll(".channel, .add-inst, .play-pause, .stop, .rec, #masterVolume, .tempoProp").forEach(function(el){
                 el.classList.toggle("onDelete-channel");
             });
             
@@ -135,6 +143,8 @@
         $(".sub-menu.genre").removeClass("active");
         var newId = this.getMaxId()+1;
         this.instrumentList.push({ id: newId, title: "Nd" , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});     
+        this.$emit('deleteChannel', {id: newId});
+        EventBus.$emit('changedSolo', {id: newId, newEl: true, solo: 1});  
     },
     getMaxId: function() {
     //   console.log(this.instrumentList)
@@ -161,13 +171,46 @@
     },
 
     recButton: function() {
-        //this.isRecording=!this.isRecording;
+        this.isRecording=!this.isRecording;
         $(".play-pause").removeClass("paused");
         $(".sub-menu.genre").removeClass("active");
         $(".add-rem-inst").removeClass("onDelete-channel");
-        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
-        EventBus.$emit('recSeq' , {});
-        EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
+
+        $(".rec-time-left").toggleClass("active");
+        // EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
+        // EventBus.$emit('recSeq' , {});
+        // EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
+        if(this.isRecording){
+            var countDownDate = new Date("Oct 3, 2020 19:03:00").getTime();
+            this.recTimeOut = setInterval(function() {
+                $('.rec').toggleClass("rec-active");
+
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the element with id="demo"
+                $(".rec-time-left-text").text("Time left: "+minutes+":"+seconds);
+                
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(this.recTimeOut);
+                    this.isRecording=false;
+                    $('.rec').removeClass("rec-active");
+                    $(".rec-time-left").removeClass("active");
+                }
+            }, 1000);
+        }
+        else
+        {
+            clearTimeout(this.recTimeOut);
+            $('.rec').removeClass("rec-active");
+        }
     },
 
     changeVolume: function(value){

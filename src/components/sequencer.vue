@@ -73,7 +73,7 @@ name: "sequencer",
     },
 
     mute(value){
-      this.g.gain.linearRampToValueAtTime(value*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+      this.g.gain.linearRampToValueAtTime(this.solo*value*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
     },
 
     url(value) {
@@ -86,7 +86,7 @@ name: "sequencer",
     },
       
     solo(value){
-       this.g.gain.linearRampToValueAtTime(value*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
+       this.g.gain.linearRampToValueAtTime(value*this.mute*(this.gain*2)*(this.masterVolume/100), this.audiox.currentTime+0.025);
     },
 
   },
@@ -187,6 +187,7 @@ name: "sequencer",
       source.start(playTime);
       this.playGain.gain.setValueAtTime(1 , playTime)
       this.playGain.gain.linearRampToValueAtTime(0 , playTime + this.noteDuration-0.01);
+      this.spikeBar();
     },
 
 

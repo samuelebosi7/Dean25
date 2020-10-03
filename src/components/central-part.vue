@@ -52,6 +52,8 @@ export default {
       //play/stop var
       isPlaying: false,
       isStop: true,
+
+      soloInsts: 0,
     }
   },
   components: {
@@ -78,6 +80,7 @@ export default {
       EventBus.$on('stopSeq', this.setPlayStop);
       EventBus.$on('recSeq', this.record);
       EventBus.$on('changeBpm', this.changeBpm);
+      EventBus.$on('changedSolo', this.changeSolo);
       
   },
   methods: {
@@ -123,15 +126,39 @@ export default {
     },
 
     changeSolo: function(value) {
-        if(value.solo){
-          this.channelList.forEach(ch => { 
-            if(ch.id!=value.id){
-              ch.solo = 0;
-            }else{
-              ch.solo = 1;
-            }
-          })
-        }else this.channelList.forEach(ch => {ch.solo = 1})
+      
+        if(value.newEl)
+        {
+          if(this.soloInsts>0){
+            console.log("entered");
+            this.channelList.find(x => x.id === value.id).solo = 0;  
+          }
+          console.log("added instrument "+value.id+" with solo value "+this.channelList.find(x => x.id === value.id).solo);
+        }
+        else if(value.solo){
+          this.channelList.find(x => x.id === value.id).solo = 1;
+          this.soloInsts++;
+          console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).solo);
+          console.log("instruments in solo: "+this.soloInsts);
+          if(this.soloInsts==1){
+            this.channelList.forEach(ch => { 
+              if(ch.id!=value.id){
+                ch.solo = 0;
+              }
+            })
+          }
+        }
+        else 
+        {
+          if(this.soloInsts>1)
+            this.channelList.find(x => x.id === value.id).solo = 0;
+          this.soloInsts--;
+          console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).solo);
+          console.log("instruments in solo: "+this.soloInsts);
+          if(this.soloInsts==0){
+            this.channelList.forEach(ch => {ch.solo = 1})
+          }
+        }
     },
 
     euclidean: function(tatum, tactus){
@@ -153,6 +180,7 @@ export default {
     },
 
     deleteChannel: function(value) {  //value.id --> id 
+      console.log("entered");
         var pos = this.channelList.map(function(e) { return e.id; }).indexOf(value.id);
         this.channelList.splice(pos, 1);
     },

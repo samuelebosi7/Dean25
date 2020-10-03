@@ -135,13 +135,20 @@ export default {
     MuteClicked: function(){
         this.mute = !this.mute;
         this.$emit('changedMute', {id: this.id, mute: this.mute});
+        if(this.solo){
+            this.solo = false;
+            this.$emit('changedSolo', {id: this.id, solo: this.solo});    
+        }
+
     },
 
     SoloClicked: function(){ 
-        this.mute = false;
-
         this.solo=!this.solo; 
         this.$emit('changedSolo', {id: this.id, solo: this.solo});
+        if(this.mute){
+            this.mute = false;
+            this.$emit('changedMute', {id: this.id, mute: this.mute});
+        }
     },
 
     selectNoteDuration: function(e){
