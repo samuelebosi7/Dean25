@@ -37,7 +37,15 @@ const store = new Vuex.Store({
       
     links: [],
     storage: firebase.storage(),
+    freeModeEnabled: false,
   },
+
+  getters: {
+    getFreeMode: state => {
+      return state.freeModeEnabled;
+    }
+  },
+
   actions:{
         getFirebaseData: ({commit}) => { //downloads data from firebase
             var db = firebase.firestore()
@@ -59,6 +67,11 @@ const store = new Vuex.Store({
   mutations:{
     setLinks(state, val) {//copies value downloaded from firebase in state.links
       state.links = val;
+    },
+
+    setFreeMode(state)
+    {
+      state.freeModeEnabled = !state.freeModeEnabled;
     }
   }
 })

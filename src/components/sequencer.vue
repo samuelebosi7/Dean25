@@ -1,7 +1,7 @@
 <template>
   <div class="channel seq-ui">
   <div class="seq-ui seq-row inline">
-        <span v-for="(step,index) in binSeq" v-on:click="onoff" v-bind:class="{'seq-note': step == 1, 'seq-playhead': index == localStep }" class="seq-ui"></span>
+        <span v-for="(step,index) in binSeq" v-on:click="onoff($event, index)" v-bind:class="{'seq-note': step == 1, 'seq-playhead': index == localStep }" class="seq-ui"></span>
         <!-- in realta non è un errore -->
       </div>
     </div>
@@ -97,8 +97,12 @@ name: "sequencer",
 
   methods: { 
 
-    onoff: function(event) {
-        event.target.classList.toggle("seq-note");
+    onoff: function(event, index) {
+        if(this.$store.getters.getFreeMode)
+        {
+            event.target.classList.toggle("seq-note");
+            this.$emit('toggleStepEvent', {id: this.id, pos: index}); 
+        }
     },
 
     stopSeq:function() {

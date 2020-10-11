@@ -410,6 +410,12 @@ span.anim.fade{
     left: 88px;
 }
 
+.disable-selector
+{
+    pointer-events: none;
+    opacity: 0.3;
+}
+
 .range-selector{
   position: absolute;
   margin-top: 7px;

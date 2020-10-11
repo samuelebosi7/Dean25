@@ -25,7 +25,7 @@
             <span :id="'spike-bar'+id" class="anim fade" style="transform: scaleY(0)"></span>
         </div>
         <div class="euclidean-input">
-            <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue"></range-selector>
+            <range-selector v-on:upValue="update" v-for="sel in selectorArr" v-bind:key="sel.id" v-bind:selName="sel.name" v-bind:selId="sel.id" v-bind:inVal="sel.initialValue" v-bind:class="{'disable-selector': $store.getters.getFreeMode && (sel.id == 1 || sel.id == 2)}"></range-selector>
 
             <div class="noteDuration" title="Note Duration">
                 <div :id="'actualDuration'+id" v-on:click="selectNoteDuration">

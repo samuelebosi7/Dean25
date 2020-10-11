@@ -238,7 +238,7 @@
     },
 
     changeFreeMode: function(){
-        //console.log(document.getElementById("freeMode").checked);
+        this.$store.commit("setFreeMode");
     },
 
     getMaxId: function() {

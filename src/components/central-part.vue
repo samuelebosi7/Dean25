@@ -10,7 +10,7 @@
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
           <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changeMute" v-on:changedSolo="changeSolo" v-on:setStep="updateStep" v-bind:id ="instrument.id" v-bind:title="instrument.title" v-bind:soloChannel ="channelList.find(x => x.id === instrument.id).solo" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-bind:audiox = "audiox" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
+          <channel class="instrument-channel" v-on:toggleStepEvent="toggleStep" v-bind:audiox = "audiox" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
   </div>
@@ -37,7 +37,7 @@ export default {
       audiox : new AudioContext,
       recx: {},
       clock: {},
-      tickEvent: 0,
+      tickEvent: null,
       updateEvent: 0,
       tic: 0.5,  
       prev:0,
@@ -103,10 +103,27 @@ export default {
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
-        var ary = this.euclidean(value.step, value.pulses);  // qui verrà usato l'agoritmo euclideo
-        ary = this.arrayRotate(ary , -value.offset)
-        this.channelList.find(x => x.id === value.id).seq = ary;
-        this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
+        if(!this.$store.getters.getFreeMode)
+        {
+            var ary = this.euclidean(value.step, value.pulses);  // qui verrà usato l'agoritmo euclideo
+            ary = this.arrayRotate(ary , -value.offset)
+            this.channelList.find(x => x.id === value.id).seq = ary;
+            this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
+        } else
+        {
+            this.channelList.find(x => x.id === value.id).seq.push(0);
+            this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
+        }
+    },
+
+    toggleStep: function(value)
+    {
+        var currentVal = this.channelList.find(x => x.id === value.id).seq[value.pos];
+
+        if (currentVal)
+          this.channelList.find(x => x.id === value.id).seq[value.pos] = 0;
+        else 
+          this.channelList.find(x => x.id === value.id).seq[value.pos] = 1;
     },
 
     updateDuration: function(value) {
@@ -259,7 +276,7 @@ export default {
     suspendClock: function() {
         this.clock.stop();
 
-        if(this.tickEvent != null ) {
+        if(this.tickEvent != null) {
           this.tickEvent.clear();
           this.tickEvent = null;
         }
