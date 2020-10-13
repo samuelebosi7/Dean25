@@ -269,7 +269,7 @@ export default {
       //this.startTime = this.audiox.currentTime + 0.005;
       //this.noteTime = 0;
       //this.emitPlaynote();
-      
+
       this.startClock();
     },
 

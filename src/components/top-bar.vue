@@ -52,8 +52,14 @@
         <!-- <img src="./src/svg/metronome.svg" class='metronome-svg'> -->
         <div id="projectMenuContainer">
             <input id='projectTitle' class="enter-to-unselect" value="New project">
-            <span id="openProjectMenu" v-on:click="projectMenu">&blacktriangledown;</span>
-        
+            <!-- <span id="openProjectMenu" v-on:click="projectMenu">&blacktriangledown;</span> -->
+
+            <div class="icon nav-icon-2" v-on:click="projectMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
             <div id="projectMenu">
                 <ul class="sub-menu-project">
                     <li class="sub-menu-project-elements">
@@ -155,11 +161,26 @@
     },
 
     playButton:  function() {
-        $(".play-pause").toggleClass("paused");
-        $(".sub-menu.genre").removeClass("active");
-        $(".add-rem-inst").toggleClass("onDelete-channel");
-        this.isPlaying = !this.isPlaying;
-        EventBus.$emit('playSeq' , {isPlaying: this.isPlaying , isStop: false});
+        if(!this.isPlaying)
+        {
+            var unselInstCheck=false;
+            this.instrumentList.forEach(inst => {
+                if(($('#actualSample'+inst.id).text().trim()=="Nd") && (unselInstCheck==false))
+                {  
+                    unselInstCheck=true;
+                    alert("One or more instruments are not selected!");
+                }
+            });
+        }
+
+        if(this.isPlaying || (!this.isPlaying && !unselInstCheck))
+        {
+            $(".play-pause").toggleClass("paused");
+            $(".sub-menu.genre").removeClass("active");
+            $(".add-rem-inst").toggleClass("onDelete-channel");
+            this.isPlaying = !this.isPlaying;
+            EventBus.$emit('playSeq' , {isPlaying: this.isPlaying , isStop: false});
+        }
     },
     
     stopButton: function() {
@@ -233,8 +254,9 @@
     },
 
     projectMenu: function(){
+        $(".icon").toggleClass("open");
         $("#projectMenu").toggleClass("active");
-        $("#openProjectMenu").toggleClass("rotated");
+        //$("#openProjectMenu").toggleClass("rotated");
     },
 
     changeFreeMode: function(){
