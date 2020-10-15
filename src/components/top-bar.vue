@@ -193,14 +193,14 @@
 
     recButton: function() {
         this.isRecording=!this.isRecording;
-        $(".play-pause").removeClass("paused");
+        $(".play-pause").addClass("paused");
         $(".sub-menu.genre").removeClass("active");
         $(".add-rem-inst").removeClass("onDelete-channel");
 
         $(".rec-time-left").toggleClass("active");
-        // EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
-        // EventBus.$emit('recSeq' , {});
-        // EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
+        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
+        EventBus.$emit('recSeq' , {});
+        EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
         if(this.isRecording){
             var countDownDate = new Date("Oct 3, 2020 19:03:00").getTime();
             this.recTimeOut = setInterval(function() {
