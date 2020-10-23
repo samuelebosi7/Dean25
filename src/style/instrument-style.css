@@ -131,7 +131,7 @@ body {
   to {left: 15px;}
 }
 
-.onDelete-channel{
+.inactive{
   opacity: 0.5;
   pointer-events: none;
 }

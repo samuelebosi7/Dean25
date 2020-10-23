@@ -1,31 +1,35 @@
 
 <template>
-  <vue-slider v-model="value" v-on:change="changeVolume"></vue-slider>
+  <vue-slider v-model="volume" v-on:change="changeVolume"></vue-slider>
 </template>
  
 <script>
 import VueSlider from 'vue-slider-component'
 //import 'vue-slider-component/theme/antd.css'
- 
+
 export default {
     name: 'slider',
   components: {
     VueSlider
   },
-  data () {
+
+  data() {
     return {
-      value: 50
+      volume:50
     }
   },
+
   // computed: {
-  //   value(val){
-  //     val=50;
+  //   volume:function(){
+  //     console.log(this.value);
+  //     return this.value;
   //   }
   // },
+
   methods:{
     changeVolume: function(){
-      this.$emit('changeVolume', {volume: this.value});
-    }
+      this.$emit('changeVolume', {volume: this.volume});
+    },
   }
 }
 </script>

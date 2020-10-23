@@ -4,16 +4,16 @@
             <div v-on:click="addInstrument"  class="add-rem-inst add-inst">
                 <div class="plus-symbol" title="Add Instrument">+</div>
             </div>
-            <div v-on:click="showButtonsDelete" class="add-rem-inst rem-inst" title="Remove Instruments">
+            <div v-on:click="showButtonsDelete" class="add-rem-inst rem-inst inactive" title="Remove Instruments">
                 <div class="minus-symbol">-</div> 
             </div>
         </div>
         <div id='rep-menu'>
-            <div class='play-pause' title="Play/Pause" v-on:click="playButton">
+            <div class='play-pause inactive' title="Play/Pause" v-on:click="playButton">
             </div>
-            <div class='stop' title="Stop" v-on:click="stopButton">
+            <div class='stop inactive' title="Stop" v-on:click="stopButton">
             </div>
-            <div class='rec' title="Record" v-on:click="recButton">
+            <div class='rec inactive' title="Record" v-on:click="recButton">
             </div>
             <div class='rec-time-left'>
                 <div class='speech-bubble'>
@@ -24,7 +24,7 @@
             </div>
         </div>
             
-        <div id='masterVolume' title="Volume">
+        <div id='masterVolume' class="inactive" title="Volume">
             <!-- <input id="duration" type="range" min="0" max="100"> -->
             <slider v-on:changeVolume="changeVolume"></slider>
             <!-- <h1>{{ value }}</h1> -->
@@ -35,7 +35,7 @@
                 <div type="text" class='crono'>00:00:00</div>
             </div> -->
             
-            <div class='tempoProp text-bpm'>
+            <div class='tempoProp text-bpm inactive'>
                 <div class='bpm-selector'>
                     <div v-on:click="bpmButtChange(0.1)" class='bpm-selectorButt bpm-selectorButt-up'>˄</div>
                     <div v-on:click="bpmButtChange(-0.1)" class='bpm-selectorButt bpm-selectorButt-down'>˅</div>
@@ -93,6 +93,7 @@
         return {
             isPlaying: false,
             isRecording: false,
+            isInstListEmpty: true,
             recTimeOut: {},
         }
     },
@@ -108,12 +109,14 @@
     created: function () {
         let that = this;
         document.addEventListener('keyup', function (evt) {
-            if (evt.keyCode == 32 && !document.querySelector(".play-pause").classList.contains("onDelete-channel")) {   //se schiacchiato spazio, fa il play degli strumenti
+            if (evt.keyCode == 32 && !document.querySelector(".play-pause").classList.contains("inactive")) {   //se schiacchiato spazio, fa il play degli strumenti
                 that.playButton();
             } else {
                 evt.preventDefault();
             }
         });
+
+        EventBus.$on('emptyList', this.emptyList);
     },
     // mounted() {
     //     $(function(){
@@ -130,27 +133,29 @@
     //     })
     // },
     methods: {
-        showButtonsDelete: function() {
-            
-            document.querySelectorAll(".on-inst").forEach(function(el){
-                el.classList.toggle("active");
-            });
-            document.querySelectorAll(".instrument-line").forEach(function(el){
-                el.classList.toggle("onDelete-instrument-line");
-            });
+    emptyList: function(value){
+        this.isInstListEmpty=value.state;
+        $(".rem-inst, .play-pause, .stop, .rec, #masterVolume, .tempoProp").addClass("inactive");
+        $(".add-inst").removeClass("inactive");
+    },
 
-            document.querySelectorAll(".channel, .add-inst, .play-pause, .stop, .rec, #masterVolume, .tempoProp").forEach(function(el){
-                el.classList.toggle("onDelete-channel");
-            });
-            
-        },
+    showButtonsDelete: function() {
+        $(".on-inst").toggleClass("active");
+        $(".instrument-line").toggleClass("onDelete-instrument-line");
+        $(".channel, .add-inst, .play-pause, .stop, .rec, #masterVolume, .tempoProp").toggleClass("inactive");
+    },
         
     addInstrument: function (event) {
         $(".sub-menu.genre").removeClass("active");
         var newId = this.getMaxId()+1;
         this.instrumentList.push({ id: newId, title: "Nd" , shortTitle: "-"/*, color: Math.floor(Math.random()*16777215).toString(16)*/});     
+        if(this.isInstListEmpty)
+        {    
+            this.isInstListEmpty=false;
+            $(".rem-inst, .play-pause, .stop, .rec, #masterVolume, .tempoProp").removeClass("inactive");
+        }
         this.$emit('deleteChannel', {id: newId});
-        EventBus.$emit('changedSolo', {id: newId, newEl: true, solo: 1});  
+        //EventBus.$emit('changedSolo', {id: newId, newEl: true, solo: 1});  
     },
     getMaxId: function() {
     //   console.log(this.instrumentList)
@@ -160,7 +165,8 @@
       else return -1;
     },
 
-    playButton:  function() {
+    playCheck:  function() {
+        var passedControl=true;
         if(!this.isPlaying)
         {
             var unselInstCheck=false;
@@ -171,14 +177,19 @@
                     alert("One or more instruments are not selected!");
                 }
             });
+            if(unselInstCheck)
+                passedControl=false;
         }
+        return passedControl;
+    },
 
-        if(this.isPlaying || (!this.isPlaying && !unselInstCheck))
-        {
+    playButton: function(){
+        if(this.playCheck())
+        {   
+            this.isPlaying = !this.isPlaying;
             $(".play-pause").toggleClass("paused");
             $(".sub-menu.genre").removeClass("active");
-            $(".add-rem-inst").toggleClass("onDelete-channel");
-            this.isPlaying = !this.isPlaying;
+            $(".add-rem-inst").toggleClass("inactive");
             EventBus.$emit('playSeq' , {isPlaying: this.isPlaying , isStop: false});
         }
     },
@@ -187,50 +198,59 @@
         this.isPlaying = false;
         $(".play-pause").removeClass("paused");
         $(".sub-menu.genre").removeClass("active");
-        $(".add-rem-inst").removeClass("onDelete-channel");
+        $(".add-rem-inst").removeClass("inactive");
         EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
     },
 
     recButton: function() {
-        this.isRecording=!this.isRecording;
-        $(".play-pause").addClass("paused");
-        $(".sub-menu.genre").removeClass("active");
-        $(".add-rem-inst").removeClass("onDelete-channel");
-
-        $(".rec-time-left").toggleClass("active");
-        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
-        EventBus.$emit('recSeq' , {});
-        EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
-        if(this.isRecording){
-            var countDownDate = new Date("Oct 3, 2020 19:03:00").getTime();
-            this.recTimeOut = setInterval(function() {
-                $('.rec').toggleClass("rec-active");
-
-                var now = new Date().getTime();
-
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-
-                // Time calculations for days, hours, minutes and seconds
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                // Display the result in the element with id="demo"
-                $(".rec-time-left-text").text("Time left: "+minutes+":"+seconds);
-                
-                // If the count down is finished, write some text
-                if (distance < 0) {
-                    clearInterval(this.recTimeOut);
-                    this.isRecording=false;
-                    $('.rec').removeClass("rec-active");
-                    $(".rec-time-left").removeClass("active");
-                }
-            }, 1000);
-        }
-        else
+        if(this.playCheck())
         {
-            clearTimeout(this.recTimeOut);
-            $('.rec').removeClass("rec-active");
+            this.isRecording=!this.isRecording;
+            $(".play-pause").addClass("paused");
+            $(".sub-menu.genre").removeClass("active");
+            $(".add-rem-inst").removeClass("inactive");
+
+            $(".channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").addClass("inactive");
+
+            $(".rec-time-left").toggleClass("active");
+            EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
+            //EventBus.$emit('recSeq' , {});
+            EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
+            if(this.isRecording){
+                var countDownDate = new Date("Oct 24, 2020 19:03:00").getTime();
+                this.recTimeOut = setInterval(function() {
+                    $('.rec').toggleClass("rec-active");
+
+                    var now = new Date().getTime();
+
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+
+                    // Time calculations for days, hours, minutes and seconds
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Display the result in the element with id="demo"
+                    $(".rec-time-left-text").text("Time left: "+minutes+":"+seconds);
+                    
+                    // If the count down is finished, write some text
+                    if (distance < 0) {
+                        clearInterval(this.recTimeOut);
+                        this.isRecording=false;
+                        $('.rec').removeClass("rec-active");
+                        $(".rec-time-left").removeClass("active");
+                        $(".channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
+                    }
+                }, 1000);
+            }
+            else
+            {
+                clearTimeout(this.recTimeOut);
+                $(".play-pause").removeClass("paused");
+                EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
+                $('.rec').removeClass("rec-active");
+                $(".channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
+            }
         }
     },
 
@@ -285,49 +305,12 @@
     }
     
     $(document).ready(function() {
-    //Play-Pause-Record script
-    // $(".play-pause").click(function() {
-    //     $(".play-pause").toggleClass("paused");
-    //     return false;
-    // });
-
-    /*$(".stop").click(function() {
-        if(rec==true){
-        rec=false;
-        alr_play=false;
+        $('.enter-to-unselect').keydown(function(e) {
+        if(e.which == 13 ) {
+            if($(this).val()!='')
+                $(this).blur().next().focus();
+            return false;
         }
-        return false;
-    });*/
-    $('.enter-to-unselect').keydown(function(e) {
-     if(e.which == 13 ) {
-        if($(this).val()!='')
-            $(this).blur().next().focus();
-        return false;
-      }
-    });
-    
-    // //Main volume slider script
-    // function createHoverState (myobject){
-    //     myobject.hover(function() {
-    //     $(this).prev().toggleClass('hilite');
-    //     });
-    //     myobject.mousedown(function() {
-    //     $(this).prev().addClass('dragging');
-    //     $("*").mouseup(function() {
-    //         $(myobject).prev().removeClass('dragging');
-    //     });
-    //     });
-    // }
-    
-    // $("#volume").slider({
-    //     orientation: "horizontal",
-    //     range: "min",
-    //     max: 100,
-    //     value: 0,
-    //     animate: 1300
-    // });
-    // $("#main").slider( "value", 100 );
-    
-    // createHoverState($(".volume a.ui-slider-handle"));
+        });
     });
 </script>
