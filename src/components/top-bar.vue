@@ -24,7 +24,7 @@
             </div>
         </div>
             
-        <div id='masterVolume' class="inactive" title="Volume">
+        <div id='masterVolume' title="Volume">
             <!-- <input id="duration" type="range" min="0" max="100"> -->
             <slider v-on:changeVolume="changeVolume"></slider>
             <!-- <h1>{{ value }}</h1> -->
@@ -35,7 +35,7 @@
                 <div type="text" class='crono'>00:00:00</div>
             </div> -->
             
-            <div class='tempoProp text-bpm inactive'>
+            <div class='tempoProp text-bpm'>
                 <div class='bpm-selector'>
                     <div v-on:click="bpmButtChange(0.1)" class='bpm-selectorButt bpm-selectorButt-up'>˄</div>
                     <div v-on:click="bpmButtChange(-0.1)" class='bpm-selectorButt bpm-selectorButt-down'>˅</div>
@@ -135,8 +135,8 @@
     methods: {
     emptyList: function(value){
         this.isInstListEmpty=value.state;
-        $(".rem-inst, .play-pause, .stop, .rec, #masterVolume, .tempoProp").addClass("inactive");
-        $(".add-inst").removeClass("inactive");
+        $(".rem-inst, .play-pause, .stop, .rec").addClass("inactive");
+        $(".add-inst, #masterVolume, .tempoProp").removeClass("inactive");
     },
 
     showButtonsDelete: function() {
@@ -152,7 +152,7 @@
         if(this.isInstListEmpty)
         {    
             this.isInstListEmpty=false;
-            $(".rem-inst, .play-pause, .stop, .rec, #masterVolume, .tempoProp").removeClass("inactive");
+            $(".rem-inst, .play-pause, .stop, .rec").removeClass("inactive");
         }
         this.$emit('deleteChannel', {id: newId});
         //EventBus.$emit('changedSolo', {id: newId, newEl: true, solo: 1});  
@@ -210,7 +210,7 @@
             $(".sub-menu.genre").removeClass("active");
             $(".add-rem-inst").removeClass("inactive");
 
-            $(".channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").addClass("inactive");
+            $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").addClass("inactive");
 
             $(".rec-time-left").toggleClass("active");
             EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
@@ -239,7 +239,7 @@
                         this.isRecording=false;
                         $('.rec').removeClass("rec-active");
                         $(".rec-time-left").removeClass("active");
-                        $(".channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
+                        $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
                     }
                 }, 1000);
             }
@@ -249,7 +249,7 @@
                 $(".play-pause").removeClass("paused");
                 EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
                 $('.rec').removeClass("rec-active");
-                $(".channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
+                $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
             }
         }
     },
