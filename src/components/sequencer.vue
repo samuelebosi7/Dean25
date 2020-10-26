@@ -57,7 +57,7 @@ name: "sequencer",
 
       //reset the clock and update the note duration
       this.suspendClock();
-      this.startClock();
+      //this.startClock();
     },
     
     pan(value) {
