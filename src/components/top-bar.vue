@@ -17,9 +17,10 @@
             </div>
             <div class='rec-time-left'>
                 <div class='speech-bubble'>
-                    <span class="rec-time-left-text">
-                        Time left: 12:01
-                    </span>
+                    Time left: 
+                    <span class="rec-time-left-text"></span>
+                    <div v-on:click="startDownload" class="button-download inactive">Download</div>
+                    <div v-on:click="cancelDownload" class="button-cancel-download">Cancel</div>
                 </div>
             </div>
         </div>
@@ -62,10 +63,13 @@
 
             <div id="projectMenu">
                 <ul class="sub-menu-project">
-                    <li class="sub-menu-project-elements">
+                    <li class="sub-menu-project-elements blank-proj inactive" v-on:click="blankProject">
+                        Blank project
+                    </li>
+                    <li class="sub-menu-project-elements coming-soon" title="Coming soon!">
                         Save
                     </li>
-                    <li class="sub-menu-project-elements">
+                    <li class="sub-menu-project-elements coming-soon" title="Coming soon!">
                         Export MIDI
                     </li>
                     <li class="sub-menu-project-elements">
@@ -135,7 +139,7 @@
     methods: {
     emptyList: function(value){
         this.isInstListEmpty=value.state;
-        $(".rem-inst, .play-pause, .stop, .rec").addClass("inactive");
+        $(".rem-inst, .play-pause, .stop, .rec, .blank-proj").addClass("inactive");
         $(".add-inst, #masterVolume, .tempoProp").removeClass("inactive");
     },
 
@@ -152,11 +156,13 @@
         if(this.isInstListEmpty)
         {    
             this.isInstListEmpty=false;
-            $(".rem-inst, .play-pause, .stop, .rec").removeClass("inactive");
+            $(".rem-inst, .play-pause, .stop, .rec, .blank-proj").removeClass("inactive");
         }
         this.$emit('deleteChannel', {id: newId});
         //EventBus.$emit('changedSolo', {id: newId, newEl: true, solo: 1});  
     },
+
+    
     getMaxId: function() {
     //   console.log(this.instrumentList)
     //   console.log(this.channelList)
@@ -217,7 +223,7 @@
             //EventBus.$emit('recSeq' , {});
             EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
             if(this.isRecording){
-                var countDownDate = new Date("Oct 24, 2020 19:03:00").getTime();
+                var countDownDate = new Date("Oct 26, 2020 18:28:30").getTime();
                 this.recTimeOut = setInterval(function() {
                     $('.rec').toggleClass("rec-active");
 
@@ -229,17 +235,20 @@
                     // Time calculations for days, hours, minutes and seconds
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    var timeLeft=minutes+":";
+                    if(seconds<10)
+                        timeLeft+="0";
+                    timeLeft+=seconds;
 
                     // Display the result in the element with id="demo"
-                    $(".rec-time-left-text").text("Time left: "+minutes+":"+seconds);
+                    $(".rec-time-left-text").text(timeLeft);
                     
                     // If the count down is finished, write some text
                     if (distance < 0) {
                         clearInterval(this.recTimeOut);
                         this.isRecording=false;
+                        $('.button-download').removeClass("inactive");
                         $('.rec').removeClass("rec-active");
-                        $(".rec-time-left").removeClass("active");
-                        $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
                     }
                 }, 1000);
             }
@@ -252,6 +261,27 @@
                 $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
             }
         }
+    },
+
+    cancelDownload:function(){
+        if(confirm("Are you sure you want to cancel the recording process?"))
+        {
+            this.isRecording=false;
+            clearTimeout(this.recTimeOut);
+            $(".play-pause").removeClass("paused");
+            EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
+            $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
+            $(".rec-time-left").toggleClass("active");
+        }
+    },
+
+    startDownload:function(){
+        $(".rec-time-left").toggleClass("active");
+        $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
+        $(".play-pause").removeClass("paused");
+        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
+
+        //Download .wav code here
     },
 
     changeVolume: function(value){
@@ -281,6 +311,18 @@
 
     changeFreeMode: function(){
         this.$store.commit("setFreeMode");
+    },
+
+    blankProject: function(){
+        if(confirm("This will delete every progress of the actual project!\nAre you sure you want to proceed?"))
+        {
+            this.instrumentList.splice(0, this.instrumentList.length);
+            EventBus.$emit('deleteAllChannels');
+            this.isInstListEmpty=true;
+            $(".icon").toggleClass("open");
+            $("#projectMenu").toggleClass("active");
+            $(".rem-inst, .play-pause, .stop, .rec, .blank-proj").addClass("inactive");
+        }
     },
 
     getMaxId: function() {

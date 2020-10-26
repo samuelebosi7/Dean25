@@ -203,6 +203,11 @@ div:focus {
   color: white;
 }
 
+.coming-soon{
+  opacity: 0.5;
+  cursor: default !important;
+}
+
 .switch {
   position: relative;
     display: inline-block;
@@ -345,6 +350,7 @@ input:checked + .slider:before {
   margin-top: -5px;
   width: 82px;
   text-align: right;
+  color: white;
   font-size: 12px;
   line-height: 29px;
   user-select: none;
@@ -354,10 +360,14 @@ input:checked + .slider:before {
   position: absolute;
   top: 26px;
   left: 64px;
-  height: 27px;
-  width: 91px;
-  background-color: gray;
-  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
+  height: 83px;
+  width: 183px;
+  color: #d7d7d7;
+  padding-top: 4px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #666363;
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.5));
   border: 1px solid #181818;
   border-radius: 4px;
   z-index: 1;
@@ -367,11 +377,11 @@ input:checked + .slider:before {
 	content: '';
   position: absolute;
   top: 0;
-  left: 16%;
+  left: 8%;
   width: 0;
   height: 0;
   border: 4px solid transparent;
-  border-bottom-color: #545454;
+  border-bottom-color: #2f2f2f;
   background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
   border-top: 0;
   margin-left: -4px;
@@ -381,15 +391,48 @@ input:checked + .slider:before {
 .rec-time-left-text{
   position: absolute;
   /* width: max-content; */
-  padding-top: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
+  top: 15px;
+  left: 47px;
+  padding-top: 10px;
   margin-top: -5px;
   width: 82px;
-  text-align: right;
-  font-size: 12px;
+  text-align: center;
+  font-size: 23px;
+  color: white;
   line-height: 29px;
   user-select: none;
+}
+
+.button-download{
+  position: absolute;
+  width: 74px;
+  height: 23px;
+  top: 50px;
+  left: 10px;
+  padding-top: 4px;
+  font-weight: 600;
+  color: #e4e4e4;
+  border: 1px solid #972323;
+  border-radius: 3px;
+  background-color: #c94848;
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
+  cursor: pointer;
+}
+
+.button-cancel-download{
+  position: absolute;
+  width: 74px;
+  height: 23px;
+  top: 50px;
+  left: 97px;
+  padding-top: 4px;
+  font-weight: 600;
+  color: #e4e4e4;
+  border: 1px solid #454545;
+  border-radius: 3px;
+  background-color: #434343;
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
+  cursor: pointer;
 }
 
 .crono{

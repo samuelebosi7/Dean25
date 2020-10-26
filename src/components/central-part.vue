@@ -9,7 +9,7 @@
             
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
-          <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changeMute" v-on:changedSolo="changeSolo" v-on:setStep="updateStep" v-bind:id ="instrument.id" v-bind:title="instrument.title" v-bind:soloChannel ="channelList.find(x => x.id === instrument.id).solo" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+          <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteAllChannels="deleteAllChannels" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changeMute" v-on:changedSolo="changeSolo" v-on:setStep="updateStep" v-bind:id ="instrument.id" v-bind:title="instrument.title" v-bind:soloChannel ="channelList.find(x => x.id === instrument.id).solo" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
           <channel class="instrument-channel" v-on:toggleStepEvent="toggleStep" v-bind:audiox = "audiox" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
@@ -81,7 +81,7 @@ export default {
       EventBus.$on('recSeq', this.record);
       EventBus.$on('changeBpm', this.changeBpm);
       EventBus.$on('changedSolo', this.changeSolo);
-      EventBus.$on('changedSolo', this.changeSolo);
+      EventBus.$on('deleteAllChannels', this.deleteAllChannels);
       
   },
   methods: {
@@ -195,6 +195,10 @@ export default {
       count -= arr.length * Math.floor(count / arr.length);
       arr.push.apply(arr, arr.splice(0, count));
       return arr;
+    },
+
+    deleteAllChannels: function() {  
+      this.channelList.splice(0, this.channelList.length);
     },
 
     deleteChannel: function(value) {  //value.id --> id 

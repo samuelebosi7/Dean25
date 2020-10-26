@@ -1,7 +1,7 @@
 <template>
 
   <div id="app">
-      <div id="overlay" v-bind:class="{overlayActive: isActive}">> <div id="overlay-text">ACTAM Project</div> <div id = "container"> <button class="btn draw-border" v-on:click="start">ENTER</button> </div></div>
+      <div id="overlay" v-bind:class="{overlayActive: isActive}"> <div id="overlay-text"></div> <div id = "container"> <button class="btn draw-border" v-on:click="start">READY ?</button> </div></div>
       <top-bar v-on:changeVolume="changeVolume"></top-bar>
       <div id = "central-part">
         <central-part v-bind:mastVolume="masterVolume"></central-part>
