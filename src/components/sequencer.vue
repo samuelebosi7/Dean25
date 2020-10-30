@@ -31,7 +31,7 @@ name: "sequencer",
       numUpdate: 0,
     }
   },
-  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url", "audiox"],
+  props: ["id","binSeq", "noteDur", "pan", "gain", "mute", "solo", "masterVolume" , "url", "audiox", "recNode"],
   created() {
       EventBus.$on('nextStep', this.scheduleNote);
       EventBus.$on('stopStep', this.stopSeq);
@@ -137,6 +137,7 @@ name: "sequencer",
     startClock: function() {
         this.clock.start();
         this.updateEvent = this.clock.callbackAtTime(this.updateCurrentStep, this.audiox.currentTime).repeat(this.noteDuration);
+        console.log("startClock");
     },
 
 
@@ -148,10 +149,10 @@ name: "sequencer",
       this.playGain = this.audiox.createGain();
       this.playGain.gain.value=1;
       this.g.gain.value=this.masterVolume/100;
-
+       
       this.playGain.connect(this.g);
       this.g.connect(this.p);
-      this.p.connect(this.audiox.destination);
+      this.p.connect(this.recNode);
     },
 
 //------------------SCHEDULE------------------------------
@@ -239,7 +240,6 @@ name: "sequencer",
       request.send();
 
     },
-
-    },
+  }
 }
 </script>

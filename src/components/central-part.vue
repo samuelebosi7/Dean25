@@ -9,8 +9,8 @@
             
       <div id = "instrument-list">
         <div class="instrument-line" v-for="instrument in instrumentList" v-bind:key="instrument.id">
-          <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteAllChannels="deleteAllChannels" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changeMute" v-on:changedSolo="changeSolo" v-on:setStep="updateStep" v-bind:id ="instrument.id" v-bind:title="instrument.title" v-bind:soloChannel ="channelList.find(x => x.id === instrument.id).solo" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
-          <channel class="instrument-channel" v-on:toggleStepEvent="toggleStep" v-bind:audiox = "audiox" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
+          <instrument v-on:upLink="updateLink" v-on:updateGainPan="updateGP" v-on:deleteChannel="deleteChannel" v-on:updateDuration="updateDuration" v-on:changedMute="changeMute" v-on:changedSolo="changeSolo" v-on:setStep="updateStep" v-bind:id ="instrument.id" v-bind:title="instrument.title" v-bind:soloChannel ="channelList.find(x => x.id === instrument.id).solo" v-bind:style="{ backgroundColor: instrument.color}"></instrument>
+          <channel class="instrument-channel" v-on:toggleStepEvent="toggleStep" v-bind:audiox = "audiox" v-bind:recNode ="recNode" v-bind:masterVolume="mastVolume" v-bind:singleChannel="channelList.find(x => x.id === instrument.id)"></channel>
         </div>
       </div>
   </div>
@@ -21,7 +21,8 @@ import { EventBus } from '../app.vue';
 import Instrument from './instrument.vue';
 import Channel from './channel.vue';
 import WAAClock from 'waaclock';
-import Recorder from 'recorder-js';
+import Recorder from './recorder.js';
+import store from '../app.vue'
 
 export default {
   name: 'central-part',
@@ -35,7 +36,9 @@ export default {
 
       //timing var
       audiox : new AudioContext,
-      recx: {},
+      recx: Recorder,
+      recNode: null,
+      input: {},
       clock: {},
       tickEvent: null,
       updateEvent: 0,
@@ -73,7 +76,9 @@ export default {
   created() {
       this.createChannel();
       this.clock = new WAAClock(this.audiox);
-      this.recx = new Recorder(this.audiox);
+      this.recNode = this.audiox.createGain();
+      this.recNode.connect(this.audiox.destination);
+
       EventBus.$on('startAudioContext', this.startAudioContext);
       //EventBus.$on('nextStep', this.advanceTic);
       EventBus.$on('playSeq', this.setPlayStop);
@@ -307,35 +312,35 @@ export default {
         this.startClock();
     },
 
-    record: function() {
+    record: function(payload) {
       //recx = new Recorder(this.audiox);
-      this.recx.start()
-      while(this.totcount <= cLcm) {
-      }
-      EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
-      this.recx.stop().then(({blob, buffer}) => {
-      blob = blob;});
+      if(payload.isRecording)
+      {
+        console.log("rec start");
+        this.setPlayStop({isPlaying: false, isStop: true});
 
-      this.recx.download(blob, 'prova1');
+        this.recx = new Recorder(this.recNode);
+        this.setPlayStop({isPlaying: true, isStop: false});
+        
+        this.recx.clear();
+        this.recx.record();
+        // this.recx.stop().then(({blob, buffer}) => {
+        // blob = blob;});
+
+      } else{
+          this.recx.stop();
+          console.log(this.recx)
+          this.recx.exportWAV(this.doneEncoding);
+          this.setPlayStop({isPlaying: false, isStop: true});
+       }
+     },
+
+    doneEncoding: function(blob) {
+        var url = (window.URL || window.webkitURL).createObjectURL(blob);
+        this.$store.commit('setRecordLink', url);
+        console.log(url);
     }
 
-   /*  emitPlaynote:  function() {
-      
-       if(this.isStop){
-        EventBus.$emit('stopStep');
-        return false;
-      } else if(!this.isPlaying) return false;  //se ho premuto pausa tengo slavato lo step corrente
-      
-      var ct = this.audiox.currentTime;
-      ct -= this.startTime;
-
-      console.log("time: "+ ct );
-      while(this.noteTime < ct + this.tic) {
-        EventBus.$emit('nextStep');
-        this.noteTime += this.tic; 
-      }
-      this.ti = setTimeout(this.emitPlaynote, 0);
-    }, */
   }
 }
 </script>

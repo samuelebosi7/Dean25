@@ -16,15 +16,6 @@ body {
     background-color: black;
 }
 
-#mixer {
-    position: fixed;
-    left: 0px;
-    bottom: 0px;
-    height: 15%;
-    width: 100%;
-    background-color: green;
-}
-
 #central-part {
     position: absolute;
     left: 0px;
@@ -49,7 +40,7 @@ body {
 /* INSTRUMENT CSS */
 
 #instrument-list {
-  height: 83%;
+  height: 100%;
   overflow-y: auto;
   position: relative;
   padding: 6px;

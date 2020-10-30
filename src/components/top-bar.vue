@@ -52,7 +52,7 @@
         </div> -->
         <!-- <img src="./src/svg/metronome.svg" class='metronome-svg'> -->
         <div id="projectMenuContainer">
-            <input id='projectTitle' class="enter-to-unselect" value="New project">
+            <input id='projectTitle' class="enter-to-unselect" value="New project" v-on:change="updateProjectTitle">
             <!-- <span id="openProjectMenu" v-on:click="projectMenu">&blacktriangledown;</span> -->
 
             <div class="icon nav-icon-2" v-on:click="projectMenu">
@@ -66,10 +66,12 @@
                     <li class="sub-menu-project-elements blank-proj inactive" v-on:click="blankProject">
                         Blank project
                     </li>
-                    <li class="sub-menu-project-elements coming-soon" title="Coming soon!">
-                        Save
-                    </li>
-                    <li class="sub-menu-project-elements coming-soon" title="Coming soon!">
+                    <a id="recordingLink" href="#">
+                        <li class="sub-menu-project-elements" >
+                         Save 
+                        </li>
+                    </a>
+                    <li class="sub-menu-project-elements">
                         Export MIDI
                     </li>
                     <li class="sub-menu-project-elements">
@@ -99,14 +101,23 @@
             isRecording: false,
             isInstListEmpty: true,
             recTimeOut: {},
+            projectTitle: "New Project"
         }
     },
     computed: {
         instrumentList () {
         return this.$store.state.instrumentList;
         },
+
+        recordLink () {
+            return this.$store.state.recordLink;
+        }
     },
-        
+    watch: {
+    recordLink: function () {
+      this.setLinkRec();
+    },
+    },
     components: {
         Slider
     },
@@ -207,7 +218,7 @@
         $(".add-rem-inst").removeClass("inactive");
         EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
     },
-
+    
     recButton: function() {
         if(this.playCheck())
         {
@@ -215,13 +226,11 @@
             $(".play-pause").addClass("paused");
             $(".sub-menu.genre").removeClass("active");
             $(".add-rem-inst").removeClass("inactive");
-
+            $(".rec-time-left").toggleClass("active");
             $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").addClass("inactive");
 
-            $(".rec-time-left").toggleClass("active");
-            EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true, });
-            //EventBus.$emit('recSeq' , {});
-            EventBus.$emit('playSeq' , {isPlaying: true , isStop: false});
+            EventBus.$emit('recSeq', {isRecording: this.isRecording});
+
             if(this.isRecording){
                 var countDownDate = new Date("Oct 26, 2020 18:28:30").getTime();
                 this.recTimeOut = setInterval(function() {
@@ -256,7 +265,6 @@
             {
                 clearTimeout(this.recTimeOut);
                 $(".play-pause").removeClass("paused");
-                EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
                 $('.rec').removeClass("rec-active");
                 $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
             }
@@ -341,6 +349,17 @@
         } else {
             return true;
         }
+    },
+
+    setLinkRec: function(e) {
+        if (this.recordLink == null) return;
+
+        $("#recordingLink").attr("href", this.recordLink);
+        $("#recordingLink").attr("download", this.projectTitle);
+    },
+
+    setProjectTitle: function(e) {
+        this.projectTitle = e.target.value;
     }
 
     }

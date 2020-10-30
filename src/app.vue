@@ -40,6 +40,7 @@ const store = new Vuex.Store({
     links: [],
     storage: firebase.storage(),
     freeModeEnabled: false,
+    recordLink: null,
   },
 
   getters: {
@@ -74,6 +75,11 @@ const store = new Vuex.Store({
     setFreeMode(state)
     {
       state.freeModeEnabled = !state.freeModeEnabled;
+    },
+
+    setRecordLink(state, url) 
+    {
+      state.recordLink = url;
     }
   }
 })
