@@ -100,7 +100,7 @@ export default {
     },
 
     createChannel: function(){
-      this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 2, mute: 1, solo: 1 , url: ''}));
+      this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 4, mute: 1, solo: 1 , url: ''}));
       //console.log("added inst"+value.id+" with solo to "+this.channelList.find(x => x.id === value.id).solo);
     },
 
@@ -110,7 +110,7 @@ export default {
         if(this.soloInsts>0)
           correctSolo=0;
         console.log("correct solo: "+correctSolo);
-        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 2, mute: 1, solo: correctSolo , url: ''}) : {});
+        this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 4, mute: 1, solo: correctSolo , url: ''}) : {});
         this.channelList.forEach(ch => console.log("inst"+ch.id+" has solo: "+ch.solo));
     }, 
 
@@ -312,11 +312,23 @@ export default {
         this.startClock();
     },
 
+    minNoteDur: function() {
+      var minNoteDuration = 32;
+      this.channelList.forEach(element => {
+        if(element.noteDuration < minNoteDuration)
+          minNoteDuration = element.noteDuration;
+      });
+      return minNoteDuration;
+    },
+
     record: function(payload) {
       //recx = new Recorder(this.audiox);
       if(payload.isRecording)
       {
-        console.log("rec start");
+        var minNoteDuration = this.minNoteDur();
+        var recordingTime = this.cLcm*this.tic*4/minNoteDuration;
+
+        EventBus.$emit('setRecordingLabel', recordingTime);
         this.setPlayStop({isPlaying: false, isStop: true});
 
         this.recx = new Recorder(this.recNode);
@@ -324,15 +336,20 @@ export default {
         
         this.recx.clear();
         this.recx.record();
-        // this.recx.stop().then(({blob, buffer}) => {
-        // blob = blob;});
+        setTimeout(this.stopRecording, recordingTime*1000);
 
       } else{
-          this.recx.stop();
+         /*  this.recx.stop();
           console.log(this.recx)
           this.recx.exportWAV(this.doneEncoding);
-          this.setPlayStop({isPlaying: false, isStop: true});
+          this.setPlayStop({isPlaying: false, isStop: true}) */;
        }
+     },
+
+     stopRecording: function() {
+          this.recx.stop();
+          this.recx.exportWAV(this.doneEncoding);
+          this.setPlayStop({isPlaying: false, isStop: true});
      },
 
     doneEncoding: function(blob) {

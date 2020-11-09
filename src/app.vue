@@ -80,8 +80,9 @@ const store = new Vuex.Store({
     setRecordLink(state, url) 
     {
       state.recordLink = url;
-    }
-  }
+    },
+
+   }
 })
 
 store.dispatch("getFirebaseData"); //triggers "getFirebaseData" action upon startup

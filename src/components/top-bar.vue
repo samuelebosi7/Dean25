@@ -19,7 +19,7 @@
                 <div class='speech-bubble'>
                     Time left: 
                     <span class="rec-time-left-text"></span>
-                    <div v-on:click="startDownload" class="button-download inactive">Download</div>
+                    <div v-on:click="startDownload" class="button-download inactive">Progress...</div>
                     <div v-on:click="cancelDownload" class="button-cancel-download">Cancel</div>
                 </div>
             </div>
@@ -101,7 +101,9 @@
             isRecording: false,
             isInstListEmpty: true,
             recTimeOut: {},
-            projectTitle: "New Project"
+            projectTitle: "New Project",
+            urlDownload: "#",
+            recordingTime:0,
         }
     },
     computed: {
@@ -111,12 +113,13 @@
 
         recordLink () {
             return this.$store.state.recordLink;
+        },
+
+        recordingTime () {
+            return this.$store.state.recordingTime;
         }
     },
     watch: {
-    recordLink: function () {
-      this.setLinkRec();
-    },
     },
     components: {
         Slider
@@ -132,6 +135,7 @@
         });
 
         EventBus.$on('emptyList', this.emptyList);
+        EventBus.$on('setRecordingLabel', this.setRecordingTimeLabel);
     },
     // mounted() {
     //     $(function(){
@@ -233,7 +237,7 @@
 
             if(this.isRecording){
                 var countDownDate = new Date("Oct 26, 2020 18:28:30").getTime();
-                this.recTimeOut = setInterval(function() {
+                /* this.recTimeOut = setInterval(function() {
                     $('.rec').toggleClass("rec-active");
 
                     var now = new Date().getTime();
@@ -259,7 +263,7 @@
                         $('.button-download').removeClass("inactive");
                         $('.rec').removeClass("rec-active");
                     }
-                }, 1000);
+                }, 1000); */
             }
             else
             {
@@ -270,6 +274,26 @@
             }
         }
     },
+
+    setRecordingTimeLabel: function(recTime) {
+        this.recordingTime = recTime;
+        this.recTimeOut = setInterval(this.countDown, 1000);
+    },
+
+    countDown: function() {
+        $('.rec').toggleClass("rec-active");
+        $(".rec-time-left-text").text(this.recordingTime);
+                    
+        this.recordingTime--;
+            // If the count down is finished, write some text
+        if (this.recordingTime <= 0) {
+            clearInterval(this.recTimeOut);
+            this.isRecording=false;
+            $('.button-download').removeClass("inactive");
+            $('.button-download').text("Dowload");
+            $('.rec').removeClass("rec-active");
+        }
+   },
 
     cancelDownload:function(){
         if(confirm("Are you sure you want to cancel the recording process?"))
@@ -287,9 +311,9 @@
         $(".rec-time-left").toggleClass("active");
         $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
         $(".play-pause").removeClass("paused");
-        EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
 
-        //Download .wav code here
+        var win = window.open(this.recordLink, '_blank');
+        win.focus();
     },
 
     changeVolume: function(value){
@@ -351,12 +375,12 @@
         }
     },
 
-    setLinkRec: function(e) {
+    /* setLinkRec: function(e) {
         if (this.recordLink == null) return;
 
         $("#recordingLink").attr("href", this.recordLink);
         $("#recordingLink").attr("download", this.projectTitle);
-    },
+    }, */
 
     setProjectTitle: function(e) {
         this.projectTitle = e.target.value;
