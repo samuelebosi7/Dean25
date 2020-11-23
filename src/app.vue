@@ -27,7 +27,7 @@ messagingSenderId: "516631775225",
 appId: "1:516631775225:web:81bb8274c50bb5ce375f28" });
 Vue.use(Vuex);
 
-Vue.config.silent=true;
+Vue.config.silent=true; //in order to silence not relevant warnings
 
 const store = new Vuex.Store({
   state: {
