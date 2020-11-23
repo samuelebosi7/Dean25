@@ -120,11 +120,11 @@ export default {
             var ary = this.euclidean(value.step, value.pulses);  // qui verrà usato l'agoritmo euclideo
             ary = this.arrayRotate(ary , -value.offset)
             this.channelList.find(x => x.id === value.id).seq = ary;
-            this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
+            //this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
         } else
         {
             this.channelList.find(x => x.id === value.id).seq.push(0);
-            this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
+            //this.cLcm = this.lcm(); //updates least common multiple value as steps get added on any instrument.
         }
     },
 
@@ -325,6 +325,7 @@ export default {
       //recx = new Recorder(this.audiox);
       if(payload.isRecording)
       {
+        this.cLcm=this.lcm();
         var minNoteDuration = this.minNoteDur();
         var recordingTime = this.cLcm*this.tic*4/minNoteDuration;
 

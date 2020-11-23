@@ -66,12 +66,12 @@
                     <li class="sub-menu-project-elements blank-proj inactive" v-on:click="blankProject">
                         Blank project
                     </li>
-                    <a id="recordingLink" href="#">
-                        <li class="sub-menu-project-elements" >
-                         Save 
+                    <!-- <a id="recordingLink" href="#"> -->
+                        <li class="sub-menu-project-elements coming-soon" title="Coming soon!">
+                         Save
                         </li>
-                    </a>
-                    <li class="sub-menu-project-elements">
+                    <!-- </a> -->
+                    <li class="sub-menu-project-elements coming-soon" title="Coming soon!">
                         Export MIDI
                     </li>
                     <li class="sub-menu-project-elements">
@@ -282,13 +282,21 @@
 
     countDown: function() {
         $('.rec').toggleClass("rec-active");
-        $(".rec-time-left-text").text(this.recordingTime);
+        var minutes=Math.floor(this.recordingTime/60);
+        var seconds=this.recordingTime%60;
+        var timeLeft=minutes+":";
+        if(seconds<10)
+            timeLeft+="0";
+        timeLeft+=seconds;
+        $(".rec-time-left-text").text(timeLeft);
                     
         this.recordingTime--;
             // If the count down is finished, write some text
-        if (this.recordingTime <= 0) {
+        if (this.recordingTime < 0) {
+            $(".rec-time-left-text").text("0:00");
             clearInterval(this.recTimeOut);
             this.isRecording=false;
+            $('.button-download').attr("href", this.recordLink);
             $('.button-download').removeClass("inactive");
             $('.button-download').text("Dowload");
             $('.rec').removeClass("rec-active");
@@ -304,11 +312,17 @@
             EventBus.$emit('stopSeq' , {isPlaying: false , isStop: true});
             $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
             $(".rec-time-left").toggleClass("active");
+            $(".rec-time-left-text").text("");
+            $('.button-download').addClass("inactive");
+            $('.button-download').text("Progress...");
         }
     },
 
     startDownload:function(){
         $(".rec-time-left").toggleClass("active");
+        $(".rec-time-left-text").text("");
+        $('.button-download').addClass("inactive");
+        $('.button-download').text("Progress...");
         $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
         $(".play-pause").removeClass("paused");
 
