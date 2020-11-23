@@ -52,7 +52,7 @@
         </div> -->
         <!-- <img src="./src/svg/metronome.svg" class='metronome-svg'> -->
         <div id="projectMenuContainer">
-            <input id='projectTitle' class="enter-to-unselect" value="New project" v-on:change="updateProjectTitle">
+            <input id='projectTitle' class="enter-to-unselect" value="New project" v-on:change="setProjectTitle">
             <!-- <span id="openProjectMenu" v-on:click="projectMenu">&blacktriangledown;</span> -->
 
             <div class="icon nav-icon-2" v-on:click="projectMenu">
@@ -312,8 +312,15 @@
         $(".instrument, .channel, .add-inst, .rem-inst, .play-pause, .stop, #masterVolume, .tempoProp").removeClass("inactive");
         $(".play-pause").removeClass("paused");
 
-        var win = window.open(this.recordLink, '_blank');
-        win.focus();
+        // var win = window.open(this.recordLink, '_blank');
+        // win.focus();
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.style = "display: none";  
+
+        a.href = this.recordLink;
+        a.download = this.projectTitle+'.wav';
+        a.click();
     },
 
     changeVolume: function(value){
