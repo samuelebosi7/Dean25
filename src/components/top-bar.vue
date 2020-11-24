@@ -19,6 +19,10 @@
                 <div class='speech-bubble'>
                     Time left: 
                     <span class="rec-time-left-text"></span>
+                    <div id="projectTitleContainer">
+                        <input id='projectTitle' class="enter-to-unselect" value="NewTrack" title="Insert track name" v-on:change="setProjectTitle">
+                        .wav
+                    </div>
                     <div v-on:click="startDownload" class="button-download inactive">Progress...</div>
                     <div v-on:click="cancelDownload" class="button-cancel-download">Cancel</div>
                 </div>
@@ -52,7 +56,7 @@
         </div> -->
         <!-- <img src="./src/svg/metronome.svg" class='metronome-svg'> -->
         <div id="projectMenuContainer">
-            <input id='projectTitle' class="enter-to-unselect" value="New project" v-on:change="setProjectTitle">
+            <!-- <input id='projectTitle' class="enter-to-unselect" value="New project" v-on:change="setProjectTitle"> -->
             <!-- <span id="openProjectMenu" v-on:click="projectMenu">&blacktriangledown;</span> -->
 
             <div class="icon nav-icon-2" v-on:click="projectMenu">

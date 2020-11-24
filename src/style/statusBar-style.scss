@@ -111,15 +111,32 @@ div:focus {
   user-select: none; 
 }
 
-#projectMenuContainer{
+#projectTitleContainer{
   position: relative;
   /* border: 1px solid transparent; */
   border: 1px solid black;
   border-radius: 2.5px;
   background-color: #00000059;
-  width: 151px;
-  left: 85%;
-  top: -4px;
+  width: 93px;
+  left: 37px;
+  top: 43px;
+  font-size: 12px;
+  padding: 0px;
+}
+
+#projectMenuContainer{
+  position: relative;
+  /* border: 1px solid transparent; */
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: #00000059;
+  width: 35px;
+  height: 31px;
+  left: 96.5%;
+  top: -7px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
   padding: 0px;
 }
 
@@ -130,17 +147,18 @@ div:focus {
 
 #projectTitle{
   position: relative;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   text-decoration-color: white;
   background-color: transparent;
-  border-color:transparent;
-  border-radius:3px;
-  height: 25px;
-  width: 124px;
-  color:#dadada;
-  text-align:right;
-  font-size: 19px;
+  border-color: transparent;
+  border-radius: 1px;
+  height: 23px;
+  width: 93px;
+  color: #dadada;
+  text-align: right;
+  font-size: 13px;
   cursor: text !important;
+  padding: 5px;
 }
 
 #projectTitle:hover{
@@ -169,25 +187,22 @@ div:focus {
 
 .sub-menu-project{
   position: absolute;
-    background-color: #0b0c0d;
-    background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.16));
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-    list-style-type: none;
-    text-align: right;
-    top: 9px;
-    left: -1px;
-    width: 104px;
-    padding-right: 7px;
-    border: 1px solid black;
-    border-top: none;
-    border-radius: 0px 0px 2px 2px;
-    font-size: 16px;
-    font-weight: 700;
-    // transition:all 1s ease-out;
-    
-    // cursor: pointer;
-    // pointer-events: none;
-    z-index: 1;
+  background-color: #0b0c0d;
+  background-image: radial-gradient(transparent, rgba(0, 0, 0, 0.16));
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  list-style-type: none;
+  text-align: right;
+  top: 9px;
+  right: -1px;
+  width: 100px;
+  height: 117px;
+  padding-right: 7px;
+  border: 1px solid black;
+  border-top: none;
+  border-radius: 4px 0px 4px 4px;
+  font-size: 17px;
+  font-weight: 700;
+  z-index: 1;
 }
 
 .sub-menu-project-elements{
@@ -361,8 +376,8 @@ input:checked + .slider:before {
   position: absolute;
   top: 26px;
   left: 64px;
-  height: 83px;
-  width: 183px;
+  height: 130px;
+  width: 198px;
   color: #d7d7d7;
   padding-top: 4px;
   text-align: center;
@@ -378,7 +393,7 @@ input:checked + .slider:before {
 	content: '';
   position: absolute;
   top: 0;
-  left: 8%;
+  left: 7%;
   width: 0;
   height: 0;
   border: 4px solid transparent;
@@ -392,13 +407,13 @@ input:checked + .slider:before {
 .rec-time-left-text{
   position: absolute;
   /* width: max-content; */
-  top: 15px;
-  left: 47px;
+  top: 19px;
+  left: 55px;
   padding-top: 10px;
   margin-top: -5px;
   width: 82px;
   text-align: center;
-  font-size: 23px;
+  font-size: 28px;
   color: white;
   line-height: 29px;
   user-select: none;
@@ -406,9 +421,9 @@ input:checked + .slider:before {
 
 .button-download{
   position: absolute;
-  width: 74px;
+  width: 86px;
   height: 23px;
-  top: 50px;
+  top: 97px;
   left: 10px;
   padding-top: 4px;
   font-weight: 600;
@@ -422,10 +437,10 @@ input:checked + .slider:before {
 
 .button-cancel-download{
   position: absolute;
-  width: 74px;
+  width: 86px;
   height: 23px;
-  top: 50px;
-  left: 97px;
+  top: 97px;
+  left: 106px;
   padding-top: 4px;
   font-weight: 600;
   color: #e4e4e4;
@@ -548,10 +563,10 @@ input:checked + .slider:before {
 
 /* nav-icon-2 */
 .nav-icon-2{
-  top: -5px;
-  right: -4px;
-  width: 19px;
-  height: 30px;
+  top: -3px;
+  right: -5px;
+  width: 25px;
+  height: 43px;
   margin: 10px 10px;
   position: absolute;
   cursor: pointer;
@@ -565,47 +580,47 @@ input:checked + .slider:before {
 }
 .nav-icon-2 span:nth-child(1){
   width: 100%;
-  height:  2px;
+  height: 2px;
   display: block;
   top: 0px;
   left: 0px;
 }
 .nav-icon-2 span:nth-child(2){
   width: 100%;
-  height:  2px;
+  height: 2px;
   display: block;
-  top: 7px;
+  top: 8px;
   left: 0px;
 }
 .nav-icon-2 span:nth-child(3){
   width: 100%;
-  height:  2px;
+  height: 2px;
   display: block;
-  top: 14px;
+  top: 16px;
   left: 0px;
 }
 
 .nav-icon-2.open span:nth-child(1){
-  left:2px;
+  left: 3px;
   top: 9px;
-  width: 14px;
-  transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+  width: 18px;
+  transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
   transform: rotate(-90deg);
   transition-delay: 100ms;
 }
 .nav-icon-2.open span:nth-child(2){
-  left:1px;
+  left: 2px;
   top: 4px;
-  width: 10px;
-  transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+  width: 12px;
+  transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
   transform: rotate(-45deg);
   transition-delay: 0ms;
 }
 .nav-icon-2.open span:nth-child(3){
-  left:7px;
+  left: 10px;
   top: 4px;
-  width: 10px;
-  transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+  width: 12px;
+  transition: 0.3s cubic-bezier(0.8, 0.5, 0.2, 1.4);
   transform: rotate(45deg);
   transition-delay: 50ms;
 }
