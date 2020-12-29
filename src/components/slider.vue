@@ -5,7 +5,6 @@
  
 <script>
 import VueSlider from 'vue-slider-component'
-//import 'vue-slider-component/theme/antd.css'
 
 export default {
     name: 'slider',
@@ -18,13 +17,6 @@ export default {
       volume:50
     }
   },
-
-  // computed: {
-  //   volume:function(){
-  //     console.log(this.value);
-  //     return this.value;
-  //   }
-  // },
 
   methods:{
     changeVolume: function(){

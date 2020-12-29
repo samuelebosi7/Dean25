@@ -1,12 +1,7 @@
 <template>
     <div>
-        <!-- <button class="control mute active"></button>
-        <button class="control pad"></button>
-        <div class="control meter vertical">
-            <span></span>
-        </div> -->
-        <sequencer ref="sequencer" v-on:toggleStepEvent="toggleStep" v-bind:audiox = "audiox" v-bind:recNode = "recNode" v-bind:masterVolume="this.masterVolume" v-bind:binSeq="this.singleChannel.seq" v-bind:mute="this.singleChannel.mute" v-bind:solo="this.singleChannel.solo" v-bind:noteDur="this.singleChannel.noteDuration" v-bind:id="this.singleChannel.id" v-bind:pan="this.singleChannel.pan" v-bind:gain="this.singleChannel.gain" v-bind:url="this.singleChannel.url">  
-        </sequencer>
+      <sequencer ref="sequencer" v-on:toggleStepEvent="toggleStep" v-bind:audiox = "audiox" v-bind:recNode = "recNode" v-bind:masterVolume="this.masterVolume" v-bind:binSeq="this.singleChannel.seq" v-bind:mute="this.singleChannel.mute" v-bind:solo="this.singleChannel.solo" v-bind:noteDur="this.singleChannel.noteDuration" v-bind:id="this.singleChannel.id" v-bind:pan="this.singleChannel.pan" v-bind:gain="this.singleChannel.gain" v-bind:url="this.singleChannel.url">  
+      </sequencer>
     </div>
 </template>
 

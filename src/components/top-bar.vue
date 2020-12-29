@@ -141,20 +141,6 @@
         EventBus.$on('emptyList', this.emptyList);
         EventBus.$on('setRecordingLabel', this.setRecordingTimeLabel);
     },
-    // mounted() {
-    //     $(function(){
-    //         if ($('#volume').length) {
-    //             console.log("ciao");
-    //             $("#volume").slider({
-    //                 orientation: "horizontal",
-    //                 range: "min",
-    //                 max: 100,
-    //                 value: 0,
-    //                 animate: 1300
-    //             });
-    //         }
-    //     })
-    // },
     methods: {
     emptyList: function(value){
         this.isInstListEmpty=value.state;
@@ -183,8 +169,6 @@
 
     
     getMaxId: function() {
-    //   console.log(this.instrumentList)
-    //   console.log(this.channelList)
       if(this.instrumentList.length >0)
         return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
       else return -1;
@@ -241,33 +225,6 @@
 
             if(this.isRecording){
                 var countDownDate = new Date("Oct 26, 2020 18:28:30").getTime();
-                /* this.recTimeOut = setInterval(function() {
-                    $('.rec').toggleClass("rec-active");
-
-                    var now = new Date().getTime();
-
-                    // Find the distance between now and the count down date
-                    var distance = countDownDate - now;
-
-                    // Time calculations for days, hours, minutes and seconds
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    var timeLeft=minutes+":";
-                    if(seconds<10)
-                        timeLeft+="0";
-                    timeLeft+=seconds;
-
-                    // Display the result in the element with id="demo"
-                    $(".rec-time-left-text").text(timeLeft);
-                    
-                    // If the count down is finished, write some text
-                    if (distance < 0) {
-                        clearInterval(this.recTimeOut);
-                        this.isRecording=false;
-                        $('.button-download').removeClass("inactive");
-                        $('.rec').removeClass("rec-active");
-                    }
-                }, 1000); */
             }
             else
             {
@@ -287,7 +244,7 @@
     countDown: function() {
         $('.rec').toggleClass("rec-active");
         var minutes=Math.floor(this.recordingTime/60);
-        var seconds=this.recordingTime%60;
+        var seconds=(this.recordingTime%60).toFixed(2);
         var timeLeft=minutes+":";
         if(seconds<10)
             timeLeft+="0";
@@ -349,7 +306,6 @@
     bpmChange: function(e) {
         $(".sub-menu.genre").removeClass("active");
         EventBus.$emit('changeBpm' , {newBpm: e.target.value});
-        //console.log(e.target.value);
     },
 
     bpmButtChange: function(val){
@@ -363,7 +319,6 @@
     projectMenu: function(){
         $(".icon").toggleClass("open");
         $("#projectMenu").toggleClass("active");
-        //$("#openProjectMenu").toggleClass("rotated");
     },
 
     changeFreeMode: function(){
@@ -383,8 +338,6 @@
     },
 
     getMaxId: function() {
-        //  console.log(this.instrumentList)
-        //   console.log(this.channelList)
         if(this.instrumentList.length >0)
             return Math.max.apply(Math, this.instrumentList.map(function(o) { return o.id; }));
         else return -1;
@@ -400,19 +353,12 @@
         }
     },
 
-    /* setLinkRec: function(e) {
-        if (this.recordLink == null) return;
-
-        $("#recordingLink").attr("href", this.recordLink);
-        $("#recordingLink").attr("download", this.projectTitle);
-    }, */
-
     setProjectTitle: function(e) {
         this.projectTitle = e.target.value;
     }
 
-    }
-    }
+}
+ }
     
     $(document).ready(function() {
         $('.enter-to-unselect').keydown(function(e) {

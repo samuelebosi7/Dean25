@@ -4,19 +4,6 @@
       Nd
     </div>
 
-    <!-- <ul class="sub-menu genre sample"  v-bind:class="{active: isActive}">
-
-      <ul v-for=" el in genre" :class="'genre'+(el.j+1)" v-text="el.gen" >
-        <li :class="'sub-menu item genre'+(el.j)" >
-          <ul v-for="sub in el.sub">
-            <li  v-text="sub"></li>
-          </ul>
-        </li>
-      </ul>
-
-    </ul> -->
-
-
     <ul class="sub-menu genre sample"  v-bind:class="{active: isActive}">
       <ul class="sub-menu1 genre" v-for=" el in genre" :class="'genre'+(el.j+1)" >
         <li v-text="el.gen+' ►'" v-on:click="el=subMenuClick(el)" ></li>
@@ -25,11 +12,7 @@
         </ul>
       </ul>
     </ul>
-
-
-
   </div>
-
 </template>
 
 <script>

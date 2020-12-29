@@ -5,14 +5,8 @@
             <div class="minus-symbol">-</div> 
         </div>
         <div v-bind:title='title' class="instrument-name">
-            <!-- <div :id="'actualSample'+id" v-on:click="selectInstrument">
-                Cy
-            </div> -->
-            
             <instrument-selector v-bind:id = this.id v-on:updateLink = "updateLink">
-
             </instrument-selector>
-            
         </div>
 
         <div class="mute" title='Mute'>

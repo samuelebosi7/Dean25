@@ -57,7 +57,6 @@ name: "sequencer",
 
       //reset the clock and update the note duration
       this.suspendClock();
-      //this.startClock();
     },
     
     pan(value) {
@@ -129,15 +128,12 @@ name: "sequencer",
         if(this.updateEvent != null ) {
           this.updateEvent.clear();
           this.updateEvent = null;
-          console.log("suspend: "+this.localStep);
         }
-        
     },
 
     startClock: function() {
         this.clock.start();
         this.updateEvent = this.clock.callbackAtTime(this.updateCurrentStep, this.audiox.currentTime).repeat(this.noteDuration);
-        console.log("startClock");
     },
 
 
@@ -148,7 +144,7 @@ name: "sequencer",
       this.g = this.audiox.createGain();
       this.playGain = this.audiox.createGain();
       this.playGain.gain.value=1;
-      this.g.gain.value=this.masterVolume/100;
+      this.g.gain.value=this.solo*this.mute*this.masterVolume/100;
        
       this.playGain.connect(this.g);
       this.g.connect(this.p);
@@ -181,7 +177,6 @@ name: "sequencer",
 
     updateCurrentStep: function() {
       this.localStep = (this.localStep+1) % this.binSeq.length;
-      //console.log("local: " + this.localStep);
     },
 
 
@@ -208,7 +203,6 @@ name: "sequencer",
 
       var tempArr = newArr.splice(0, num);
       newArr.push.apply(newArr, tempArr);
-
       return newArr;
     },
 
@@ -224,9 +218,7 @@ name: "sequencer",
 
     getData: function(url, audioCtx , b) {
       var request = new XMLHttpRequest();
-
       request.open('GET', url, true);
-
       request.responseType = 'arraybuffer';
 
       request.onload = function() {
@@ -234,11 +226,9 @@ name: "sequencer",
         audioCtx.decodeAudioData(audioData, function(buffer) {
           b.buffer = buffer;
         },
-        
         function(e){ console.log("Error with decoding audio data" + e.err); });
       }
       request.send();
-
     },
   }
 }

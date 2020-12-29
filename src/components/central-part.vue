@@ -45,17 +45,10 @@ export default {
       tic: 0.5,  
       prev:0,
       noteDuration: 0.5, //note duration in seconds
-      //totcount: 0,
 
-
-      // startTime: 0,
-      // noteTime: 0,
-      // ti: 0,
-      
       //play/stop var
       isPlaying: false,
       isStop: true,
-
       soloInsts: 0,
     }
   },
@@ -80,14 +73,12 @@ export default {
       this.recNode.connect(this.audiox.destination);
 
       EventBus.$on('startAudioContext', this.startAudioContext);
-      //EventBus.$on('nextStep', this.advanceTic);
       EventBus.$on('playSeq', this.setPlayStop);
       EventBus.$on('stopSeq', this.setPlayStop);
       EventBus.$on('recSeq', this.record);
       EventBus.$on('changeBpm', this.changeBpm);
       EventBus.$on('changedSolo', this.changeSolo);
       EventBus.$on('deleteAllChannels', this.deleteAllChannels);
-      
   },
   methods: {
 
@@ -101,7 +92,6 @@ export default {
 
     createChannel: function(){
       this.instrumentList.forEach(element => this.channelList.push({id: element.id , seq: [1], gain:0.5, pan: 0, noteDuration: 4, mute: 1, solo: 1 , url: ''}));
-      //console.log("added inst"+value.id+" with solo to "+this.channelList.find(x => x.id === value.id).solo);
     },
 
     updateChannel: function() {
@@ -109,9 +99,7 @@ export default {
         var correctSolo=1;
         if(this.soloInsts>0)
           correctSolo=0;
-        console.log("correct solo: "+correctSolo);
         this.instrumentList.forEach(element => (!idArr.includes(element.id)) ? this.channelList.push({id: element.id , seq: [1], gain: 0.5, pan: 0, noteDuration: 4, mute: 1, solo: correctSolo , url: ''}) : {});
-        this.channelList.forEach(ch => console.log("inst"+ch.id+" has solo: "+ch.solo));
     }, 
 
     updateStep: function(value) {  //value.step --> step | value.id --> id | value.pulses --> pulses  | value.offset --> offset
@@ -141,17 +129,12 @@ export default {
     updateDuration: function(value) {
         this.channelList.find(x => x.id === value.id).noteDuration = parseInt(value.dur,10);
         this.noteDuration = this.tic*4/parseInt(value.dur,10);
-/* 
-        this.updateEvent.clear();
-        this.updateEvent = null;
-        this.updateEvent = this.clock.callbackAtTime(this.updateCurrentStep, this.audiox.currentTime).repeat(this.noteDuration) */
     },
 
     changeMute: function(value) {
         var newVal;
         value.mute ? newVal = 0 : newVal= 1;
         this.channelList.find(x => x.id === value.id).mute = newVal;
-        //console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).mute);
     },
 
     changeSolo: function(value) {
@@ -214,7 +197,6 @@ export default {
     
     lcm: function () {
       var input_array= this.channelList.map(function(e) { return e.seq.length; });
-      //console.log(input_array);
           if (toString.call(input_array) !== "[object Array]")  
               return  false;  
             var r1 = 0, r2 = 0;
@@ -241,16 +223,7 @@ export default {
       this.channelList.find(x => x.id === value.id).gain = value.gain;
     },
 
-    //TIMING
-
-    // playListener(payload) {
-    //   this.setPlayStop(payload.isPlaying , payload.isStop);
-    //   //this.play();
-    // },
-
-    // stopListener(payload) {
-    //   this.setPlayStop(payload.isPlaying , payload.isStop);
-    // },
+    //---------------TIMING AND SCHEDULE-----------------
 
     setPlayStop: function(payload) {
       this.isPlaying = payload.isPlaying ;
@@ -259,11 +232,6 @@ export default {
     },
 
     play: function () {
-      /* if(this.isStop || !this.isPlaying)
-        this.audiox.suspend();
-      else this.audiox.resume(); */
-      
-
       if(this.isStop){
         this.suspendClock();
         EventBus.$emit('stopStep');
@@ -274,11 +242,6 @@ export default {
         EventBus.$emit('pauseStep');
         return false;  //se ho premuto pausa tengo salvato lo step corrente
       }
-
-
-      //this.startTime = this.audiox.currentTime + 0.005;
-      //this.noteTime = 0;
-      //this.emitPlaynote();
 
       this.startClock();
     },
@@ -321,8 +284,9 @@ export default {
       return minNoteDuration;
     },
 
+//  ---------------RECORDING---------------------
+
     record: function(payload) {
-      //recx = new Recorder(this.audiox);
       if(payload.isRecording)
       {
         this.cLcm=this.lcm();
@@ -338,13 +302,7 @@ export default {
         this.recx.clear();
         this.recx.record();
         setTimeout(this.stopRecording, recordingTime*1000);
-
-      } else{
-         /*  this.recx.stop();
-          console.log(this.recx)
-          this.recx.exportWAV(this.doneEncoding);
-          this.setPlayStop({isPlaying: false, isStop: true}) */;
-       }
+      }
      },
 
      stopRecording: function() {
@@ -358,7 +316,6 @@ export default {
         this.$store.commit('setRecordLink', url);
         console.log(url);
     }
-
   }
 }
 </script>
