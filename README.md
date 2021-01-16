@@ -7,7 +7,7 @@ You can go from catchy, relaxing, exotic to even moody, dark and emotional beats
 It is the place that can reunite either the more advanced producers as well as beginners to get inspiration for their new upcoming songs.
 With this you can go from creating simple kick and snare beats to even discover the complex and fashinating nature of polirithms!
 
-## How does this work?
+## What is the idea behind?
 As said before, Dean25 base its principles on the euclidean patterns. 
 But, what are they?
 To start off, we need to define two important paramters:
