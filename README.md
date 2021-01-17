@@ -1,4 +1,5 @@
-# Dean25
+
+<img src="https://user-images.githubusercontent.com/58031924/104849071-2452df80-58e8-11eb-9e36-0f0105623ecb.png" style="vertical-align:middle" />
 
 Have you have ever been in the situation where you would really like to make up a beat or a rhythmic pattern for your song but you didn't have the time or the knowledge to do it using your favourite DAW?
 Well, now we have the solution for you!
@@ -18,20 +19,24 @@ So, Euclidean patterns are a class of musical rhythms where the OnSets (pulses) 
 
 ## How to use?
 In order to create a beat from scratch, just follow this simple steps:
-1. In the main page, click the big + icon on the top left corner to add an instrument line
-2. Click on the "Nd" button and selecting the sample that you want 
+1. In the main page, click the <img src="https://user-images.githubusercontent.com/58031924/104848569-e1900800-58e5-11eb-881b-2438c40dcd30.PNG" width="5%" height="5%" /> icon on the top left corner to add an instrument line
+2. Click on the <img src="https://user-images.githubusercontent.com/58031924/104848633-477c8f80-58e6-11eb-93db-3933158a3d50.PNG" width="4%" height="4%" /> button and selecting the sample that you want 
 3.  Tune the values of Steps, Pulses and Offset as you like
+  <img src="https://user-images.githubusercontent.com/58031924/104848707-89a5d100-58e6-11eb-96af-ccc001c16567.PNG"/>
+
 4. Repeat steps from 1 to 3 until you've added all the instruments that you need
-5. Just click on the play button on the top bar and enjoy your creation!
+5. Just click <img src="https://user-images.githubusercontent.com/58031924/104848938-6deefa80-58e7-11eb-9064-e46a124724fa.PNG" width="2%" height="2%" /> in the top bar and enjoy your creation!
 
 If you want to delete an instrument line, you have to:
-1. Click the - button on the top left of the page
-2. Choose the one or more lines to delete by clicking on the little - buttons that will apper at the right of each element added to the session
+1. Click the <img src="https://user-images.githubusercontent.com/58031924/104848841-dbe6f200-58e6-11eb-9f68-249f01e1878b.PNG" width="2%" height="2%" /> button on the top left of the page
+2. Choose the one or more lines to delete by clicking on the <img src="https://user-images.githubusercontent.com/58031924/104848841-dbe6f200-58e6-11eb-9f68-249f01e1878b.PNG" width="2%" height="2%" /> buttons that will apper at the right of each element added to the session
 
 To download your creation, after you finished working on the beat, you will:
-1. Press on the red circle on the top bar
+1. Press on <img src="https://user-images.githubusercontent.com/58031924/104848885-1f416080-58e7-11eb-958d-eb5241d7d8f2.PNG" width="2%" height="2%" /> in the top bar
 2. Wait for the process to finish (a countdown will appear)
 3. Rename the file to download and click on the "Download" underneath it and the job is completed!  
+
+<img src="https://user-images.githubusercontent.com/58031924/104848130-d89e3700-58e3-11eb-89bb-a06f3569bd00.gif" width="480" height="300" />
 
 ## Features
 
@@ -40,6 +45,9 @@ All the standard drum machine features will be available: bpm control, master vo
 ### Free Mode
 All the patterns that can be generated follow the euclidean algorithm.
 If this isn't enough for you, by activating the free mode in the menu located the top right of the page, you will be able to modify the patterns as you would do in a normal drum machine, escaping from the "euclidean rules" in order to merge the classical and original waves togheter for the creation of original hybrid beats.
+
+<img src="https://user-images.githubusercontent.com/58031924/104847883-a2ac8300-58e2-11eb-8091-5abe8a462a3d.gif" width="480" height="300" />
+
 ### Download
 When done with your producing, you will be able to download the entire beat in ".wav" format by simply clicking the red circle in the transport bar and waiting for the recording process to finish.
 With this you will be able to transfer your creation to your favourite DAW to add some cool effects to it or even to add a melody completing your production.
