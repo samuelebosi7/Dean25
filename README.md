@@ -1,5 +1,6 @@
-
-<img src="https://user-images.githubusercontent.com/58031924/104849071-2452df80-58e8-11eb-9e36-0f0105623ecb.png" style="vertical-align:middle" />
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/58031924/104849349-7f390680-58e9-11eb-888c-50d7f7ac0c32.png"/>
+</p>
 
 Have you have ever been in the situation where you would really like to make up a beat or a rhythmic pattern for your song but you didn't have the time or the knowledge to do it using your favourite DAW?
 Well, now we have the solution for you!
