@@ -71,5 +71,5 @@ For Dean25 development, the external libraries we used are:
 
 Here you can find the links for:
 * the __web app__ ([here](https://dean25.surge.sh))
-* a quick video __demo__ of our project ([here](https://vuejs.org/))
+* a quick video __demo__ of our project ([here](https://youtu.be/jXeHQTZSNw0))
 
