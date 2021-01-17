@@ -59,3 +59,17 @@ With this you will be able to transfer your creation to your favourite DAW to ad
 In the upcoming future, we would like to add a save session feature for keeping all your progress and changes saved into a session in order for you to go back to it whenever you want to complete your work.
 ### Export MIDI
 Aside from the ".wav" download function, we would like to add also the possibility to export the MIDI version of your work to provide a more rapid download (especially for long sessions) and allowing the possibility of importing the session in DAWs either to change the samples if not liked or even for applying little adjustments in the patterns created.
+
+## Libraries and resources
+
+For Dean25 development, the external libraries we used are:
+* __[Vue.js](https://vuejs.org/)__, the framework where our app is built on
+* __[Firebase](https://firebase.google.com/)__, the database for uploading and retrieving the audio samples
+* __[Recorder.js](https://github.com/mattdiamond/Recorderjs)__, a plugin for recording/exporting the output of Web Audio API nodes
+
+## Links
+
+Here you can find the links for:
+* the __web app__ ([here](https://dean25.surge.sh))
+* a quick video __demo__ of our project ([here](https://vuejs.org/))
+
