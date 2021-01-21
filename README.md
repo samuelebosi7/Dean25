@@ -67,6 +67,12 @@ For Dean25 development, the external libraries we used are:
 * __[Firebase](https://firebase.google.com/)__, the database for uploading and retrieving the audio samples
 * __[Recorder.js](https://github.com/mattdiamond/Recorderjs)__, a plugin for recording/exporting the output of Web Audio API nodes
 
+Drum samples taken from:
+* __[BPB Cassette 909](https://bedroomproducersblog.com/2014/04/24/free-909-samples/)__, Free Roland TR909 sample pack
+* __[UNIT: 808](https://loopcult.com/products/unit-808-bass-sample-pack)__, Roland TR808 sample pack
+* __[LinnDrum Tape](https://www.synthtopia.com/content/2016/09/21/free-linndrum-tape-drum-sample-library/)__, LinnDrum sample pack
+* __[Slingerland Drum Kit](https://www.indiedrums.com/2015/10/10/slingerland-kit/)__, Slingerland acoustic drum-kit sample pack
+
 ## Links
 
 Here you can find the links for:
