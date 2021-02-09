@@ -6,7 +6,7 @@ Have you have ever been in the situation where you would really like to make up 
 Well, now we have the solution for you!
 
 __Dean 25__ is a simple drum machine that exploits euclidean patterns in order to produce beats.
-A web app that allows you to go from catchy, relaxing, exotic feelings to even moody, dark and emotional ones in a few easy steps,  going from creating simple kick and snare beats to even discovering the complex and fashinating nature of polirithms.
+A web app that allows you to go from catchy, relaxing, exotic feelings to even moody, dark and emotional ones in a few easy steps,  going from creating simple kick and snare beats to even discovering the complex and fashinating nature of polimetrics.
 It is the place that fulfill the needs of the more advanced producers as well as beginners to get inspiration for their new upcoming songs.
 
 ## What is the idea behind?
