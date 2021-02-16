@@ -22,8 +22,8 @@ So, Euclidean patterns are a class of musical rhythms where the OnSets (pulses) 
 In order to create a beat from scratch, just follow this simple steps:
 1. In the main page, click the <img src="https://user-images.githubusercontent.com/58031924/104848569-e1900800-58e5-11eb-881b-2438c40dcd30.PNG" width="5%" height="5%" /> icon on the top left corner to add an instrument line
 2. Click on the <img src="https://user-images.githubusercontent.com/58031924/104848633-477c8f80-58e6-11eb-93db-3933158a3d50.PNG" width="4%" height="4%" /> button and selecting the sample that you want 
-3.  Tune the values of Steps, Pulses and Offset as you like. 
-The Offset parameter will let you shift the rhytmical pattern to the right by the number of steps imposed in the text label. This will allow for more rhythmical combinations in the beat.
+3.  Tune the values of Steps, Pulses and Offset as you like.<br/>
+The __Offset__ parameter will let you shift the rhytmical pattern to the right by the number of steps imposed in the text label. This will allow for more rhythmical combinations in the beat.
   <img src="https://user-images.githubusercontent.com/58031924/104848707-89a5d100-58e6-11eb-96af-ccc001c16567.PNG"/>
 
 4. Repeat steps from 1 to 3 until you've added all the instruments that you need
