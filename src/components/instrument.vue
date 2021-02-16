@@ -105,7 +105,6 @@ export default {
         var pos = this.instrumentList.map(function(e) { return e.id; }).indexOf(this.id);
         this.instrumentList.splice(pos, 1);
         this.$emit('deleteChannel', {id: this.id});
-        console.log("list length: "+this.instrumentList.length);
         if(this.instrumentList.length<=0)
             EventBus.$emit('emptyList', {state: true});
     },

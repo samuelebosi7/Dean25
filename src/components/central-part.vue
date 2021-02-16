@@ -150,9 +150,6 @@ export default {
           }
           else
             this.channelList.find(x => x.id === value.id).solo = 1;
-
-          console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).solo);
-          console.log("instruments in solo: "+this.soloInsts);
         }
         else 
         {
@@ -161,9 +158,6 @@ export default {
             this.channelList.forEach(ch => {ch.solo = 1})
           else
             this.channelList.find(x => x.id === value.id).solo = 0;
-          
-          console.log("instrument "+value.id+" changed to "+this.channelList.find(x => x.id === value.id).solo);
-          console.log("instruments in solo: "+this.soloInsts);
         }
     },
 
@@ -189,8 +183,7 @@ export default {
       this.channelList.splice(0, this.channelList.length);
     },
 
-    deleteChannel: function(value) {  //value.id --> id 
-      console.log("sono nel delete channel");
+    deleteChannel: function(value) { 
         var pos = this.channelList.map(function(e) { return e.id; }).indexOf(value.id);
         this.channelList.splice(pos, 1);
     },
@@ -314,7 +307,6 @@ export default {
     doneEncoding: function(blob) {
         var url = (window.URL || window.webkitURL).createObjectURL(blob);
         this.$store.commit('setRecordLink', url);
-        console.log(url);
     }
   }
 }
