@@ -54,6 +54,8 @@ If this isn't enough for you, by activating the free mode in the menu located th
 When done with your producing, you will be able to download the entire beat in ".wav" format by simply clicking the red circle in the transport bar and waiting for the recording process to finish.
 With this you will be able to transfer your creation to your favourite DAW to add some cool effects to it or even to add a melody completing your production.
 
+[NOTE]: The .wav download works only with the project in local. On the website (link avaliable on the bottom of the page) this feature will download an empty file (we tried different solutions, including trying to upload the web app on different domains but the problem won't fix, apologies for this).
+
 ## Coming soon
 
 ### Save session
